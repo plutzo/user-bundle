@@ -12,12 +12,6 @@
             <argument type="service" id="fos_user.object_manager"/>
             <argument>%fos_user.model.user.class%</argument>
         </service>
-        <service id="marlinc.user.form_authenticator" class="Marlinc\UserBundle\Security\LoginFormAuthenticator">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="router"/>
-            <argument type="service" id="security.password_encoder"/>
-            <argument type="service" id="security.csrf.token_manager"/>
-        </service>
         <service id="cas.authenticator" class="Marlinc\UserBundle\Security\CasAuthenticator" public="false"/>
         <service id="cas.user.provider" class="Marlinc\UserBundle\Security\CasUserProvider">
             <argument type="service" id="doctrine.orm.entity_manager"/>
