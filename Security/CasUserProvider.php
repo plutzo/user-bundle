@@ -2,15 +2,9 @@
 
 namespace Marlinc\UserBundle\Security;
 
-use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-//use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-
 use Doctrine\ORM\EntityManager;
-use AppBundle\Entity\thirdpartyCasUsers;
-use Marlinc\UserBundle\Entity\User;
 
 class CasUserProvider implements UserProviderInterface
 {
@@ -25,7 +19,7 @@ class CasUserProvider implements UserProviderInterface
     {
         // Look up the username based on the token in the database.
         $CasUser = $this->em
-            ->getRepository('CasUser.php')
+            ->getRepository('MarlincUserBundle:CasUser')
             ->findOneBy([
                 'username' => base64_decode($authUserId)
             ]);
@@ -57,4 +51,3 @@ class CasUserProvider implements UserProviderInterface
         return 'Marlinc\UserBundle\Entity\User' === $class;
     }
 }
-?>
