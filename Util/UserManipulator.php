@@ -60,9 +60,10 @@ class UserManipulator
      *
      * @param string $email
      * @param string $password
-     * @param string $email
-     * @param bool   $active
-     * @param bool   $superadmin
+     * @param $firstname
+     * @param $lastname
+     * @param bool $active
+     * @param bool $superadmin
      *
      * @return \FOS\UserBundle\Model\UserInterface
      */

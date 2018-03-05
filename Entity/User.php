@@ -2,8 +2,8 @@
 
 namespace Marlinc\UserBundle\Entity;
 
-use AppBundle\Doctrine\GenderEnumType;
-use AppBundle\Traits\BlameableEntity;
+use Marlinc\UserBundle\Doctrine\GenderEnumType;
+use Marlinc\UserBundle\Traits\BlameableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,8 +11,6 @@ use FOS\UserBundle\Model\GroupableInterface;
 use FOS\UserBundle\Model\GroupInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
-use MarlincCore\ClientBundle\Entity\Client;
-use MarlincCore\ClientBundle\Entity\Person;
 use Sonata\UserBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -141,17 +139,9 @@ class User implements UserInterface, GroupableInterface
     /**
      * @var Person
      *
-     * @ORM\ManyToOne(targetEntity="MarlincCore\ClientBundle\Entity\Person",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Marlinc\UserBundle\Entity\Person",cascade={"persist"})
      */
     protected $person;
-
-    /**
-     * @var Client
-     *
-     * @ORM\ManyToOne(targetEntity="MarlincCore\ClientBundle\Entity\Client")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    protected $client;
 
     /**
      * @var \DateTime
@@ -676,24 +666,6 @@ class User implements UserInterface, GroupableInterface
     public function setPerson(Person $person): User
     {
         $this->person = $person;
-        return $this;
-    }
-
-    /**
-     * @return Client
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
-     * @param Client $client
-     * @return User
-     */
-    public function setClient(Client $client): User
-    {
-        $this->client = $client;
         return $this;
     }
 
