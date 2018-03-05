@@ -12,7 +12,7 @@ trait BlameableEntity
      * @var User
      *
      * @Gedmo\Blameable(on="create")
-     * @ORM\ManyToOne(targetEntity="MarlincCore\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Marlinc\UserBundle\Entity\User")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     protected $createdBy;
@@ -21,7 +21,7 @@ trait BlameableEntity
      * @var User
      *
      * @Gedmo\Blameable(on="update")
-     * @ORM\ManyToOne(targetEntity="MarlincCore\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Marlinc\UserBundle\Entity\User")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     protected $updatedBy;
