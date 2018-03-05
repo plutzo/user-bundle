@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="marlinc.user.util.user_manipulator" class="Marlinc\UserBundle\Util\UserManipulator">
+            <argument type="service" id="marlinc.user.user_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="request_stack"/>
+        </service>
+        <service id="marlinc.user.user_manager" class="Marlinc\UserBundle\Entity\UserManager">
+            <argument type="service" id="fos_user.util.password_updater"/>
+            <argument type="service" id="fos_user.util.canonical_fields_updater"/>
+            <argument type="service" id="fos_user.object_manager"/>
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+        <service id="marlinc.user.form_authenticator" class="Marlinc\UserBundle\Security\LoginFormAuthenticator">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="security.password_encoder"/>
+            <argument type="service" id="security.csrf.token_manager"/>
+        </service>
+        <service id="cas.authenticator" class="Marlinc\UserBundle\Security\CasAuthenticator" public="false"/>
+        <service id="cas.user.provider" class="Marlinc\UserBundle\Security\CasUserProvider">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+        <service id="marlinc1.authenticator" class="Marlinc\UserBundle\Security\Marlinc1Authenticator">
+            <argument type="service" id="security.http_utils"/>
+        </service>
+        <service id="marlinc1.user.provider" class="Marlinc\UserBundle\Security\Marlinc1UserProvider">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="doctrine.dbal.marlinc_connection"/>
+        </service>
+        <service id="user.export.user" class="Marlinc\UserBundle\Export\UserExport">
+            <tag name="marlinc.exporter.format" alias="user" class="Marlinc\UserBundle\Entity\User"/>
+        </service>
+    </services>
+</container>
