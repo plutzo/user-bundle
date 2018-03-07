@@ -2,6 +2,7 @@
 
 namespace Marlinc\UserBundle\Admin;
 
+use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Marlinc\UserBundle\Event\UserAclUpdateEvent;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -12,6 +13,7 @@ use Sonata\AdminBundle\Security\Handler\AclSecurityHandlerInterface;
 use Sonata\UserBundle\Admin\Model\UserAdmin as BaseAdmin;
 use Sonata\UserBundle\Form\Type\SecurityRolesType;
 use Sonata\UserBundle\Form\Type\UserGenderListType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -91,7 +93,10 @@ class UserAdmin extends BaseAdmin
                 ->with('Personal info')
                     // TODO: Embed PersonAdmin
                     ->add('locale', LanguageType::class)
-                    ->add('person.gender', UserGenderListType::class)
+                    ->add('person.gender', ChoiceType::class, [
+                        'choices' => GenderEnumType::getChoices(),
+                        'required' => true
+                    ])
                     ->add('person.firstname')
                     ->add('person.lastname')
                     ->add('person.phone', PhoneNumberType::class, [
