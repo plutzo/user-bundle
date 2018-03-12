@@ -116,7 +116,7 @@ class Person
      * @var string
      *
      * @ORM\Column(type="enumclientcrm", nullable=true)
-     * @AssertEnum(entity="MarlincCore\ClientBundle\Doctrine\CrmEnumType")
+     * @AssertEnum(entity="Marlinc\UserBundle\Doctrine\CrmEnumType")
      */
     private $crmChannel;
 
