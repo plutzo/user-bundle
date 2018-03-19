@@ -12,6 +12,7 @@ use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhone;
 use Sonata\UserBundle\Model\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Person
@@ -28,6 +29,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     })
  * @ORM\Table(name="person")
  * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"lastname","firstname","thoroughfare","postalCode"},
+ *     message="A person with this data (name and address) already exists in the database.",
+ *     groups={"UniquePerson"}
+ * )
  */
 class Person
 {
