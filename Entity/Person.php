@@ -50,6 +50,13 @@ class Person
     private $id;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $formal;
+
+    /**
      * @var string
      *
      * @Groups({"person_read", "person_write"})
@@ -153,6 +160,7 @@ class Person
     public function __construct()
     {
         $this->gender = UserInterface::GENDER_UNKNOWN;
+        $this->formal = true;
     }
 
     /**
@@ -426,6 +434,25 @@ class Person
     public function setCrmChannel($crmChannel): Person
     {
         $this->crmChannel = $crmChannel;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFormal(): bool
+    {
+        return $this->formal;
+    }
+
+    /**
+     * @param bool $formal
+     * @return Person
+     */
+    public function setFormal($formal): Person
+    {
+        $this->formal = $formal;
+
         return $this;
     }
 
