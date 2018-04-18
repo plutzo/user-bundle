@@ -3,24 +3,16 @@
 namespace Marlinc\UserBundle\Admin;
 
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
-use Marlinc\UserBundle\Event\UserAclUpdateEvent;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Security\Acl\Permission\MaskBuilder;
-use Sonata\AdminBundle\Security\Handler\AclSecurityHandlerInterface;
 use Sonata\UserBundle\Admin\Model\UserAdmin as BaseAdmin;
 use Sonata\UserBundle\Form\Type\SecurityRolesType;
-use Sonata\UserBundle\Form\Type\UserGenderListType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Security\Acl\Domain\Acl;
-use Symfony\Component\Security\Acl\Domain\Entry;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 
 class UserAdmin extends BaseAdmin
 {
@@ -135,84 +127,5 @@ class UserAdmin extends BaseAdmin
                 ->end()
             ->end()
         ;
-    }
-
-    public function preUpdate($user): void
-    {
-        parent::preUpdate($user);
-
-        $originalData = $this->getConfigurationPool()
-            ->getContainer()->get('doctrine')->getManager()
-            ->getUnitOfWork()->getOriginalEntityData($user);
-
-        if ($originalData['email'] !== $user->getEmail()) {
-            $this->getConfigurationPool()->getContainer()->get('security.acl.provider')->updateUserSecurityIdentity(
-                UserSecurityIdentity::fromAccount($user), $originalData['email']);
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function postUpdate($object)
-    {
-        $this->updateAces($object);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function postPersist($object)
-    {
-        $this->updateAces($object);
-    }
-
-    private function updateAces($user) {
-        $securityIdentity = UserSecurityIdentity::fromAccount($user);
-        $securityHandler = $this->getSecurityHandler();
-
-        // Create/update ACEs for entities.
-        if ($securityHandler instanceof AclSecurityHandlerInterface) {
-            // Get object identities and corresponding ace bitmasks.
-            $event = new UserAclUpdateEvent($user);
-            $dispatcher = $this->getConfigurationPool()->getContainer()->get('event_dispatcher');
-            $dispatcher->dispatch(UserAclUpdateEvent::NAME, $event);
-            $masks = $event->getMasks();
-
-            foreach ($event->getObjectIdentities() as $key => $objectIdentity) {
-                $acl = $securityHandler->getObjectAcl($objectIdentity);
-                $maskBuilder = new MaskBuilder(($masks[$key] === false)?0:$masks[$key]);
-
-                // Flag to determine if mask was really updated or not.
-                $isUpdated = false;
-
-                // Does ACL exist? If not, create one.
-                if ($acl instanceof MutableAclInterface) {
-                    // Go through all ACEs and try to find current user's ACE.
-                    foreach ($acl->getObjectAces() as $akey => $ace) {
-                        if ($ace instanceof Entry && $ace->getSecurityIdentity()->equals($securityIdentity)) {
-                            if ($masks[$key] === false) {
-                                // Mask is false -> remove existing ACE.
-                                $acl->deleteObjectAce($akey);
-                            } else {
-                                // Set the mask for the existing ACE.
-                                $acl->updateObjectAce($akey, $maskBuilder->get());
-                            }
-
-                            $isUpdated = true;
-                            break;
-                        }
-                    }
-                } else {
-                    $acl = $securityHandler->createAcl($objectIdentity);
-                }
-
-                // Need to insert new ACE.
-                if (!$isUpdated && $acl instanceof Acl && $masks[$key] !== false) {
-                    $acl->insertObjectAce($securityIdentity, $maskBuilder->get());
-                }
-                $securityHandler->updateAcl($acl);
-            }
-        }
     }
 }
