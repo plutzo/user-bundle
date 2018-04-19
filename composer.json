@@ -22,7 +22,7 @@
     "fresh/doctrine-enum-bundle": "^5.0",
     "api-platform/core": "^2.2",
     "marlinc/postalcode-bundle": "^1.0",
-    "marlinc/admin-bundle": "dev-master"
+    "marlinc/admin-bundle": "^1.4|dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8"
