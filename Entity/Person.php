@@ -10,6 +10,7 @@ use libphonenumber\PhoneNumber;
 use Marlinc\PostalCodeBundle\Entity\PostalCodeLocation;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhone;
 use Sonata\UserBundle\Model\UserInterface;
+use Symfony\Component\Form\Exception\BadMethodCallException;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -48,6 +49,14 @@ class Person
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var User
+     *
+     * @ORM\OneToMany(targetEntity="Marlinc\UserBundle\Entity\User",mappedBy="person")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
 
     /**
      * @var bool
@@ -452,6 +461,31 @@ class Person
     public function setFormal($formal): Person
     {
         $this->formal = $formal;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return Person
+     */
+    public function setUser(User $user = null): Person
+    {
+        if ($user instanceof User) {
+            $user->setPerson($this);
+        } elseif ($this->user instanceof User) {
+            throw new BadMethodCallException("User can not be unset, once associated.");
+        }
+
+        $this->user = $user;
 
         return $this;
     }
