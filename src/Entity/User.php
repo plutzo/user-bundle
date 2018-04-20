@@ -139,7 +139,7 @@ class User implements UserInterface, GroupableInterface
     /**
      * @var Person
      *
-     * @ORM\ManyToOne(targetEntity="Marlinc\UserBundle\Entity\Person",cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Marlinc\UserBundle\Entity\Person",cascade={"persist"},inversedBy="person")
      */
     protected $person;
 
