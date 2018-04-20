@@ -54,7 +54,6 @@ class Person
      * @var User
      *
      * @ORM\OneToOne(targetEntity="Marlinc\UserBundle\Entity\User",mappedBy="person")
-     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
