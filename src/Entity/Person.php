@@ -53,7 +53,7 @@ class Person
     /**
      * @var User
      *
-     * @ORM\OneToMany(targetEntity="Marlinc\UserBundle\Entity\User",mappedBy="person")
+     * @ORM\OneToOne(targetEntity="Marlinc\UserBundle\Entity\User",mappedBy="person")
      * @ORM\JoinColumn(nullable=true)
      */
     private $user;
