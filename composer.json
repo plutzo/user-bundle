@@ -16,11 +16,11 @@
   "require": {
     "php": ">=7.1",
     "sonata-project/user-bundle": "^4.0",
-    "marlinc/machinename-bundle": "^1.0",
     "misd/phone-number-bundle": "^1.3",
     "stof/doctrine-extensions-bundle": "^1.3",
     "fresh/doctrine-enum-bundle": "^5.0",
     "api-platform/core": "^2.2",
+    "marlinc/machinename-bundle": "^1.0|dev-master",
     "marlinc/postalcode-bundle": "^1.0",
     "marlinc/admin-bundle": "^1.4|dev-master"
   },
