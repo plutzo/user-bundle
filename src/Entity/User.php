@@ -148,7 +148,7 @@ class User implements UserInterface, GroupableInterface
      * @var Client
      *
      * TODO: Migrate reference to client object (person relation).
-     * @ORM\ManyToOne(targetEntity="MarlincCore\ClientBundle\Entity\Client")
+     * @ORM\ManyToOne(targetEntity="Marlinc\ClientBundle\Entity\Client")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $client;
