@@ -4,6 +4,7 @@ namespace Marlinc\UserBundle\Entity;
 
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Marlinc\UserBundle\Traits\BlameableEntity;
+use Marlinc\ClientBundle\Entity\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -144,6 +145,15 @@ class User implements UserInterface, GroupableInterface
     protected $person;
 
     /**
+     * @var Client
+     *
+     * TODO: Migrate reference to client object (person relation).
+     * @ORM\ManyToOne(targetEntity="MarlincCore\ClientBundle\Entity\Client")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $client;
+
+    /**
      * @var \DateTime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
@@ -167,6 +177,24 @@ class User implements UserInterface, GroupableInterface
     public function __toString()
     {
         return $this->getFullName().' ('.$this->email.')';
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     * @return User
+     */
+    public function setClient(Client $client): User
+    {
+        $this->client = $client;
+        return $this;
     }
 
     /**
