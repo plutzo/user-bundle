@@ -28,7 +28,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          "normalization_context"={"groups"={"person_read"}},
  *          "denormalization_context"={"groups"={"person_write"}}
  *     })
- * @ORM\Table(name="person")
+ * @ORM\Table(name="user_persons")
  * @ORM\Entity
  * @UniqueEntity(
  *     fields={"lastname","firstname","thoroughfare","postalCode"},

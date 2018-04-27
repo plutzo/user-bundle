@@ -20,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Class User
  *
  * @ORM\Entity
- * @ORM\Table(name="users")
+ * @ORM\Table(name="user_users")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @Gedmo\Loggable
  * @UniqueEntity("email")
@@ -106,7 +106,7 @@ class User implements UserInterface, GroupableInterface
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Marlinc\UserBundle\Entity\Group")
-     * @ORM\JoinTable(name="users_groups",
+     * @ORM\JoinTable(name="user_users_groups",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
      * )

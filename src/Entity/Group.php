@@ -14,7 +14,7 @@ use Marlinc\MachineNameBundle\MachineName\MachineNameTrait;
  * Class Group
  *
  * @ORM\Entity
- * @ORM\Table(name="groups")
+ * @ORM\Table(name="user_groups")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Group implements GroupInterface, MachineNameInterface
