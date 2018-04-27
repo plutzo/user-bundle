@@ -24,8 +24,8 @@ class PersonAdmin extends AbstractAdmin
             ->add('firstname')
             ->add('lastname')
             ->add('email')
-            ->add('user')
-            ->add('referencingEntities');
+            ->add('user');
+            // TODO add AJAX filter ->add('referencingEntities');
     }
 
     /**

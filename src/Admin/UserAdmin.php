@@ -49,8 +49,8 @@ class UserAdmin extends BaseAdmin
         $filterMapper
             ->add('email')
             ->add('person.newsletter')
-            ->add('groups')
-            ->add('referencingEntities');
+            ->add('groups');
+            // TODO add AJAX filter ->add('referencingEntities');
     }
 
     /**
