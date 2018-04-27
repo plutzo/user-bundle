@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints\Enum as AssertEnum;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use libphonenumber\PhoneNumber;
+use Marlinc\MachineNameBundle\Entity\EntityReference;
 use Marlinc\PostalCodeBundle\Entity\PostalCodeLocation;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhone;
 use Sonata\UserBundle\Model\UserInterface;
@@ -36,19 +37,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     groups={"UniquePerson"}
  * )
  */
-class Person
+class Person extends EntityReference
 {
     use TimestampableEntity;
-
-    /**
-     * @var int
-     *
-     * @Groups({"person_read"})
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var User
@@ -167,18 +158,10 @@ class Person
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->gender = UserInterface::GENDER_UNKNOWN;
         $this->formal = true;
-    }
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

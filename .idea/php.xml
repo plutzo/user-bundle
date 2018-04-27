@@ -110,6 +110,9 @@
       <path value="$PROJECT_DIR$/vendor/sonata-project/admin-bundle" />
       <path value="$PROJECT_DIR$/vendor/sonata-project/user-bundle" />
       <path value="$PROJECT_DIR$/vendor/sonata-project/block-bundle" />
+      <path value="$PROJECT_DIR$/vendor/jdorn/sql-formatter" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-cache-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

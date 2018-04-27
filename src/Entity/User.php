@@ -2,6 +2,7 @@
 
 namespace Marlinc\UserBundle\Entity;
 
+use Marlinc\MachineNameBundle\Entity\EntityReference;
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Marlinc\UserBundle\Traits\BlameableEntity;
 use Marlinc\ClientBundle\Entity\Client;
@@ -25,19 +26,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @Gedmo\Loggable
  * @UniqueEntity("email")
  */
-class User implements UserInterface, GroupableInterface
+class User extends EntityReference implements UserInterface, GroupableInterface
 {
     use SoftDeleteableEntity;
     use BlameableEntity;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
 
     /**
      * @var \DateTime
@@ -171,6 +163,8 @@ class User implements UserInterface, GroupableInterface
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->enabled = false;
         $this->roles = array();
         $this->person = new Person();
@@ -250,14 +244,6 @@ class User implements UserInterface, GroupableInterface
     public function eraseCredentials()
     {
         $this->plainPassword = null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -696,6 +682,13 @@ class User implements UserInterface, GroupableInterface
     public function setPerson(Person $person): User
     {
         $this->person = $person;
+
+        if ($person === null && $this->person instanceof Person) {
+            $this->removeReferencedEntity($this->person);
+        } else {
+            $this->addReferencedEntity($person);
+        }
+
         return $this;
     }
 
