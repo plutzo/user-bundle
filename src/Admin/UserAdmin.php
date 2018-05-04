@@ -2,6 +2,7 @@
 
 namespace Marlinc\UserBundle\Admin;
 
+use Marlinc\EntityBundle\Admin\Filter\HasReferenceFilter;
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -26,7 +27,7 @@ class UserAdmin extends BaseAdmin
             ->add('groups')
             ->add('enabled', null, ['editable' => true])
             ->add('createdAt')
-            ->add('referencingEntities')
+            ->add('allReferencingEntities', 'array')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
@@ -49,8 +50,9 @@ class UserAdmin extends BaseAdmin
         $filterMapper
             ->add('email')
             ->add('person.newsletter')
-            ->add('groups');
-            // TODO add AJAX filter ->add('referencingEntities');
+            ->add('groups')
+            // TODO add AJAX filter ->add('referencingEntities')
+            ->add('has_reference', HasReferenceFilter::class);
     }
 
     /**

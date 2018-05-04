@@ -3,8 +3,8 @@
 namespace Marlinc\UserBundle\Admin;
 
 use Marlinc\AdminBundle\Admin\AbstractAdmin;
+use Marlinc\EntityBundle\Admin\Filter\HasReferenceFilter;
 use Marlinc\PostalCodeBundle\Form\Type\PostalCodeSelectType;
-use Marlinc\Select2EntityBundle\Form\Type\Select2EntityType;
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -27,6 +27,7 @@ class PersonAdmin extends AbstractAdmin
             ->add('email')
             ->add('user')
             // TODO ->add('referencingEntities', null, [], Select2EntityType::class)
+            ->add('has_reference', HasReferenceFilter::class)
         ;
     }
 

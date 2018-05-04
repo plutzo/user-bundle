@@ -184,6 +184,23 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     }
 
     /**
+     * @return Collection
+     */
+    public function getAllReferencingEntities(): Collection
+    {
+        $all = new ArrayCollection(
+            array_merge($this->getReferencingEntities()->toArray(), $this->person->getReferencingEntities()->toArray())
+        );
+
+        foreach ($all as $key => $item) {
+            if ($item instanceof User) {
+                $all->remove($key);
+            }
+        }
+        return $all;
+    }
+
+    /**
      * @param Client $client
      * @return User
      */
