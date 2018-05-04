@@ -2,7 +2,7 @@
 
 namespace Marlinc\UserBundle\Entity;
 
-use Marlinc\MachineNameBundle\Entity\EntityReference;
+use Marlinc\EntityBundle\Entity\EntityReference;
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Marlinc\UserBundle\Traits\BlameableEntity;
 use Marlinc\ClientBundle\Entity\Client;

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints\Enum as AssertEnum;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use libphonenumber\PhoneNumber;
-use Marlinc\MachineNameBundle\Entity\EntityReference;
+use Marlinc\EntityBundle\Entity\EntityReference;
 use Marlinc\PostalCodeBundle\Entity\PostalCodeLocation;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhone;
 use Sonata\UserBundle\Model\UserInterface;

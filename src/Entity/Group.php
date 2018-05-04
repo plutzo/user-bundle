@@ -7,8 +7,8 @@ use FOS\UserBundle\Model\GroupInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Marlinc\MachineNameBundle\MachineName\MachineNameInterface;
-use Marlinc\MachineNameBundle\MachineName\MachineNameTrait;
+use Marlinc\EntityBundle\MachineName\MachineNameInterface;
+use Marlinc\EntityBundle\MachineName\MachineNameTrait;
 
 /**
  * Class Group

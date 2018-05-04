@@ -8,7 +8,7 @@
 
 namespace Marlinc\UserBundle\Admin;
 
-use Marlinc\MachineNameBundle\Form\Type\MachineNameType;
+use Marlinc\EntityBundle\Form\Type\MachineNameType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\UserBundle\Admin\Entity\GroupAdmin as BaseAdmin;
