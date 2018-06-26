@@ -31,6 +31,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     })
  * @ORM\Table(name="user_persons")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(
  *     fields={"lastname","firstname","thoroughfare","postalCode"},
  *     message="A person with this data (name and address) already exists in the database.",
@@ -162,6 +163,32 @@ class Person extends EntityReference
 
         $this->gender = UserInterface::GENDER_UNKNOWN;
         $this->formal = true;
+    }
+
+    public function __toString()
+    {
+        return $this->getFullName();
+    }
+
+    public function getFullName()
+    {
+        return $this->getFirstname().' '.$this->getLastname();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setEntityLabel() {
+        $this->setLabel($this->firstname.' '.$this->lastname);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityLabel(): string
+    {
+        return $this->__toString();
     }
 
     /**
@@ -471,11 +498,5 @@ class Person extends EntityReference
 
         return $this;
     }
-
-    function __toString()
-    {
-        return $this->getFirstname().' '.$this->getLastname();
-    }
-
 }
 

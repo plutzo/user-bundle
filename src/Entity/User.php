@@ -22,6 +22,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="user_users")
+ * @ORM\HasLifecycleCallbacks()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @Gedmo\Loggable
  * @UniqueEntity("email")
@@ -173,6 +174,23 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     public function __toString()
     {
         return $this->getFullName().' ('.$this->email.')';
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setEntityLabel()
+    {
+        $this->setLabel($this->__toString());
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityLabel(): string
+    {
+        return $this->__toString();
     }
 
     /**
@@ -627,7 +645,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
 
     public function getFullName()
     {
-        return $this->person->getFirstname().' '.$this->person->getLastname();
+        return $this->person->getFullName();
     }
 
     /**
