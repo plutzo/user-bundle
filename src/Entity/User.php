@@ -4,7 +4,6 @@ namespace Marlinc\UserBundle\Entity;
 
 use Marlinc\EntityBundle\Entity\EntityReference;
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
-use Marlinc\UserBundle\Traits\BlameableEntity;
 use Marlinc\ClientBundle\Entity\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\GroupableInterface;
 use FOS\UserBundle\Model\GroupInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Sonata\UserBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -23,15 +21,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity
  * @ORM\Table(name="user_users")
  * @ORM\HasLifecycleCallbacks()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @Gedmo\Loggable
  * @UniqueEntity("email")
  */
 class User extends EntityReference implements UserInterface, GroupableInterface
 {
-    use SoftDeleteableEntity;
-    use BlameableEntity;
-
     /**
      * @var \DateTime
      *

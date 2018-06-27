@@ -52,7 +52,8 @@ class UserAdmin extends BaseAdmin
             ->add('person.newsletter')
             ->add('groups')
             // TODO add AJAX filter ->add('referencingEntities')
-            ->add('has_reference', HasReferenceFilter::class);
+            ->add('has_reference', HasReferenceFilter::class)
+        ;
     }
 
     /**

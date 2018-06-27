@@ -5,7 +5,6 @@ namespace Marlinc\UserBundle\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints\Enum as AssertEnum;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use libphonenumber\PhoneNumber;
 use Marlinc\EntityBundle\Entity\EntityReference;
 use Marlinc\PostalCodeBundle\Entity\PostalCodeLocation;
@@ -40,8 +39,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Person extends EntityReference
 {
-    use TimestampableEntity;
-
     /**
      * @var User
      *
