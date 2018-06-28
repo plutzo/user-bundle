@@ -3,6 +3,7 @@
 namespace Marlinc\UserBundle\Admin;
 
 use Marlinc\EntityBundle\Admin\Filter\HasReferenceFilter;
+use Marlinc\EntityBundle\Form\Type\EntityReferenceSelectType;
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -51,7 +52,10 @@ class UserAdmin extends BaseAdmin
             ->add('email')
             ->add('person.newsletter')
             ->add('groups')
-            // TODO add AJAX filter ->add('referencingEntities')
+            ->add('referencingEntities', null, [], EntityReferenceSelectType::class, [
+                'allow_edit' => true,
+                'width' => '100%'
+            ])
             ->add('has_reference', HasReferenceFilter::class)
         ;
     }

@@ -4,6 +4,7 @@ namespace Marlinc\UserBundle\Admin;
 
 use Marlinc\AdminBundle\Admin\AbstractAdmin;
 use Marlinc\EntityBundle\Admin\Filter\HasReferenceFilter;
+use Marlinc\EntityBundle\Form\Type\EntityReferenceSelectType;
 use Marlinc\PostalCodeBundle\Form\Type\PostalCodeSelectType;
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
@@ -26,7 +27,10 @@ class PersonAdmin extends AbstractAdmin
             ->add('lastname')
             ->add('email')
             ->add('user')
-            // TODO ->add('referencingEntities', null, [], Select2EntityType::class)
+            ->add('referencingEntities', null, [], EntityReferenceSelectType::class, [
+                'allow_edit' => true,
+                'width' => '100%'
+            ])
             ->add('has_reference', HasReferenceFilter::class)
         ;
     }
