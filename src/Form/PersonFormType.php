@@ -16,24 +16,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PersonFormType extends AbstractType
 {
-    /**
-     * @var PersonValidationGroupResolver
-     */
-    private $groupResolver;
-
-    /**
-     * PersonFormType constructor.
-     * @param PersonValidationGroupResolver $groupResolver
-     */
-    public function __construct(PersonValidationGroupResolver $groupResolver)
-    {
-        $this->groupResolver = $groupResolver;
-    }
-
     /**
      * @inheritDoc
      */
@@ -130,7 +117,17 @@ class PersonFormType extends AbstractType
             'country' => null,
             'enabled_fields' => ['postalCode', 'thoroughfare', 'phone', 'email'],
             'required_fields' => ['postalCode', 'thoroughfare', 'phone', 'email'],
-            'validation_groups' => $this->groupResolver,
+            'validation_groups' => function (FormInterface $form) {
+                $groups = [];
+
+                if ($form->getConfig()->hasOption('required_fields') && is_array($form->getConfig()->getOption('required_fields'))) {
+                    $groups = $form->getConfig()->getOption('required_fields');
+                }
+
+                $groups[] = 'Default';
+
+                return $groups;
+            },
         ));
     }
 }
