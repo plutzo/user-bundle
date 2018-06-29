@@ -60,7 +60,8 @@ class PersonFormType extends AbstractType
                     'remote_params' => ['country' => $options['country']],
                     'attr' => [
                         'data-theme' => 'bootstrap'
-                    ]
+                    ],
+                    'width' => '100%'
                 ]);
             }
         }
