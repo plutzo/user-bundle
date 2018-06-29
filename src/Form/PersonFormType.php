@@ -10,7 +10,6 @@ namespace Marlinc\UserBundle\Form;
 
 use Marlinc\PostalCodeBundle\Form\Type\PostalCodeSelectType;
 use Marlinc\UserBundle\Entity\Person;
-use Marlinc\UserBundle\Validator\PersonValidationGroupResolver;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
