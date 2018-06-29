@@ -32,5 +32,9 @@
             <argument>Marlinc\UserBundle\Entity\Person</argument>
             <argument>MarlincAdminBundle:MarlincAdmin</argument>
         </service>
+        <service id="Marlinc\UserBundle\Validator\PersonValidationGroupResolver" />
+        <service id="Marlinc\UserBundle\Form\PersonFormType">
+            <argument type="service" id="Marlinc\UserBundle\Validator\PersonValidationGroupResolver" />
+        </service>
     </services>
 </container>
