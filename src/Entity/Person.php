@@ -137,6 +137,7 @@ class Person extends EntityReference
      * @var bool
      *
      * @ORM\Column(name="newsletter", type="boolean")
+     * @Assert\NotNull(groups={"newsletter"})
      */
     private $newsletter = false;
 

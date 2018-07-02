@@ -95,7 +95,9 @@ class PersonFormType extends AbstractType
         }
 
         if (in_array('newsletter', $options['enabled_fields'])) {
-            $builder->add('newsletter');
+            $builder->add('newsletter', null, [
+                'required' => in_array('newsletter', $options['required_fields']),
+            ]);
         }
 
         if (in_array('birthday', $options['enabled_fields'])) {
