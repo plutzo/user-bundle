@@ -50,7 +50,8 @@ class PersonFormType extends AbstractType
                     'required' => in_array('postalCode', $options['required_fields']),
                     'attr' => [
                         'data-theme' => 'bootstrap'
-                    ]
+                    ],
+                    'width' => '100%'
                 ]);
             } else {
                 $builder->add('postalCode', PostalCodeSelectType::class, [
