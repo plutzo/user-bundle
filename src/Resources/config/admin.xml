@@ -16,7 +16,7 @@
                 <argument type="service" id="fos_user.user_manager"/>
             </call>
             <call method="setTranslationDomain">
-                <argument>%marlinc.user.admin.user.translation_domain%</argument>
+                <argument>%marlinc.user.admin.translation_domain%</argument>
             </call>
         </service>
         <service id="marlinc.user.admin.group" class="Marlinc\UserBundle\Admin\GroupAdmin" public="true">
@@ -25,7 +25,7 @@
             <argument>Marlinc\UserBundle\Entity\Group</argument>
             <argument>MarlincAdminBundle:MarlincAdmin</argument>
             <call method="setTranslationDomain">
-                <argument>%marlinc.user.admin.group.translation_domain%</argument>
+                <argument>%marlinc.user.admin.translation_domain%</argument>
             </call>
         </service>
         <service id="marlinc.user.admin.person" class="Marlinc\UserBundle\Admin\PersonAdmin">
