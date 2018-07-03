@@ -48,8 +48,8 @@ class MarlincUserExtension extends Extension
             $loader->load('google_authenticator.xml');
         }
 
-        $container->setParameter('sonata.user.default_avatar', $config['profile']['default_avatar']);
-        $container->setParameter('sonata.user.impersonating', $config['impersonating']);
+        $container->setParameter('marlinc.user.default_avatar', $config['profile']['default_avatar']);
+        $container->setParameter('marlinc.user.impersonating', $config['impersonating']);
 
         $this->configureGoogleAuthenticator($config, $container);
     }
