@@ -42,7 +42,7 @@ class UserAdmin extends AbstractAdmin
 
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
             $listMapper
-                ->add('impersonating', 'string', ['template' => '@MarlincUserBundle/Admin/Field/impersonating.html.twig']);
+                ->add('impersonating', 'string', ['template' => '@MarlincUser/Admin/Field/impersonating.html.twig']);
         }
     }
 
