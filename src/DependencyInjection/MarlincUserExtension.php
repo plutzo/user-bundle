@@ -25,6 +25,14 @@ class MarlincUserExtension extends Extension
             // add custom form widgets
             $container->prependExtensionConfig('twig', ['form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']]);
         }
+
+        if ($container->hasExtension('sonata_admin')) {
+            $container->prependExtensionConfig('sonata_admin', [
+                'templates' => [
+                    'user_block' => '@MarlincUser/Admin/Core/user_block.html.twig',
+                ],
+            ]);
+        }
     }
 
     /**
