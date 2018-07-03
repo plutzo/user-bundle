@@ -619,9 +619,9 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTwoStepVerificationCode(): string
+    public function getTwoStepVerificationCode(): ?string
     {
         return $this->twoStepVerificationCode;
     }
@@ -637,9 +637,9 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLocale(): string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
@@ -705,7 +705,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * @inheritDoc
      */
-    public function getTimezone(): string
+    public function getTimezone(): ?string
     {
         return $this->timezone;
     }

@@ -53,9 +53,9 @@ interface UserInterface extends BaseUserInterface
     /**
      * Returns the two-step verification code.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTwoStepVerificationCode(): string;
+    public function getTwoStepVerificationCode(): ?string;
 
     /**
      * @param Person $person
@@ -77,9 +77,9 @@ interface UserInterface extends BaseUserInterface
     public function setLocale($locale): UserInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLocale(): string;
+    public function getLocale(): ?string;
 
     /**
      * @param string $timezone
@@ -89,9 +89,9 @@ interface UserInterface extends BaseUserInterface
     public function setTimezone($timezone): UserInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTimezone(): string;
+    public function getTimezone(): ?string;
 
     /**
      * Sets the user groups.
