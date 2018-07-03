@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Form\Transformer;
 
-use Marlinc\UserBundle\Security\EditableRolesBuilder;
+use Marlinc\UserBundle\Security\RolesBuilder\EditableRolesBuilder;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class RestoreRolesTransformer implements DataTransformerInterface

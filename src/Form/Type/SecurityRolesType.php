@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Marlinc\UserBundle\Form\Type;
 
 use Marlinc\UserBundle\Form\Transformer\RestoreRolesTransformer;
-use Marlinc\UserBundle\Security\EditableRolesBuilder;
+use Marlinc\UserBundle\Security\RolesBuilder\EditableRolesBuilder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -84,7 +83,6 @@ class SecurityRolesType extends AbstractType
         $resolver->setDefaults([
             // make expanded default value
             'expanded' => true,
-
             'choices' => function (Options $options, $parentChoices) {
                 if (!empty($parentChoices)) {
                     return [];
@@ -93,7 +91,6 @@ class SecurityRolesType extends AbstractType
 
                 return array_flip($roles);
             },
-
             'read_only_choices' => function (Options $options) {
                 if (!empty($options['choices'])) {
                     return [];
@@ -101,7 +98,6 @@ class SecurityRolesType extends AbstractType
 
                 return $this->rolesBuilder->getRolesReadOnly($options['choice_translation_domain']);
             },
-
             'choice_translation_domain' => function (Options $options, $value) {
                 // if choice_translation_domain is true, then it's the same as translation_domain
                 if (true === $value) {
@@ -126,11 +122,6 @@ class SecurityRolesType extends AbstractType
 
             'data_class' => null,
         ]);
-
-        // Symfony 2.8 BC
-        if (method_exists(FormTypeInterface::class, 'setDefaultOptions')) {
-            $resolver->setDefault('choices_as_values', true);
-        }
     }
 
     /**
@@ -146,14 +137,6 @@ class SecurityRolesType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'sonata_security_roles';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
+        return 'marlinc_security_roles';
     }
 }

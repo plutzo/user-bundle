@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Marlinc\UserBundle\Security;
+namespace Marlinc\UserBundle\Security\RolesBuilder;
 
 use Sonata\AdminBundle\Admin\Pool;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

@@ -1,4 +1,4 @@
-{% block sonata_security_roles_widget %}
+{% block marlinc_security_roles_widget %}
 {% spaceless %}
     <div class="editable">
         <h4>{{ 'field.label_roles_editable'|trans({}, "MarlincUserBundle") }}</h4>
@@ -15,13 +15,13 @@
     </div>
     {% endif %}
 {% endspaceless %}
-{% endblock sonata_security_roles_widget %}
+{% endblock marlinc_security_roles_widget %}
 
-{% block sonata_roles_matrix_widget %}
+{% block marlinc_roles_matrix_widget %}
 {% spaceless %}
     {{ renderMatrix(form)|raw }}
     <ul class="list-unstyled">
         {{ renderRolesList(form)|raw }}
     </ul>
 {% endspaceless %}
-{% endblock sonata_roles_matrix_widget %}
+{% endblock marlinc_roles_matrix_widget %}
