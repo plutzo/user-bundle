@@ -70,6 +70,7 @@
         <service id="marlinc.user.twig.global" class="Marlinc\UserBundle\Twig\GlobalVariables" public="false">
             <argument>%marlinc.user.impersonating%</argument>
             <argument>%marlinc.user.default_avatar%</argument>
+            <argument type="service" id="marlinc.user.admin.user"/>
         </service>
     </services>
 </container>

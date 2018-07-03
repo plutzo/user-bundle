@@ -25,15 +25,22 @@ class GlobalVariables
     protected $avatar;
 
     /**
+     * @var AdminInterface
+     */
+    private $userAdmin;
+
+    /**
      * GlobalVariables constructor.
      *
      * @param array $impersonating
      * @param string $avatar
+     * @param AdminInterface $userAdmin
      */
-    public function __construct(array $impersonating, string $avatar)
+    public function __construct(array $impersonating, string $avatar, AdminInterface $userAdmin)
     {
         $this->impersonating = $impersonating;
         $this->avatar = $avatar;
+        $this->userAdmin = $userAdmin;
     }
 
     /**
@@ -50,5 +57,13 @@ class GlobalVariables
     public function getDefaultAvatar()
     {
         return $this->avatar;
+    }
+
+    /**
+     * @return AdminInterface
+     */
+    public function getUserAdmin()
+    {
+        return $this->userAdmin;
     }
 }
