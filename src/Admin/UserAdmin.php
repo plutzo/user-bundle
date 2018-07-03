@@ -2,22 +2,25 @@
 
 namespace Marlinc\UserBundle\Admin;
 
+use Marlinc\AdminBundle\Admin\AbstractAdmin;
 use Marlinc\EntityBundle\Admin\Filter\HasReferenceFilter;
 use Marlinc\EntityBundle\Form\Type\EntityReferenceSelectType;
-use Marlinc\UserBundle\Doctrine\GenderEnumType;
-use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
+use Marlinc\UserBundle\Form\Type\SecurityRolesType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\UserBundle\Admin\Model\UserAdmin as BaseAdmin;
-use Sonata\UserBundle\Form\Type\SecurityRolesType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Sonata\AdminBundle\Form\Type\AdminType;
+use Sonata\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
-class UserAdmin extends BaseAdmin
+class UserAdmin extends AbstractAdmin
 {
+    /**
+     * @var UserManagerInterface
+     */
+    protected $userManager;
+
     /**
      * {@inheritdoc}
      */
@@ -39,7 +42,7 @@ class UserAdmin extends BaseAdmin
 
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
             $listMapper
-                ->add('impersonating', 'string', ['template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig']);
+                ->add('impersonating', 'string', ['template' => '@MarlincUserBundle/Admin/Field/impersonating.html.twig']);
         }
     }
 
@@ -50,6 +53,8 @@ class UserAdmin extends BaseAdmin
     {
         $filterMapper
             ->add('email')
+            ->add('person.firstname')
+            ->add('person.lastname')
             ->add('person.newsletter')
             ->add('groups')
             ->add('referencingEntities', null, [], EntityReferenceSelectType::class, [
@@ -65,72 +70,102 @@ class UserAdmin extends BaseAdmin
      */
     protected function configureFormFields(FormMapper $formMapper): void
     {
-        // define group zoning
         $formMapper
             ->tab('User')
-            ->with('User data', ['class' => 'col-md-6'])->end()
-            ->with('Personal info', ['class' => 'col-md-6'])->end()
+                ->with('User data', ['class' => 'col-md-6'])
+                    ->add('email')
+                    ->add('plainPassword', RepeatedType::class, [
+                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId())),
+                        'first_options' => ['label' => 'Password'],
+                        'second_options' => ['label' => 'Repeat Password'],
+                    ])
+                    ->add('locale', LanguageType::class)
+                ->end()
+                ->with('Personal info', ['class' => 'col-md-6'])
+                    ->add('person', AdminType::class, [
+                        'delete' => false,
+                        'by_reference' => true,
+                    ])
+                ->end()
             ->end()
             ->tab('Security')
-            ->with('Status', ['class' => 'col-md-4'])->end()
-            ->with('Groups', ['class' => 'col-md-4'])->end()
-            ->with('Keys', ['class' => 'col-md-4'])->end()
-            ->with('Roles', ['class' => 'col-md-12'])->end()
+                ->with('Status', ['class' => 'col-md-4'])
+                    ->add('enabled', null, ['required' => false])
+                ->end()
+                ->with('Groups', ['class' => 'col-md-4'])
+                    ->add('groups', 'sonata_type_model', [
+                        'required' => false,
+                        'expanded' => true,
+                        'multiple' => true,
+                    ])
+                ->end()
+                ->with('Roles', ['class' => 'col-md-12'])
+                    ->add('roles', SecurityRolesType::class, [
+                        'label' => 'form.label_roles',
+                        'expanded' => true,
+                        'multiple' => true,
+                        'required' => false,
+                    ])
+                ->end()
+                ->with('Keys', ['class' => 'col-md-4'])
+                    ->add('twoStepVerificationCode', null, ['required' => false])
+                ->end()
             ->end();
+    }
 
-        $formMapper
-            ->tab('User')
-            ->with('User data')
-            ->add('email')
-            ->add('plainPassword', RepeatedType::class, [
-                'required' => (!$this->getSubject() || is_null($this->getSubject()->getId())),
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-            ])
-            ->end()
-            ->with('Personal info')
-            // TODO: Embed PersonAdmin
-            ->add('locale', LanguageType::class)
-            ->add('person.gender', ChoiceType::class, [
-                'choices' => GenderEnumType::getChoices(),
-                'required' => true
-            ])
-            ->add('person.firstname')
-            ->add('person.lastname')
-            ->add('person.phone', PhoneNumberType::class, [
-                'default_region' => 'DE',
-                'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
-                'country_choices' => ['DE', 'AT', 'CH'],
-                'required' => false
-            ])
-            ->add('dateOfBirth', DateType::class, [
-                'years' => range(date('Y') - 90, date('Y') - 15),
-                'required' => false
-            ])
-            ->end()
-            ->end()
-            ->tab('Security')
-            ->with('Status')
-            ->add('enabled', null, ['required' => false])
-            ->end()
-            ->with('Groups')
-            ->add('groups', 'sonata_type_model', [
-                'required' => false,
-                'expanded' => true,
-                'multiple' => true,
-            ])
-            ->end()
-            ->with('Roles')
-            ->add('roles', SecurityRolesType::class, [
-                'label' => 'form.label_roles',
-                'expanded' => true,
-                'multiple' => true,
-                'required' => false,
-            ])
-            ->end()
-            ->with('Keys')
-            ->add('twoStepVerificationCode', null, ['required' => false])
-            ->end()
-            ->end();
+    /**
+     * Override form builder to set specific validation groups based on operation.
+     *
+     * {@inheritdoc}
+     */
+    public function getFormBuilder()
+    {
+        $this->formOptions['data_class'] = $this->getClass();
+
+        $options = $this->formOptions;
+        $options['validation_groups'] = (!$this->getSubject() || null === $this->getSubject()->getId()) ? 'Registration' : 'Profile';
+
+        $formBuilder = $this->getFormContractor()->getFormBuilder($this->getUniqid(), $options);
+
+        $this->defineFormBuilder($formBuilder);
+
+        return $formBuilder;
+    }
+
+    /**
+     * Avoid security fields to be exported.
+     *
+     * {@inheritdoc}
+     */
+    public function getExportFields()
+    {
+        return array_filter(parent::getExportFields(), function ($v) {
+            return !in_array($v, ['plainPassword', 'password', 'salt']);
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preUpdate($user): void
+    {
+        $this->getUserManager()->updateCanonicalFields($user);
+        $this->getUserManager()->updatePassword($user);
+    }
+
+    /**
+     * @param UserManagerInterface $userManager
+     */
+    public function setUserManager(UserManagerInterface $userManager): void
+    {
+        $this->userManager = $userManager;
+    }
+
+    /**
+     * @return UserManagerInterface
+     */
+    public function getUserManager()
+    {
+        return $this->userManager;
     }
 }

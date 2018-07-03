@@ -6,7 +6,7 @@
  * Time: 17:28
  */
 
-namespace Marlinc\UserBundle\Entity;
+namespace Marlinc\UserBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
