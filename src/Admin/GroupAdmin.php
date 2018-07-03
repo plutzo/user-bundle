@@ -10,10 +10,10 @@ namespace Marlinc\UserBundle\Admin;
 
 use Marlinc\AdminBundle\Admin\AbstractAdmin;
 use Marlinc\EntityBundle\Form\Type\MachineNameType;
+use Marlinc\UserBundle\Form\Type\RolesMatrixType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\UserBundle\Form\Type\SecurityRolesType;
 
 class GroupAdmin extends AbstractAdmin
 {
@@ -73,7 +73,7 @@ class GroupAdmin extends AbstractAdmin
             ->end()
             ->tab('Security')
                 ->with('Roles', ['class' => 'col-md-12'])
-                    ->add('roles', SecurityRolesType::class, [
+                    ->add('roles', RolesMatrixType::class, [
                         'expanded' => true,
                         'multiple' => true,
                         'required' => false,

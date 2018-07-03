@@ -5,7 +5,7 @@ namespace Marlinc\UserBundle\Admin;
 use Marlinc\AdminBundle\Admin\AbstractAdmin;
 use Marlinc\EntityBundle\Admin\Filter\HasReferenceFilter;
 use Marlinc\EntityBundle\Form\Type\EntityReferenceSelectType;
-use Marlinc\UserBundle\Form\Type\SecurityRolesType;
+use Marlinc\UserBundle\Form\Type\RolesMatrixType;
 use Marlinc\UserBundle\Model\UserManagerInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -100,7 +100,7 @@ class UserAdmin extends AbstractAdmin
                     ])
                 ->end()
                 ->with('Roles', ['class' => 'col-md-12'])
-                    ->add('roles', SecurityRolesType::class, [
+                    ->add('roles', RolesMatrixType::class, [
                         'label' => 'form.label_roles',
                         'expanded' => true,
                         'multiple' => true,
