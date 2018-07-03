@@ -3,7 +3,6 @@
 namespace Marlinc\UserBundle\Entity;
 
 use Marlinc\EntityBundle\Entity\EntityReference;
-use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Marlinc\ClientBundle\Entity\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\GroupableInterface;
 use FOS\UserBundle\Model\GroupInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Sonata\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -51,6 +50,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
 
     /**
      * Encrypted password. Must be persisted.
+     *
      * @var string
      *
      * @ORM\Column(type="string", length=190)
@@ -75,6 +75,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
 
     /**
      * If not null, a two step verification with GoogleAuthenticator app will be used on each login.
+     *
      * @var string
      *
      * @ORM\Column(type="string", length=190, nullable=true)
@@ -82,7 +83,8 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     protected $twoStepVerificationCode;
 
     /**
-     * Random string sent to the user email address in order to verify it.
+     * Random string sent to the user email address in order to verify the user account registration.
+     *
      * @var string
      *
      * @ORM\Column(type="string", length=190, nullable=true, unique=true)
@@ -110,7 +112,6 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * @var string
      *
-     * TODO: Migrate/remove. Keep getter/setter for symfony/localization compatibility.
      * @ORM\Column(type="string", length=8, nullable=true)
      * @Assert\Locale()
      * @Gedmo\Versioned
@@ -118,13 +119,12 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     protected $locale;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * TODO: Migrate/remove
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="string", length=64, nullable=true)
      * @Gedmo\Versioned
      */
-    protected $dateOfBirth;
+    protected $timezone;
 
     /**
      * @var Person
@@ -142,26 +142,12 @@ class User extends EntityReference implements UserInterface, GroupableInterface
      */
     protected $client;
 
-    /**
-     * @var \DateTime
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
-    protected $updatedAt;
-
     public function __construct()
     {
         parent::__construct();
 
         $this->enabled = false;
-        $this->roles = array();
+        $this->roles = [];
         $this->person = new Person();
     }
 
@@ -587,7 +573,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
      */
     public function getGroupNames()
     {
-        $names = array();
+        $names = [];
         foreach ($this->getGroups() as $group) {
             $names[] = $group->getName();
         }
@@ -627,16 +613,6 @@ class User extends EntityReference implements UserInterface, GroupableInterface
         return $this;
     }
 
-    /**
-     * Returns the gender list.
-     *
-     * @return array
-     */
-    public static function getGenderList()
-    {
-        return GenderEnumType::getChoices();
-    }
-
     public function getFullName()
     {
         return $this->person->getFullName();
@@ -645,7 +621,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * @return string
      */
-    public function getTwoStepVerificationCode()
+    public function getTwoStepVerificationCode(): string
     {
         return $this->twoStepVerificationCode;
     }
@@ -654,7 +630,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
      * @param string $twoStepVerificationCode
      * @return User
      */
-    public function setTwoStepVerificationCode($twoStepVerificationCode)
+    public function setTwoStepVerificationCode($twoStepVerificationCode): UserInterface
     {
         $this->twoStepVerificationCode = $twoStepVerificationCode;
         return $this;
@@ -663,7 +639,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -672,34 +648,17 @@ class User extends EntityReference implements UserInterface, GroupableInterface
      * @param string $locale
      * @return User
      */
-    public function setLocale($locale)
+    public function setLocale($locale): UserInterface
     {
         $this->locale = $locale;
-        return $this;
-    }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateOfBirth()
-    {
-        return $this->dateOfBirth;
-    }
-
-    /**
-     * @param \DateTime $dateOfBirth
-     * @return User
-     */
-    public function setDateOfBirth($dateOfBirth)
-    {
-        $this->dateOfBirth = $dateOfBirth;
         return $this;
     }
 
     /**
      * @return Person
      */
-    public function getPerson()
+    public function getPerson(): Person
     {
         return $this->person;
     }
@@ -708,7 +667,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
      * @param Person $person
      * @return User
      */
-    public function setPerson(Person $person): User
+    public function setPerson(Person $person): UserInterface
     {
         $this->person = $person;
 
@@ -722,55 +681,9 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     }
 
     /**
-     * Sets createdAt.
-     *
-     * @param  \DateTime $createdAt
-     * @return $this
-     */
-    public function setCreatedAt(\DateTime $createdAt = null)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Returns createdAt.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Sets updatedAt.
-     *
-     * @param  \DateTime $updatedAt
-     * @return $this
-     */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Returns updatedAt.
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
      * @inheritDoc
      */
-    public function setGroups($groups)
+    public function setGroups($groups): UserInterface
     {
         foreach ($groups as $group) {
             $this->addGroup($group);
@@ -782,290 +695,18 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * @inheritDoc
      */
-    public function setBiography($biography)
+    public function setTimezone($timezone): UserInterface
     {
-        // TODO: Implement setBiography() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBiography()
-    {
-        // TODO: Implement getBiography() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setFacebookData($facebookData)
-    {
-        // TODO: Implement setFacebookData() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFacebookData()
-    {
-        // TODO: Implement getFacebookData() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setFacebookName($facebookName)
-    {
-        // TODO: Implement setFacebookName() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFacebookName()
-    {
-        // TODO: Implement getFacebookName() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setFacebookUid($facebookUid)
-    {
-        // TODO: Implement setFacebookUid() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFacebookUid()
-    {
-        // TODO: Implement getFacebookUid() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setFirstname($firstname)
-    {
-        // TODO: Implement setFirstname() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFirstname()
-    {
-        // TODO: Implement getFirstname() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setGender($gender)
-    {
-        // TODO: Implement setGender() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getGender()
-    {
-        // TODO: Implement getGender() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setGplusData($gplusData)
-    {
-        // TODO: Implement setGplusData() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getGplusData()
-    {
-        // TODO: Implement getGplusData() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setGplusName($gplusName)
-    {
-        // TODO: Implement setGplusName() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getGplusName()
-    {
-        // TODO: Implement getGplusName() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setGplusUid($gplusUid)
-    {
-        // TODO: Implement setGplusUid() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getGplusUid()
-    {
-        // TODO: Implement getGplusUid() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setLastname($lastname)
-    {
-        // TODO: Implement setLastname() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getLastname()
-    {
-        // TODO: Implement getLastname() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setPhone($phone)
-    {
-        // TODO: Implement setPhone() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPhone()
-    {
-        // TODO: Implement getPhone() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setTimezone($timezone)
-    {
-        // TODO: Implement setTimezone() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTimezone()
-    {
-        // TODO: Implement getTimezone() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setTwitterData($twitterData)
-    {
-        // TODO: Implement setTwitterData() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTwitterData()
-    {
-        // TODO: Implement getTwitterData() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setTwitterName($twitterName)
-    {
-        // TODO: Implement setTwitterName() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTwitterName()
-    {
-        // TODO: Implement getTwitterName() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setTwitterUid($twitterUid)
-    {
-        // TODO: Implement setTwitterUid() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTwitterUid()
-    {
-        // TODO: Implement getTwitterUid() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setWebsite($website)
-    {
-        // TODO: Implement setWebsite() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getWebsite()
-    {
-        // TODO: Implement getWebsite() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setToken($token)
-    {
-        // TODO: Implement setToken() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getToken()
-    {
-        // TODO: Implement getToken() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRealRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setRealRoles(array $roles)
-    {
-        $this->setRoles($roles);
+        $this->timezone = $timezone;
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTimezone(): string
+    {
+        return $this->timezone;
     }
 }

@@ -13,7 +13,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Util\CanonicalFieldsUpdater;
 use FOS\UserBundle\Util\PasswordUpdaterInterface;
-use Sonata\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Model\UserManagerInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
 
 class UserManager implements UserManagerInterface, ManagerInterface
