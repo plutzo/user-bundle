@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class GlobalVariables
 {
     /**
-     * @var string
+     * @var array
      */
     protected $impersonating;
 
@@ -27,17 +27,17 @@ class GlobalVariables
     /**
      * GlobalVariables constructor.
      *
-     * @param string $impersonating
+     * @param array $impersonating
      * @param string $avatar
      */
-    public function __construct(string $impersonating, string $avatar)
+    public function __construct(array $impersonating, string $avatar)
     {
         $this->impersonating = $impersonating;
         $this->avatar = $avatar;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getImpersonating()
     {
