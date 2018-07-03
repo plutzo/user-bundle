@@ -1,0 +1,27 @@
+{% block sonata_security_roles_widget %}
+{% spaceless %}
+    <div class="editable">
+        <h4>{{ 'field.label_roles_editable'|trans({}, "MarlincUserBundle") }}</h4>
+        {{ block('choice_widget') }}
+    </div>
+    {% if read_only_choices|length > 0 %}
+    <div class="readonly">
+        <h4>{{ 'field.label_roles_readonly'|trans({}, "MarlincUserBundle") }}</h4>
+        <ul>
+        {% for choice in read_only_choices %}
+            <li>{{ choice }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock sonata_security_roles_widget %}
+
+{% block sonata_roles_matrix_widget %}
+{% spaceless %}
+    {{ renderMatrix(form)|raw }}
+    <ul class="list-unstyled">
+        {{ renderRolesList(form)|raw }}
+    </ul>
+{% endspaceless %}
+{% endblock sonata_roles_matrix_widget %}

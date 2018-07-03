@@ -254,6 +254,10 @@
                 <source>field.label_roles_editable</source>
                 <target>Roles</target>
             </trans-unit>
+            <trans-unit id="field.label_roles_readonly">
+                <source>field.label_roles_readonly</source>
+                <target>Roles</target>
+            </trans-unit>
             <trans-unit id="form.label_date_of_birth">
                 <source>form.label_date_of_birth</source>
                 <target>Date of birth</target>

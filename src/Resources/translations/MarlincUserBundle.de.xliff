@@ -198,6 +198,10 @@
                 <source>field.label_roles_editable</source>
                 <target>Rollen</target>
             </trans-unit>
+            <trans-unit id="field.label_roles_readonly">
+                <source>field.label_roles_readonly</source>
+                <target>Rollen</target>
+            </trans-unit>
             <trans-unit id="filter.label_username">
                 <source>filter.label_username</source>
                 <target>Benutzername</target>
