@@ -6,11 +6,11 @@ use Marlinc\AdminBundle\Admin\AbstractAdmin;
 use Marlinc\EntityBundle\Admin\Filter\HasReferenceFilter;
 use Marlinc\EntityBundle\Form\Type\EntityReferenceSelectType;
 use Marlinc\UserBundle\Form\Type\SecurityRolesType;
+use Marlinc\UserBundle\Model\UserManagerInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
-use Sonata\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
