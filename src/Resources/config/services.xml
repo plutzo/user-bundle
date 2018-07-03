@@ -6,7 +6,7 @@
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="request_stack"/>
         </service>
-        <service id="marlinc.user.user_manager" class="Marlinc\UserBundle\Manager\UserManager">
+        <service id="marlinc.user.user_manager" class="Marlinc\UserBundle\Manager\UserManager" public="true">
             <argument type="service" id="fos_user.util.password_updater"/>
             <argument type="service" id="fos_user.util.canonical_fields_updater"/>
             <argument type="service" id="fos_user.object_manager"/>
@@ -38,6 +38,30 @@
         <service id="marlinc.user.form.type.security_roles" class="Marlinc\UserBundle\Form\Type\SecurityRolesType" public="true">
             <tag name="form.type" alias="marlinc_security_roles"/>
             <argument type="service" id="marlinc.user.editable_role_builder"/>
+        </service>
+        <service id="marlinc.user.matrix_roles_builder" class="Marlinc\UserBundle\Security\RolesBuilder\MatrixRolesBuilder" public="false">
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="marlinc.user.admin_roles_builder"/>
+            <argument type="service" id="marlinc.user.security_roles_builder"/>
+        </service>
+        <service id="marlinc.user.admin_roles_builder" class="Marlinc\UserBundle\Security\RolesBuilder\AdminRolesBuilder" public="false">
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="sonata.admin.pool"/>
+            <argument type="service" id="translator"/>
+        </service>
+        <service id="marlinc.user.security_roles_builder" class="Marlinc\UserBundle\Security\RolesBuilder\SecurityRolesBuilder" public="false">
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="sonata.admin.pool"/>
+            <argument type="service" id="translator"/>
+            <argument>%security.role_hierarchy.roles%</argument>
+        </service>
+        <service id="marlinc.user.roles_matrix_extension" class="Marlinc\UserBundle\Twig\RolesMatrixExtension" public="false">
+            <argument type="service" id="marlinc.user.matrix_roles_builder"/>
+            <tag name="twig.extension"/>
+        </service>
+        <service id="marlinc.user.twig.global" class="Marlinc\UserBundle\Twig\GlobalVariables" public="false">
+            <argument>%marlinc.user.impersonating%</argument>
+            <argument>%marlinc.user.default_avatar%</argument>
         </service>
     </services>
 </container>
