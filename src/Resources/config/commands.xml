@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="marlinc.user.command.activate_user" class="Marlinc\UserBundle\Command\ActivateUserCommand">
+            <argument type="service" id="marlinc.user.util.user_manipulator" />
+            <tag name="console.command" command="marlinc:user:activate" />
+        </service>
+        <service id="marlinc.user.command.change_password" class="Marlinc\UserBundle\Command\ChangePasswordCommand">
+            <argument type="service" id="marlinc.user.util.user_manipulator" />
+            <tag name="console.command" command="marlinc:user:change-password" />
+        </service>
+        <service id="marlinc.user.command.create_user" class="Marlinc\UserBundle\Command\CreateUserCommand">
+            <argument type="service" id="marlinc.user.util.user_manipulator" />
+            <tag name="console.command" command="marlinc:user:create" />
+        </service>
+        <service id="marlinc.user.command.deactivate_user" class="Marlinc\UserBundle\Command\DeactivateUserCommand">
+            <argument type="service" id="marlinc.user.util.user_manipulator" />
+            <tag name="console.command" command="marlinc:user:deactivate" />
+        </service>
+    </services>
+</container>

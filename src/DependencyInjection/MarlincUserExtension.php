@@ -52,6 +52,7 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
         );
         $loader->load('services.xml');
         $loader->load('util.xml');
+        $loader->load('commands.xml');
         $loader->load('admin.xml');
 
         if (class_exists('Google\Authenticator\GoogleAuthenticator')) {
