@@ -3,12 +3,12 @@
 namespace Marlinc\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\GroupInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Marlinc\EntityBundle\MachineName\MachineNameInterface;
 use Marlinc\EntityBundle\MachineName\MachineNameTrait;
+use Marlinc\UserBundle\Model\GroupInterface;
 
 /**
  * Class Group
@@ -74,7 +74,59 @@ class Group implements GroupInterface, MachineNameInterface
     /**
      * {@inheritdoc}
      */
-    public function addRole($role)
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setName($name): GroupInterface
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRoles(array $roles): GroupInterface
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasRole($role): bool
+    {
+        return in_array(strtoupper($role), $this->roles, true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addRole($role): GroupInterface
     {
         if (!$this->hasRole($role)) {
             $this->roles[] = strtoupper($role);
@@ -86,64 +138,12 @@ class Group implements GroupInterface, MachineNameInterface
     /**
      * {@inheritdoc}
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasRole($role)
-    {
-        return in_array(strtoupper($role), $this->roles, true);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeRole($role)
+    public function removeRole($role): GroupInterface
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setRoles(array $roles)
-    {
-        $this->roles = $roles;
 
         return $this;
     }

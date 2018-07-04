@@ -99,6 +99,9 @@ class UserAdmin extends AbstractAdmin
                         'multiple' => true,
                     ])
                 ->end()
+                ->with('Keys', ['class' => 'col-md-4'])
+                    ->add('twoStepVerificationCode', null, ['required' => false])
+                ->end()
                 ->with('Roles', ['class' => 'col-md-12'])
                     ->add('roles', RolesMatrixType::class, [
                         'label' => 'form.label_roles',
@@ -106,9 +109,6 @@ class UserAdmin extends AbstractAdmin
                         'multiple' => true,
                         'required' => false,
                     ])
-                ->end()
-                ->with('Keys', ['class' => 'col-md-4'])
-                    ->add('twoStepVerificationCode', null, ['required' => false])
                 ->end()
             ->end();
     }

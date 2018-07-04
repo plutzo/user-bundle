@@ -10,11 +10,13 @@ namespace Marlinc\UserBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
-use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Util\CanonicalFieldsUpdater;
 use FOS\UserBundle\Util\PasswordUpdaterInterface;
+use Marlinc\UserBundle\Model\UserInterface;
 use Marlinc\UserBundle\Model\UserManagerInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
+use Sonata\DatagridBundle\Pager\Doctrine\Pager;
+use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 
 class UserManager implements UserManagerInterface, ManagerInterface
 {
@@ -58,7 +60,7 @@ class UserManager implements UserManagerInterface, ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createUser()
+    public function createUser(): UserInterface
     {
         $class = $this->getClass();
         $user = new $class();
@@ -69,80 +71,54 @@ class UserManager implements UserManagerInterface, ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function findUserByEmail($email)
+    public function findUserByEmail(string $email): ?UserInterface
     {
-        return $this->findUserBy(array('email' => $this->canonicalFieldsUpdater->canonicalizeEmail($email)));
+        return $this->findUserBy(['email' => $this->canonicalFieldsUpdater->canonicalizeEmail($email)]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function findUserByUsername($username)
+    public function findUserByConfirmationToken(string $token): UserInterface
     {
-        return $this->findUserByEmail($username);
+        return $this->findUserBy(['confirmationToken' => $token]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function findUserByUsernameOrEmail($usernameOrEmail)
-    {
-        return $this->findUserByEmail($usernameOrEmail);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function findUserByConfirmationToken($token)
-    {
-        return $this->findUserBy(array('confirmationToken' => $token));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateCanonicalFields(UserInterface $user)
+    public function updateCanonicalFields(UserInterface $user): UserManagerInterface
     {
         $this->canonicalFieldsUpdater->updateCanonicalFields($user);
+
+        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function updatePassword(UserInterface $user)
+    public function updatePassword(UserInterface $user): UserManagerInterface
     {
         $this->passwordUpdater->hashPassword($user);
-    }
 
-    /**
-     * @return PasswordUpdaterInterface
-     */
-    protected function getPasswordUpdater()
-    {
-        return $this->passwordUpdater;
-    }
-
-    /**
-     * @return CanonicalFieldsUpdater
-     */
-    protected function getCanonicalFieldsUpdater()
-    {
-        return $this->canonicalFieldsUpdater;
+        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function deleteUser(UserInterface $user)
+    public function deleteUser(UserInterface $user): UserManagerInterface
     {
         $this->objectManager->remove($user);
         $this->objectManager->flush();
+
+        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
@@ -150,7 +126,7 @@ class UserManager implements UserManagerInterface, ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function findUserBy(array $criteria)
+    public function findUserBy(array $criteria): ?UserInterface
     {
         return $this->repository->findOneBy($criteria);
     }
@@ -158,7 +134,7 @@ class UserManager implements UserManagerInterface, ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function findUsers()
+    public function findUsers(): array
     {
         return $this->repository->findAll();
     }
@@ -166,15 +142,17 @@ class UserManager implements UserManagerInterface, ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function reloadUser(UserInterface $user)
+    public function reloadUser(UserInterface $user): UserManagerInterface
     {
         $this->objectManager->refresh($user);
+
+        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function updateUser(UserInterface $user, $andFlush = true)
+    public function updateUser(UserInterface $user, $andFlush = true): UserManagerInterface
     {
         $this->updateCanonicalFields($user);
         $this->updatePassword($user);
@@ -183,12 +161,14 @@ class UserManager implements UserManagerInterface, ManagerInterface
         if ($andFlush) {
             $this->objectManager->flush();
         }
+
+        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function findUsersBy(array $criteria = null, array $orderBy = null, $limit = null, $offset = null)
+    public function findUsersBy(array $criteria = null, array $orderBy = null, $limit = null, $offset = null): array
     {
         return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
     }

@@ -7,9 +7,9 @@ use Marlinc\ClientBundle\Entity\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\GroupableInterface;
-use FOS\UserBundle\Model\GroupInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Marlinc\UserBundle\Model\GroupableInterface;
+use Marlinc\UserBundle\Model\GroupInterface;
 use Marlinc\UserBundle\Model\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -211,7 +211,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function addRole($role)
+    public function addRole(string $role): UserInterface
     {
         $role = strtoupper($role);
         if ($role === static::ROLE_DEFAULT) {
@@ -228,34 +228,6 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->password,
-            $this->enabled,
-            $this->id,
-            $this->email,
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-
-        list(
-            $this->password,
-            $this->enabled,
-            $this->id,
-            $this->email
-            ) = $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function eraseCredentials()
     {
         $this->plainPassword = null;
@@ -266,15 +238,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
      */
     public function getUsername()
     {
-        return $this->email;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUsernameCanonical()
-    {
-        return $this->email;
+        return $this->getEmail();
     }
 
     /**
@@ -288,15 +252,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEmailCanonical()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -312,7 +268,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function getPlainPassword()
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
@@ -330,7 +286,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfirmationToken()
+    public function getConfirmationToken(): string
     {
         return $this->confirmationToken;
     }
@@ -355,36 +311,12 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function hasRole($role)
+    public function hasRole(string $role): bool
     {
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isAccountNonExpired()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isAccountNonLocked()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isCredentialsNonExpired()
-    {
-        return true;
-    }
-
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -392,15 +324,15 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function isSuperAdmin()
+    public function isSuperAdmin(): bool
     {
-        return $this->hasRole(static::ROLE_SUPER_ADMIN);
+        return $this->hasRole(UserInterface::ROLE_SUPER_ADMIN);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function removeRole($role)
+    public function removeRole(string $role): UserInterface
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -413,31 +345,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setUsername($username)
-    {
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUsernameCanonical($usernameCanonical)
-    {
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setSalt($salt)
-    {
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): UserInterface
     {
         $this->email = $email;
         if ($this->person instanceof Person) {
@@ -450,17 +358,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setEmailCanonical($emailCanonical)
-    {
-        $this->setEmail($emailCanonical);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setEnabled($boolean)
+    public function setEnabled($boolean): UserInterface
     {
         $this->enabled = (bool) $boolean;
 
@@ -470,7 +368,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setPassword($password)
+    public function setPassword(string $password): UserInterface
     {
         $this->password = $password;
 
@@ -480,7 +378,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setSuperAdmin($boolean)
+    public function setSuperAdmin($boolean): UserInterface
     {
         if (true === $boolean) {
             $this->addRole(static::ROLE_SUPER_ADMIN);
@@ -494,7 +392,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setPlainPassword($password)
+    public function setPlainPassword(string $password): UserInterface
     {
         $this->plainPassword = $password;
 
@@ -504,7 +402,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setLastLogin(\DateTime $time = null)
+    public function setLastLogin(\DateTime $time = null): UserInterface
     {
         $this->lastLogin = $time;
 
@@ -514,7 +412,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setConfirmationToken($confirmationToken)
+    public function setConfirmationToken($confirmationToken): UserInterface
     {
         $this->confirmationToken = $confirmationToken;
 
@@ -544,7 +442,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function isPasswordRequestNonExpired($ttl)
+    public function isPasswordRequestNonExpired(int $ttl): bool
     {
         return $this->getPasswordRequestedAt() instanceof \DateTime &&
             $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
@@ -553,7 +451,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): UserInterface
     {
         $this->roles = $roles;
 
@@ -563,7 +461,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function getGroups()
+    public function getGroups(): Collection
     {
         return $this->groups ?: $this->groups = new ArrayCollection();
     }
@@ -571,7 +469,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function getGroupNames()
+    public function getGroupNames(): array
     {
         $names = [];
         foreach ($this->getGroups() as $group) {
@@ -584,7 +482,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function hasGroup($name)
+    public function hasGroup($name): bool
     {
         return in_array($name, $this->getGroupNames());
     }
@@ -592,7 +490,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function addGroup(GroupInterface $group)
+    public function addGroup(GroupInterface $group): GroupableInterface
     {
         if (!$this->getGroups()->contains($group)) {
             $this->getGroups()->add($group);
@@ -604,7 +502,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function removeGroup(GroupInterface $group)
+    public function removeGroup(GroupInterface $group): GroupableInterface
     {
         if ($this->getGroups()->contains($group)) {
             $this->getGroups()->removeElement($group);
@@ -683,7 +581,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * @inheritDoc
      */
-    public function setGroups($groups): UserInterface
+    public function setGroups($groups): GroupableInterface
     {
         foreach ($groups as $group) {
             $this->addGroup($group);

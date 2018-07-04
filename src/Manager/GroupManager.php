@@ -4,20 +4,114 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Manager;
 
-use FOS\UserBundle\Doctrine\GroupManager as BaseGroupManager;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Marlinc\UserBundle\Model\GroupInterface;
+use Marlinc\UserBundle\Model\GroupManagerInterface;
 use Sonata\DatagridBundle\Pager\Doctrine\Pager;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
-use Sonata\UserBundle\Model\GroupManagerInterface;
 
 /**
  * @author Hugo Briand <briand@ekino.com>
  */
-class GroupManager extends BaseGroupManager implements GroupManagerInterface
+class GroupManager implements GroupManagerInterface
 {
+    /**
+     * @var ObjectManager
+     */
+    protected $objectManager;
+
+    /**
+     * @var string
+     */
+    protected $class;
+
+    /**
+     * @var ObjectRepository
+     */
+    protected $repository;
+
+    /**
+     * GroupManager constructor.
+     *
+     * @param ObjectManager $om
+     * @param string        $class
+     */
+    public function __construct(ObjectManager $om, $class)
+    {
+        $this->objectManager = $om;
+        $this->repository = $om->getRepository($class);
+
+        $metadata = $om->getClassMetadata($class);
+        $this->class = $metadata->getName();
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function findGroupsBy(array $criteria = null, array $orderBy = null, $limit = null, $offset = null)
+    public function getClass(): string
+    {
+        return $this->class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createGroup($name): GroupInterface
+    {
+        $class = $this->getClass();
+
+        return new $class($name);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateGroup(GroupInterface $group, $andFlush = true): GroupManagerInterface
+    {
+        $this->objectManager->persist($group);
+        if ($andFlush) {
+            $this->objectManager->flush();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function deleteGroup(GroupInterface $group): GroupManagerInterface
+    {
+        $this->objectManager->remove($group);
+        $this->objectManager->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findGroupBy(array $criteria): ?GroupInterface
+    {
+        return $this->repository->findOneBy($criteria);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findGroups(): array
+    {
+        return $this->repository->findAll();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findGroupByName($name): GroupInterface
+    {
+        return $this->findGroupBy(array('name' => $name));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findGroupsBy(array $criteria = null, array $orderBy = null, $limit = null, $offset = null): array
     {
         return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
     }

@@ -4,15 +4,71 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Model;
 
-use FOS\UserBundle\Model\GroupInterface;
-use FOS\UserBundle\Model\GroupManagerInterface as BaseInterface;
 use Sonata\CoreBundle\Model\PageableManagerInterface;
 
 /**
  * @author Hugo Briand <briand@ekino.com>
  */
-interface GroupManagerInterface extends BaseInterface, PageableManagerInterface
+interface GroupManagerInterface extends PageableManagerInterface
 {
+    /**
+     * Returns the group's fully qualified class name.
+     *
+     * @return string
+     */
+    public function getClass(): string;
+
+    /**
+     * Returns an empty group instance.
+     *
+     * @param string $name
+     *
+     * @return GroupInterface
+     */
+    public function createGroup($name): GroupInterface;
+
+    /**
+     * Updates a group.
+     *
+     * @param GroupInterface $group
+     * @return GroupManagerInterface
+     */
+    public function updateGroup(GroupInterface $group): GroupManagerInterface;
+
+    /**
+     * Deletes a group.
+     *
+     * @param GroupInterface $group
+     *
+     * @return GroupManagerInterface
+     */
+    public function deleteGroup(GroupInterface $group): GroupManagerInterface;
+
+    /**
+     * Finds one group by the given criteria.
+     *
+     * @param array $criteria
+     *
+     * @return GroupInterface
+     */
+    public function findGroupBy(array $criteria): ?GroupInterface;
+
+    /**
+     * Finds a group by name.
+     *
+     * @param string $name
+     *
+     * @return GroupInterface
+     */
+    public function findGroupByName($name): ?GroupInterface;
+
+    /**
+     * Returns a collection with all group instances.
+     *
+     * @return array
+     */
+    public function findGroups(): array;
+
     /**
      * Alias for the repository method.
      *
@@ -23,5 +79,5 @@ interface GroupManagerInterface extends BaseInterface, PageableManagerInterface
      *
      * @return GroupInterface[]
      */
-    public function findGroupsBy(array $criteria = null, array $orderBy = null, $limit = null, $offset = null);
+    public function findGroupsBy(array $criteria = null, array $orderBy = null, $limit = null, $offset = null): array;
 }
