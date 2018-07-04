@@ -67,7 +67,7 @@
                         <span class="help-block sonata-ba-field-help">{{ 'message_two_step_code_help'|trans({}, 'MarlincUserBundle') }}</span>
                     </form>
                 {% else %}
-                    <form action="{{ path("sonata_user_admin_security_check") }}" method="post" role="form">
+                    <form action="{{ path("marlinc_user_admin_security_check") }}" method="post" role="form">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
 
                         <div class="form-group has-feedback">
