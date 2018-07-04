@@ -8,9 +8,9 @@
 
 namespace Marlinc\UserBundle\Util;
 
-use FOS\UserBundle\Event\UserEvent;
-use FOS\UserBundle\FOSUserEvents;
 use Marlinc\UserBundle\Entity\User;
+use Marlinc\UserBundle\Event\UserEvent;
+use Marlinc\UserBundle\Event\UserEvents;
 use Marlinc\UserBundle\Model\UserInterface;
 use Marlinc\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -79,7 +79,7 @@ class UserManipulator
         $this->userManager->updateUser($user);
 
         $event = new UserEvent($user, $this->request);
-        $this->dispatcher->dispatch(FOSUserEvents::USER_CREATED, $event);
+        $this->dispatcher->dispatch(UserEvents::USER_CREATED, $event);
 
         return $user;
     }
@@ -96,7 +96,7 @@ class UserManipulator
         $this->userManager->updateUser($user);
 
         $event = new UserEvent($user, $this->request);
-        $this->dispatcher->dispatch(FOSUserEvents::USER_ACTIVATED, $event);
+        $this->dispatcher->dispatch(UserEvents::USER_ACTIVATED, $event);
     }
 
     /**
@@ -111,7 +111,7 @@ class UserManipulator
         $this->userManager->updateUser($user);
 
         $event = new UserEvent($user, $this->request);
-        $this->dispatcher->dispatch(FOSUserEvents::USER_DEACTIVATED, $event);
+        $this->dispatcher->dispatch(UserEvents::USER_DEACTIVATED, $event);
     }
 
     /**
@@ -127,7 +127,7 @@ class UserManipulator
         $this->userManager->updateUser($user);
 
         $event = new UserEvent($user, $this->request);
-        $this->dispatcher->dispatch(FOSUserEvents::USER_PASSWORD_CHANGED, $event);
+        $this->dispatcher->dispatch(UserEvents::USER_PASSWORD_CHANGED, $event);
     }
 
     /**
@@ -142,7 +142,7 @@ class UserManipulator
         $this->userManager->updateUser($user);
 
         $event = new UserEvent($user, $this->request);
-        $this->dispatcher->dispatch(FOSUserEvents::USER_PROMOTED, $event);
+        $this->dispatcher->dispatch(UserEvents::USER_PROMOTED, $event);
     }
 
     /**
@@ -157,7 +157,7 @@ class UserManipulator
         $this->userManager->updateUser($user);
 
         $event = new UserEvent($user, $this->request);
-        $this->dispatcher->dispatch(FOSUserEvents::USER_DEMOTED, $event);
+        $this->dispatcher->dispatch(UserEvents::USER_DEMOTED, $event);
     }
 
     /**
