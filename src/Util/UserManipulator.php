@@ -10,9 +10,9 @@ namespace Marlinc\UserBundle\Util;
 
 use FOS\UserBundle\Event\UserEvent;
 use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Model\UserManagerInterface;
 use Marlinc\UserBundle\Entity\User;
+use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -25,8 +25,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class UserManipulator
 {
     /**
-     * User manager.
-     *
      * @var UserManagerInterface
      */
     private $userManager;
@@ -37,9 +35,9 @@ class UserManipulator
     private $dispatcher;
 
     /**
-     * @var RequestStack
+     * @var null|Request
      */
-    private $requestStack;
+    private $request;
 
     /**
      * UserManipulator constructor.
@@ -52,7 +50,7 @@ class UserManipulator
     {
         $this->userManager = $userManager;
         $this->dispatcher = $dispatcher;
-        $this->requestStack = $requestStack;
+        $this->request = $requestStack->getCurrentRequest();
     }
 
     /**
@@ -65,7 +63,7 @@ class UserManipulator
      * @param bool $active
      * @param bool $superadmin
      *
-     * @return \FOS\UserBundle\Model\UserInterface
+     * @return UserInterface
      */
     public function create($email, $password, $firstname, $lastname, $active, $superadmin)
     {
@@ -73,14 +71,14 @@ class UserManipulator
         $user->setEmail($email);
         $user->setPlainPassword($password);
         if ($user instanceof User) {
-            $user->setFirstname($firstname);
-            $user->setLastname($lastname);
+            $user->getPerson()->setFirstname($firstname);
+            $user->getPerson()->setLastname($lastname);
         }
         $user->setEnabled((bool) $active);
         $user->setSuperAdmin((bool) $superadmin);
         $this->userManager->updateUser($user);
 
-        $event = new UserEvent($user, $this->getRequest());
+        $event = new UserEvent($user, $this->request);
         $this->dispatcher->dispatch(FOSUserEvents::USER_CREATED, $event);
 
         return $user;
@@ -97,7 +95,7 @@ class UserManipulator
         $user->setEnabled(true);
         $this->userManager->updateUser($user);
 
-        $event = new UserEvent($user, $this->getRequest());
+        $event = new UserEvent($user, $this->request);
         $this->dispatcher->dispatch(FOSUserEvents::USER_ACTIVATED, $event);
     }
 
@@ -112,7 +110,7 @@ class UserManipulator
         $user->setEnabled(false);
         $this->userManager->updateUser($user);
 
-        $event = new UserEvent($user, $this->getRequest());
+        $event = new UserEvent($user, $this->request);
         $this->dispatcher->dispatch(FOSUserEvents::USER_DEACTIVATED, $event);
     }
 
@@ -128,7 +126,7 @@ class UserManipulator
         $user->setPlainPassword($password);
         $this->userManager->updateUser($user);
 
-        $event = new UserEvent($user, $this->getRequest());
+        $event = new UserEvent($user, $this->request);
         $this->dispatcher->dispatch(FOSUserEvents::USER_PASSWORD_CHANGED, $event);
     }
 
@@ -143,7 +141,7 @@ class UserManipulator
         $user->setSuperAdmin(true);
         $this->userManager->updateUser($user);
 
-        $event = new UserEvent($user, $this->getRequest());
+        $event = new UserEvent($user, $this->request);
         $this->dispatcher->dispatch(FOSUserEvents::USER_PROMOTED, $event);
     }
 
@@ -158,7 +156,7 @@ class UserManipulator
         $user->setSuperAdmin(false);
         $this->userManager->updateUser($user);
 
-        $event = new UserEvent($user, $this->getRequest());
+        $event = new UserEvent($user, $this->request);
         $this->dispatcher->dispatch(FOSUserEvents::USER_DEMOTED, $event);
     }
 
@@ -220,13 +218,5 @@ class UserManipulator
         }
 
         return $user;
-    }
-
-    /**
-     * @return Request
-     */
-    private function getRequest()
-    {
-        return $this->requestStack->getCurrentRequest();
     }
 }

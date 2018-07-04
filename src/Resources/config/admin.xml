@@ -2,27 +2,26 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <parameter key="marlinc.user.admin.groupname">sonata_user</parameter>
-        <parameter key="marlinc.user.admin.label_catalogue">MarlincUserBundle</parameter>
         <parameter key="marlinc.user.admin.translation_domain">MarlincUserBundle</parameter>
         <parameter key="marlinc.user.admin.groupicon"><![CDATA[<i class='fa fa-users'></i>]]></parameter>
     </parameters>
     <services>
         <service id="marlinc.user.admin.user" class="Marlinc\UserBundle\Admin\UserAdmin" public="true">
-            <tag name="sonata.admin" manager_type="orm" group="%marlinc.user.admin.groupname%" label="users" label_catalogue="%marlinc.user.admin.label_catalogue%" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%marlinc.user.admin.groupicon%"/>
+            <tag name="sonata.admin" manager_type="orm" group="%marlinc.user.admin.groupname%" label="users" label_catalogue="%marlinc.user.admin.translation_domain%" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%marlinc.user.admin.groupicon%"/>
             <argument/>
-            <argument>Marlinc\UserBundle\Entity\User</argument>
+            <argument>%marlinc.user.class.user%</argument>
             <argument>MarlincAdminBundle:MarlincAdmin</argument>
             <call method="setUserManager">
-                <argument type="service" id="fos_user.user_manager"/>
+                <argument type="service" id="marlinc.user.user_manager"/>
             </call>
             <call method="setTranslationDomain">
                 <argument>%marlinc.user.admin.translation_domain%</argument>
             </call>
         </service>
         <service id="marlinc.user.admin.group" class="Marlinc\UserBundle\Admin\GroupAdmin" public="true">
-            <tag name="sonata.admin" manager_type="orm" group="%marlinc.user.admin.groupname%" label="groups" label_catalogue="%marlinc.user.admin.label_catalogue%" label_translator_strategy="sonata.admin.label.strategy.underscore"/>
+            <tag name="sonata.admin" manager_type="orm" group="%marlinc.user.admin.groupname%" label="groups" label_catalogue="%marlinc.user.admin.translation_domain%" label_translator_strategy="sonata.admin.label.strategy.underscore"/>
             <argument/>
-            <argument>Marlinc\UserBundle\Entity\Group</argument>
+            <argument>%marlinc.user.class.group%</argument>
             <argument>MarlincAdminBundle:MarlincAdmin</argument>
             <call method="setTranslationDomain">
                 <argument>%marlinc.user.admin.translation_domain%</argument>

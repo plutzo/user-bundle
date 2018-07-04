@@ -51,6 +51,7 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
             new FileLocator(__DIR__ . '/../Resources/config')
         );
         $loader->load('services.xml');
+        $loader->load('util.xml');
         $loader->load('admin.xml');
 
         if (class_exists('Google\Authenticator\GoogleAuthenticator')) {

@@ -10,10 +10,10 @@ namespace Marlinc\UserBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
-use FOS\UserBundle\Util\CanonicalFieldsUpdater;
-use FOS\UserBundle\Util\PasswordUpdaterInterface;
 use Marlinc\UserBundle\Model\UserInterface;
 use Marlinc\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Util\CanonicalizerInterface;
+use Marlinc\UserBundle\Util\PasswordUpdaterInterface;
 use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\DatagridBundle\Pager\Doctrine\Pager;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
@@ -35,18 +35,25 @@ class UserManager implements UserManagerInterface, ManagerInterface
      */
     protected $repository;
 
+    /**
+     * @var PasswordUpdaterInterface
+     */
     private $passwordUpdater;
+
+    /**
+     * @var CanonicalizerInterface
+     */
     private $canonicalFieldsUpdater;
 
     /**
      * Constructor.
      *
      * @param PasswordUpdaterInterface $passwordUpdater
-     * @param CanonicalFieldsUpdater   $canonicalFieldsUpdater
-     * @param ObjectManager            $om
-     * @param string                   $class
+     * @param CanonicalizerInterface $canonicalFieldsUpdater
+     * @param ObjectManager $om
+     * @param string $class
      */
-    public function __construct(PasswordUpdaterInterface $passwordUpdater, CanonicalFieldsUpdater $canonicalFieldsUpdater, ObjectManager $om, $class)
+    public function __construct(PasswordUpdaterInterface $passwordUpdater, CanonicalizerInterface $canonicalFieldsUpdater, ObjectManager $om, $class)
     {
         $this->passwordUpdater = $passwordUpdater;
         $this->canonicalFieldsUpdater = $canonicalFieldsUpdater;
@@ -73,7 +80,7 @@ class UserManager implements UserManagerInterface, ManagerInterface
      */
     public function findUserByEmail(string $email): ?UserInterface
     {
-        return $this->findUserBy(['email' => $this->canonicalFieldsUpdater->canonicalizeEmail($email)]);
+        return $this->findUserBy(['email' => $this->canonicalFieldsUpdater->canonicalize($email)]);
     }
 
     /**
@@ -89,7 +96,7 @@ class UserManager implements UserManagerInterface, ManagerInterface
      */
     public function updateCanonicalFields(UserInterface $user): UserManagerInterface
     {
-        $this->canonicalFieldsUpdater->updateCanonicalFields($user);
+        $user->setEmail($this->canonicalFieldsUpdater->canonicalize($user->getEmail()));
 
         return $this;
     }

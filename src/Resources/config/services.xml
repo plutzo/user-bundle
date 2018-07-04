@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter id="marlinc.user.class.user">Marlinc\UserBundle\Entity\User</parameter>
+        <parameter id="marlinc.user.class.group">Marlinc\UserBundle\Entity\Group</parameter>
+    </parameters>
     <services>
-        <service id="marlinc.user.util.user_manipulator" class="Marlinc\UserBundle\Util\UserManipulator">
-            <argument type="service" id="marlinc.user.user_manager"/>
-            <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="request_stack"/>
-        </service>
         <service id="marlinc.user.user_manager" class="Marlinc\UserBundle\Manager\UserManager" public="false">
-            <argument type="service" id="fos_user.util.password_updater"/>
-            <argument type="service" id="fos_user.util.canonical_fields_updater"/>
-            <argument type="service" id="fos_user.object_manager"/>
-            <argument>%fos_user.model.user.class%</argument>
+            <argument type="service" id="Marlinc\UserBundle\Util\PasswordUpdaterInterface"/>
+            <argument type="service" id="Marlinc\UserBundle\Util\CanonicalizerInterface"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument>%marlinc.user.class.user%</argument>
         </service>
-        <service id="marlinc.user.group_manager" class="Sonata\UserBundle\Entity\GroupManager" public="false">
-            <argument type="service" id="fos_user.object_manager"/>
-            <argument>%fos_user.model.group.class%</argument>
+        <service id="marlinc.user.group_manager" class="Marlinc\UserBundle\Manager\GroupManager" public="false">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument>%marlinc.user.class.group%</argument>
         </service>
+
         <service id="cas.authenticator" class="Marlinc\UserBundle\Security\CasAuthenticator" public="false"/>
         <service id="cas.user.provider" class="Marlinc\UserBundle\Security\CasUserProvider">
             <argument type="service" id="doctrine.orm.entity_manager"/>
@@ -27,9 +27,11 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="doctrine.dbal.marlinc_connection"/>
         </service>
+
         <service id="user.export.user" class="Marlinc\UserBundle\Export\UserExport">
             <tag name="marlinc.exporter.format" alias="user" class="Marlinc\UserBundle\Entity\User"/>
         </service>
+
         <service id="marlinc.user.editable_role_builder" class="Marlinc\UserBundle\Security\RolesBuilder\EditableRolesBuilder" public="false">
             <argument type="service" id="security.token_storage"/>
             <argument type="service" id="security.authorization_checker"/>
@@ -63,6 +65,7 @@
             <argument type="service" id="marlinc.user.matrix_roles_builder"/>
             <tag name="form.type"/>
         </service>
+
         <service id="marlinc.user.roles_matrix_extension" class="Marlinc\UserBundle\Twig\RolesMatrixExtension" public="false">
             <argument type="service" id="marlinc.user.matrix_roles_builder"/>
             <tag name="twig.extension"/>
