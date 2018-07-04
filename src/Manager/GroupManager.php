@@ -105,7 +105,7 @@ class GroupManager implements GroupManagerInterface
      */
     public function findGroupByName($name): GroupInterface
     {
-        return $this->findGroupBy(array('name' => $name));
+        return $this->findGroupBy(['name' => $name]);
     }
 
     /**

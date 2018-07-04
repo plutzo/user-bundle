@@ -255,7 +255,7 @@ class UserManager implements UserManagerInterface, ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function getPager(array $criteria, $page, $limit = 10, array $sort = array())
+    public function getPager(array $criteria, $page, $limit = 10, array $sort = [])
     {
         $query = $this->repository
             ->createQueryBuilder('u')
@@ -268,7 +268,7 @@ class UserManager implements UserManagerInterface, ManagerInterface
             }
         }
         if (count($sort) == 0) {
-            $sort = array('username' => 'ASC');
+            $sort = ['username' => 'ASC'];
         }
         foreach ($sort as $field => $direction) {
             $query->orderBy(sprintf('u.%s', $field), strtoupper($direction));

@@ -32,14 +32,14 @@ class CreateUserCommand extends Command
         $this
             ->setName('marlinc:user:create')
             ->setDescription('Create a user.')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
                 new InputArgument('firstname', InputArgument::REQUIRED, 'The first name'),
                 new InputArgument('lastname', InputArgument::REQUIRED, 'The last name'),
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
-            ))
+            ])
             ->setHelp(<<<'EOT'
 The <info>marlinc:user:create</info> command creates a user:
 
@@ -85,7 +85,7 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $questions = array();
+        $questions = [];
 
         if (!$input->getArgument('email')) {
             $question = new Question('Please choose an email:');

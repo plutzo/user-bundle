@@ -115,7 +115,7 @@ class PersonFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Person::class,
             'country' => null,
             'enabled_fields' => ['postalCode', 'thoroughfare', 'phone', 'email'],
@@ -131,6 +131,6 @@ class PersonFormType extends AbstractType
 
                 return $groups;
             },
-        ));
+        ]);
     }
 }

@@ -422,7 +422,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setPasswordRequestedAt(\DateTime $date = null)
+    public function setPasswordRequestedAt(\DateTime $date = null): UserInterface
     {
         $this->passwordRequestedAt = $date;
 
@@ -434,7 +434,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface
      *
      * @return null|\DateTime
      */
-    public function getPasswordRequestedAt()
+    public function getPasswordRequestedAt(): ?\DateTime
     {
         return $this->passwordRequestedAt;
     }

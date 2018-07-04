@@ -262,8 +262,8 @@ class CasImportCommand extends ContainerAwareCommand
         $progress->setFormat('normal_nomax');
         $step     = 0;
         $ctx      = stream_context_create(
-            array(),
-            array(
+            [],
+            [
                 'notification' => function ($notification_code, $severity, $message, $message_code, $bytes_transferred, $bytes_max) use ($output, $progress, &$step) {
                     switch ($notification_code) {
                         case STREAM_NOTIFY_FILE_SIZE_IS:
@@ -278,7 +278,7 @@ class CasImportCommand extends ContainerAwareCommand
                             break;
                     }
                 },
-            )
+            ]
         );
 
         $file = file_get_contents($from, false, $ctx);

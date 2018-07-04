@@ -158,6 +158,12 @@ interface UserInterface extends BaseUserInterface
     public function setLastLogin(\DateTime $time = null): UserInterface;
 
     /**
+     * @param \DateTime|null $date
+     * @return UserInterface
+     */
+    public function setPasswordRequestedAt(\DateTime $date = null): UserInterface;
+
+    /**
      * Sets the confirmation token.
      *
      * @param string|null $confirmationToken
