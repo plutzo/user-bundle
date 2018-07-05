@@ -44,69 +44,6 @@ final class UserEvents
     const CHANGE_PASSWORD_COMPLETED = 'marlinc.user.change_password.edit.completed';
 
     /**
-     * The GROUP_CREATE_INITIALIZE event occurs when the group creation process is initialized.
-     *
-     * This event allows you to modify the default values of the user before binding the form.
-     *
-     * @Event("Marlinc\UserBundle\Event\GroupEvent")
-     */
-    const GROUP_CREATE_INITIALIZE = 'marlinc.user.group.create.initialize';
-
-    /**
-     * The GROUP_CREATE_SUCCESS event occurs when the group creation form is submitted successfully.
-     *
-     * This event allows you to set the response instead of using the default one.
-     *
-     * @Event("Marlinc\UserBundle\Event\FormEvent")
-     */
-    const GROUP_CREATE_SUCCESS = 'marlinc.user.group.create.success';
-
-    /**
-     * The GROUP_CREATE_COMPLETED event occurs after saving the group in the group creation process.
-     *
-     * This event allows you to access the response which will be sent.
-     *
-     * @Event("Marlinc\UserBundle\Event\FilterGroupResponseEvent")
-     */
-    const GROUP_CREATE_COMPLETED = 'marlinc.user.group.create.completed';
-
-    /**
-     * The GROUP_DELETE_COMPLETED event occurs after deleting the group.
-     *
-     * This event allows you to access the response which will be sent.
-     *
-     * @Event("Marlinc\UserBundle\Event\FilterGroupResponseEvent")
-     */
-    const GROUP_DELETE_COMPLETED = 'marlinc.user.group.delete.completed';
-
-    /**
-     * The GROUP_EDIT_INITIALIZE event occurs when the group editing process is initialized.
-     *
-     * This event allows you to modify the default values of the user before binding the form.
-     *
-     * @Event("Marlinc\UserBundle\Event\GetResponseGroupEvent")
-     */
-    const GROUP_EDIT_INITIALIZE = 'marlinc.user.group.edit.initialize';
-
-    /**
-     * The GROUP_EDIT_SUCCESS event occurs when the group edit form is submitted successfully.
-     *
-     * This event allows you to set the response instead of using the default one.
-     *
-     * @Event("Marlinc\UserBundle\Event\FormEvent")
-     */
-    const GROUP_EDIT_SUCCESS = 'marlinc.user.group.edit.success';
-
-    /**
-     * The GROUP_EDIT_COMPLETED event occurs after saving the group in the group edit process.
-     *
-     * This event allows you to access the response which will be sent.
-     *
-     * @Event("Marlinc\UserBundle\Event\FilterGroupResponseEvent")
-     */
-    const GROUP_EDIT_COMPLETED = 'marlinc.user.group.edit.completed';
-
-    /**
      * The PROFILE_EDIT_INITIALIZE event occurs when the profile editing process is initialized.
      *
      * This event allows you to modify the default values of the user before binding the form.
