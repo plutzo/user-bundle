@@ -57,16 +57,6 @@ abstract class AbstractSecurityController extends Controller
         return $this->renderLogin($session, $csrfToken, $error);
     }
 
-    public function checkAction(): void
-    {
-        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
-    }
-
-    public function logoutAction(): void
-    {
-        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
-    }
-
     /**
      * @param SessionInterface $session
      * @param string $csrfToken

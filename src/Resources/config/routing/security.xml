@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <routes xmlns="http://symfony.com/schema/routing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-    <route id="marlinc_user_admin_security_login" path="/login">
-        <default key="_controller">MarlincUserBundle:AdminSecurity:login</default>
-    </route>
-    <route id="marlinc_user_admin_security_check" path="/login_check" methods="POST" />
+    <route id="marlinc_user_security_logout" path="/logout" />
+    <route id="marlinc_user_security_login_check" path="/login_check" methods="POST" />
 </routes>
