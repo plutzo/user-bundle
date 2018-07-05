@@ -16,5 +16,11 @@
         <service id="Marlinc\UserBundle\Util\PasswordUpdaterInterface" alias="marlinc.user.util.password_updater" public="false" />
         <service id="marlinc.user.util.canonical_fields_updater" class="Marlinc\UserBundle\Util\Canonicalizer" public="false" />
         <service id="Marlinc\UserBundle\Util\CanonicalizerInterface" alias="marlinc.user.util.canonical_fields_updater" public="false" />
+        <service id="marlinc.user.mailer.noop" class="Marlinc\UserBundle\Mailer\NoopMailer" public="false" />
+        <service id="Marlinc\UserBundle\Mailer\MailerInterface" alias="marlinc.user.mailer.noop" public="false" />
+        <service id="Marlinc\UserBundle\Validator\UserInitializer" public="false">
+            <argument type="service" id="Marlinc\UserBundle\Util\CanonicalizerInterface" />
+            <tag name="validator.initializer" />
+        </service>
     </services>
 </container>

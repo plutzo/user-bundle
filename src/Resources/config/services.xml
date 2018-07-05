@@ -1,71 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-    <parameters>
-        <parameter id="marlinc.user.class.user">Marlinc\UserBundle\Entity\User</parameter>
-        <parameter id="marlinc.user.class.group">Marlinc\UserBundle\Entity\Group</parameter>
-    </parameters>
     <services>
-        <service id="marlinc.user.user_manager" class="Marlinc\UserBundle\Manager\UserManager" public="false">
-            <argument type="service" id="Marlinc\UserBundle\Util\PasswordUpdaterInterface"/>
-            <argument type="service" id="Marlinc\UserBundle\Util\CanonicalizerInterface"/>
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument>%marlinc.user.class.user%</argument>
-        </service>
-        <service id="marlinc.user.group_manager" class="Marlinc\UserBundle\Manager\GroupManager" public="false">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument>%marlinc.user.class.group%</argument>
-        </service>
-
-        <service id="cas.authenticator" class="Marlinc\UserBundle\Security\CasAuthenticator" public="false"/>
-        <service id="cas.user.provider" class="Marlinc\UserBundle\Security\CasUserProvider">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-        </service>
-        <service id="marlinc1.authenticator" class="Marlinc\UserBundle\Security\Marlinc1Authenticator">
-            <argument type="service" id="security.http_utils"/>
-        </service>
-        <service id="marlinc1.user.provider" class="Marlinc\UserBundle\Security\Marlinc1UserProvider">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="doctrine.dbal.marlinc_connection"/>
-        </service>
-
         <service id="user.export.user" class="Marlinc\UserBundle\Export\UserExport">
             <tag name="marlinc.exporter.format" alias="user" class="Marlinc\UserBundle\Entity\User"/>
-        </service>
-
-        <service id="marlinc.user.editable_role_builder" class="Marlinc\UserBundle\Security\RolesBuilder\EditableRolesBuilder" public="false">
-            <argument type="service" id="security.token_storage"/>
-            <argument type="service" id="security.authorization_checker"/>
-            <argument type="service" id="sonata.admin.pool"/>
-            <argument>%security.role_hierarchy.roles%</argument>
-            <call method="setTranslator">
-                <argument type="service" id="translator"/>
-            </call>
         </service>
         <service id="marlinc.user.form.type.security_roles" class="Marlinc\UserBundle\Form\Type\SecurityRolesType" public="true">
             <argument type="service" id="marlinc.user.editable_role_builder"/>
             <tag name="form.type" />
         </service>
-        <service id="marlinc.user.matrix_roles_builder" class="Marlinc\UserBundle\Security\RolesBuilder\MatrixRolesBuilder" public="false">
-            <argument type="service" id="security.token_storage"/>
-            <argument type="service" id="marlinc.user.admin_roles_builder"/>
-            <argument type="service" id="marlinc.user.security_roles_builder"/>
-        </service>
-        <service id="marlinc.user.admin_roles_builder" class="Marlinc\UserBundle\Security\RolesBuilder\AdminRolesBuilder" public="false">
-            <argument type="service" id="security.authorization_checker"/>
-            <argument type="service" id="sonata.admin.pool"/>
-            <argument type="service" id="translator"/>
-        </service>
-        <service id="marlinc.user.security_roles_builder" class="Marlinc\UserBundle\Security\RolesBuilder\SecurityRolesBuilder" public="false">
-            <argument type="service" id="security.authorization_checker"/>
-            <argument type="service" id="sonata.admin.pool"/>
-            <argument type="service" id="translator"/>
-            <argument>%security.role_hierarchy.roles%</argument>
-        </service>
         <service id="marlinc.user.form.roles_matrix_type" class="Marlinc\UserBundle\Form\Type\RolesMatrixType" public="true">
             <argument type="service" id="marlinc.user.matrix_roles_builder"/>
             <tag name="form.type"/>
         </service>
-
         <service id="marlinc.user.roles_matrix_extension" class="Marlinc\UserBundle\Twig\RolesMatrixExtension" public="false">
             <argument type="service" id="marlinc.user.matrix_roles_builder"/>
             <tag name="twig.extension"/>

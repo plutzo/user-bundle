@@ -23,7 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @Gedmo\Loggable
  * @UniqueEntity("email")
  */
-class User extends EntityReference implements UserInterface, GroupableInterface
+class User extends EntityReference implements UserInterface, GroupableInterface, \Serializable
 {
     /**
      * @var \DateTime
@@ -606,5 +606,29 @@ class User extends EntityReference implements UserInterface, GroupableInterface
     public function getTimezone(): ?string
     {
         return $this->timezone;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->email,
+            $this->password,
+        ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->password
+            ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
