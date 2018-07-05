@@ -44,22 +44,22 @@ file that was distributed with this source code.
                 {% block sonata_user_reset_request_error %}
                     {% if invalid_username is defined %}
                         <div class="alert alert-danger">
-                            {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
+                            {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'MarlincUserBundle') }}
                         </div>
                     {% endif %}
                 {% endblock %}
-                <p class="login-box-msg">{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</p>
+                <p class="login-box-msg">{{ 'resetting.request.submit'|trans({}, 'MarlincUserBundle') }}</p>
                 <form action="{{ path('marlinc_user_admin_resetting_send_email') }}" method="post" role="form">
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" id="username"  name="username" required="required"
-                            placeholder="{{ 'resetting.request.username'|trans({}, 'FOSUserBundle')|replace({':': ''}) }}"/>
+                            placeholder="{{ 'resetting.request.username'|trans({}, 'MarlincUserBundle')|replace({':': ''}) }}"/>
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-12">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">
-                                {{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}
+                                {{ 'resetting.request.submit'|trans({}, 'MarlincUserBundle') }}
                             </button>
                         </div>
                     </div>

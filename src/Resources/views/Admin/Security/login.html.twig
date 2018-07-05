@@ -61,7 +61,7 @@
                                     id="_submit"
                                     name="_submit"
                                     type="submit"
-                                    value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+                                    value="{{ 'security.login.submit'|trans({}, 'MarlincUserBundle') }}" />
                             </span>
                         </div>
                         <span class="help-block sonata-ba-field-help">{{ 'message_two_step_code_help'|trans({}, 'MarlincUserBundle') }}</span>
@@ -74,7 +74,7 @@
                             <input class="form-control"
                                 id="username"
                                 name="_username"
-                                placeholder="{{ 'security.login.username'|trans({}, 'MarlincUserBundle') }}"
+                                placeholder="{{ 'security.login.email'|trans({}, 'MarlincUserBundle') }}"
                                 required="required"
                                 type="text"
                                 value="{{ last_username }}"/>
@@ -96,12 +96,12 @@
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
-                                        {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                                        {{ 'security.login.remember_me'|trans({}, 'MarlincUserBundle') }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-xs-4">
-                                <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'security.login.submit'|trans({}, 'MarlincUserBundle') }}</button>
                             </div>
                         </div>
                     </form>

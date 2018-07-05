@@ -29,7 +29,7 @@
             </div>
         {% endblock %}
         <div class="login-box-body">
-            <p>{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime}, 'FOSUserBundle')|nl2br }}</p>
+            <p>{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime}, 'MarlincUserBundle')|nl2br }}</p>
             <a href="{{ path('marlinc_user_admin_security_login') }}">
                 {{ 'title_user_authentication'|trans({}, 'MarlincUserBundle') }}
             </a>

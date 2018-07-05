@@ -30,24 +30,24 @@
         {% endblock %}
         <div class="login-box-body">
             {% block sonata_user_reset_form %}
-                <p class="login-box-msg">{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}</p>
+                <p class="login-box-msg">{{ 'resetting.reset.submit'|trans({}, 'MarlincUserBundle') }}</p>
                 {{ form_start(form, { 'action': path('marlinc_user_admin_resetting_reset', {'token': token}) }) }}
                     <div class="form-group">
                         {{ form_widget(form.plainPassword.first, {'attr': {
                             'class': 'form-control',
-                            'placeholder': 'form.new_password'|trans({}, 'FOSUserBundle')
+                            'placeholder': 'form.new_password'|trans({}, 'MarlincUserBundle')
                         }}) }}
                     </div>
                     <div class="form-group">
                         {{ form_widget(form.plainPassword.second, {'attr': {
                             'class': 'form-control',
-                            'placeholder': 'form.new_password_confirmation'|trans({}, 'FOSUserBundle')
+                            'placeholder': 'form.new_password_confirmation'|trans({}, 'MarlincUserBundle')
                         }}) }}
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">
-                                {{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}
+                                {{ 'resetting.reset.submit'|trans({}, 'MarlincUserBundle') }}
                             </button>
                         </div>
                     </div>
