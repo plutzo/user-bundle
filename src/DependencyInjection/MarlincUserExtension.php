@@ -61,6 +61,15 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
             $this->configureGoogleAuthenticator($config, $container);
         }
 
+        if (!empty($config['resetting'])) {
+            $this->remapParametersNamespaces($config['resetting'], $container, [
+                '' => [
+                    'retry_ttl' => 'marlinc.user.resetting.retry_ttl',
+                    'token_ttl' => 'marlinc.user.resetting.token_ttl',
+                ],
+            ]);
+        }
+
         $container->setParameter('marlinc.user.default_avatar', $config['profile']['default_avatar']);
         $container->setParameter('marlinc.user.impersonating', $config['impersonating']);
     }
@@ -145,6 +154,20 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
                 foreach ($namespaceConfig as $name => $value) {
                     $container->setParameter(sprintf($map, $name), $value);
                 }
+            }
+        }
+    }
+
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param array            $map
+     */
+    protected function remapParameters(array $config, ContainerBuilder $container, array $map)
+    {
+        foreach ($map as $name => $paramName) {
+            if (array_key_exists($name, $config)) {
+                $container->setParameter($paramName, $config[$name]);
             }
         }
     }

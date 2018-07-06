@@ -61,6 +61,12 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('default_avatar')->defaultValue('bundles/marlincuser/default_avatar.png')->end()
                     ->end()
                 ->end()
+                ->arrayNode('resetting')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                    ->scalarNode('retry_ttl')->defaultValue(7200)->end()
+                    ->scalarNode('token_ttl')->defaultValue(86400)->end()
+                ->end()
             ->end()
         ;
 
