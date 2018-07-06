@@ -9,9 +9,12 @@
         </service>
         <service id="marlinc.user.registration.form.factory" class="Marlinc\UserBundle\Form\Factory\FormFactory">
             <argument type="service" id="form.factory" />
-            <argument>%marlinc.user.registration.form.name%</argument>
-            <argument>%marlinc.registration.form.type%</argument>
-            <argument>%marlinc.registration.form.validation_groups%</argument>
+            <argument>marlinc_user_registration_form</argument>
+            <argument>Marlinc\UserBundle\Form\Type\RegistrationFormType</argument>
+            <argument type="collection">
+                <argument>Default</argument>
+                <argument>Registration</argument>
+            </argument>
         </service>
         <service id="marlinc.user.registration.form.type" class="Marlinc\UserBundle\Form\Type\RegistrationFormType">
             <argument>%marlinc.user.class.user%</argument>
@@ -19,32 +22,39 @@
         </service>
         <service id="marlinc.user.resetting.form.factory" class="Marlinc\UserBundle\Form\Factory\FormFactory">
             <argument type="service" id="form.factory" />
-            <argument>%marlinc.user.resetting.form.name%</argument>
-            <argument>%marlinc.user.resetting.form.type%</argument>
-            <argument>%marlinc.user.resetting.form.validation_groups%</argument>
+            <argument>marlinc_user_resetting_form</argument>
+            <argument>Marlinc\UserBundle\Form\Type\ResettingFormType</argument>
+            <argument type="collection">
+                <argument>ResetPassword</argument>
+            </argument>
         </service>
         <service id="marlinc.user.resetting.form.type" class="Marlinc\UserBundle\Form\Type\ResettingFormType">
-            <argument>%marlinc.user.model.user.class%</argument>
+            <argument>%marlinc.user.class.user%</argument>
             <tag name="form.type" />
         </service>
         <service id="marlinc.user.profile.form.factory" class="Marlinc\UserBundle\Form\Factory\FormFactory">
             <argument type="service" id="form.factory" />
-            <argument>%marlinc.user.profile.form.name%</argument>
-            <argument>%marlinc.user.profile.form.type%</argument>
-            <argument>%marlinc.user.profile.form.validation_groups%</argument>
+            <argument>marlinc_user_profile_form</argument>
+            <argument>Marlinc\UserBundle\Form\Type\ProfileFormType</argument>
+            <argument type="collection">
+                <argument>Default</argument>
+                <argument>Profile</argument>
+            </argument>
         </service>
         <service id="marlinc.user.profile.form.type" class="Marlinc\UserBundle\Form\Type\ProfileFormType">
-            <argument>%marlinc.user.model.user.class%</argument>
+            <argument>%marlinc.user.class.user%</argument>
             <tag name="form.type" />
         </service>
         <service id="marlinc.user.change_password.form.factory" class="Marlinc\UserBundle\Form\Factory\FormFactory">
             <argument type="service" id="form.factory" />
-            <argument>%marlinc.user.change_password.form.name%</argument>
-            <argument>%marlinc.user.change_password.form.type%</argument>
-            <argument>%marlinc.user.change_password.form.validation_groups%</argument>
+            <argument>marlinc_user_change_password_form</argument>
+            <argument>Marlinc\UserBundle\Form\Type\ChangePasswordFormType</argument>
+            <argument type="collection">
+                <argument>ChangePassword</argument>
+            </argument>
         </service>
         <service id="marlinc.user.change_password.form.type" class="Marlinc\UserBundle\Form\Type\ChangePasswordFormType">
-            <argument>%marlinc.user.model.user.class%</argument>
+            <argument>%marlinc.user.class.user%</argument>
             <tag name="form.type" />
         </service>
     </services>

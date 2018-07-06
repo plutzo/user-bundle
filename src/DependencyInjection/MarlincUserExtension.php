@@ -24,7 +24,9 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
     {
         if ($container->hasExtension('twig')) {
             // add custom form widgets
-            $container->prependExtensionConfig('twig', ['form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']]);
+            $container->prependExtensionConfig('twig', [
+                'form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']
+            ]);
         }
 
         if ($container->hasExtension('sonata_admin')) {
@@ -50,23 +52,17 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
             $container,
             new FileLocator(__DIR__ . '/../Resources/config')
         );
-        $loader->load('services.xml');
-        $loader->load('util.xml');
-        $loader->load('commands.xml');
-        $loader->load('forms.xml');
-        $loader->load('controllers.xml');
-        $loader->load('security.xml');
-        $loader->load('listeners.xml');
-        $loader->load('admin.xml');
+        foreach (['services', 'util', 'commands', 'forms', 'controllers', 'security', 'listeners', 'admin'] as $basename) {
+            $loader->load(sprintf('%s.xml', $basename));
+        }
 
         if (class_exists('Google\Authenticator\GoogleAuthenticator')) {
             $loader->load('google_authenticator.xml');
+            $this->configureGoogleAuthenticator($config, $container);
         }
 
         $container->setParameter('marlinc.user.default_avatar', $config['profile']['default_avatar']);
         $container->setParameter('marlinc.user.impersonating', $config['impersonating']);
-
-        $this->configureGoogleAuthenticator($config, $container);
     }
 
     /**
@@ -74,7 +70,7 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
      * @throws \RuntimeException
      * @return array
      */
-    public function fixImpersonating(array $config)
+    private function fixImpersonating(array $config)
     {
         if (isset($config['impersonating'], $config['impersonating_route'])) {
             throw new \RuntimeException('you can\'t have `impersonating` and `impersonating_route` keys defined at the same time');
@@ -102,9 +98,8 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
      * @param array $config
      * @param ContainerBuilder $container
      * @throws \RuntimeException
-     * @return mixed
      */
-    public function configureGoogleAuthenticator($config, ContainerBuilder $container)
+    private function configureGoogleAuthenticator($config, ContainerBuilder $container)
     {
         $container->setParameter('marlinc.user.google.authenticator.enabled', $config['google_authenticator']['enabled']);
 
@@ -126,5 +121,31 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
 
         $container->getDefinition('marlinc.user.google.authenticator.provider')
             ->replaceArgument(0, $config['google_authenticator']['server']);
+    }
+
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     * @param array            $namespaces
+     */
+    protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces)
+    {
+        foreach ($namespaces as $ns => $map) {
+            if ($ns) {
+                if (!array_key_exists($ns, $config)) {
+                    continue;
+                }
+                $namespaceConfig = $config[$ns];
+            } else {
+                $namespaceConfig = $config;
+            }
+            if (is_array($map)) {
+                $this->remapParameters($namespaceConfig, $container, $map);
+            } else {
+                foreach ($namespaceConfig as $name => $value) {
+                    $container->setParameter(sprintf($map, $name), $value);
+                }
+            }
+        }
     }
 }

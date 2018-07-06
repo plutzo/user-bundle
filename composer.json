@@ -31,7 +31,7 @@
   "autoload": {
     "psr-4": { "Marlinc\\UserBundle\\": "src/" }
   },
-  "suggest": {
-    "sonata-project/google-authenticator": "For google auth user login"
+  "suggests": {
+    "sonata-project/google-authenticator": "For Google 2FA user login"
   }
 }
