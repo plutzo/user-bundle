@@ -22,7 +22,6 @@
     "marlinc/entity-bundle": "^2.0|dev-master",
     "marlinc/postalcode-bundle": "^1.0",
     "marlinc/admin-bundle": "^1.4|dev-master",
-    "friendsofsymfony/user-bundle": "^2.1",
     "symfony/swiftmailer-bundle": "^3.2"
   },
   "require-dev": {
