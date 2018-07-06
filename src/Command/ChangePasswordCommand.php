@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\UserBundle\Command;
+namespace Marlinc\UserBundle\Command;
 
 use Marlinc\UserBundle\Util\UserManipulator;
 use Symfony\Component\Console\Command\Command;
