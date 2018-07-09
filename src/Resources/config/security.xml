@@ -3,7 +3,7 @@
     <parameters>
         <parameter key="marlinc.user.class.user">Marlinc\UserBundle\Entity\User</parameter>
         <parameter key="marlinc.user.class.group">Marlinc\UserBundle\Entity\Group</parameter>
-        <parameter key="marlinc.user.admin.login">admin_login</parameter>
+        <parameter key="marlinc.user.admin.login">marlinc_user_admin_security_login</parameter>
         <parameter key="marlinc.user.admin.redirect">sonata_admin_dashboard</parameter>
     </parameters>
     <services>

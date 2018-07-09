@@ -3,13 +3,12 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="marlinc.user.admin.security.controller" class="Marlinc\UserBundle\Controller\AdminSecurityController" public="true">
-            <argument type="service" id="event_dispatcher" />
+        <service id="Marlinc\UserBundle\Controller\AdminSecurityController" public="true">
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
         </service>
-        <service id="marlinc.user.admin.resetting.controller" class="Marlinc\UserBundle\Controller\AdminResettingController" public="true">
+        <service id="Marlinc\UserBundle\Controller\AdminResettingController" public="true">
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="marlinc.user.resetting.form.factory" />
             <argument type="service" id="marlinc.user.user_manager" />
@@ -21,5 +20,4 @@
             </call>
         </service>
     </services>
-
 </container>

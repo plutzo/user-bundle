@@ -48,5 +48,7 @@ class AdminSecurityController extends AbstractSecurityController
 
             return $this->redirect($url);
         }
+
+        return null;
     }
 }

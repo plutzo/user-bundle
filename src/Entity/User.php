@@ -629,6 +629,6 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
             $this->id,
             $this->email,
             $this->password
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+            ) = unserialize($serialized);
     }
 }

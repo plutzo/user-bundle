@@ -1,7 +1,7 @@
 {% block user_block %}
     {% if app.user %}
         {% set _bg_class          = "bg-light-blue" %}
-        {% set _logout_uri        = url('marlinc_user_admin_security_logout') %}
+        {% set _logout_uri        = url('marlinc_user_security_logout') %}
         {% set _logout_text       = 'user_block_logout'|trans({}, 'MarlincUserBundle') %}
         {% set _profile_uri       = marlinc_user.userAdmin.isGranted('EDIT', app.user) ? marlinc_user.userAdmin.generateUrl('edit', {id: app.user.id}) : marlinc_user.userAdmin.generateUrl('show', {id: app.user.id}) %}
         {% set _profile_text      = 'user_block_profile'|trans({}, 'MarlincUserBundle') %}

@@ -66,7 +66,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function supports(Request $request)
     {
         // Only try to authenticate if current path matches login route
-        if ($request->getPathInfo() != $this->router->generate($this->loginRoute) || !$request->isMethod('POST')) {
+        if ($request->getBaseUrl().$request->getPathInfo() != $this->router->generate($this->loginRoute) || !$request->isMethod('POST')) {
             return false;
         }
 
