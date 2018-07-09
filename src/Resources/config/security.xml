@@ -32,6 +32,7 @@
             <argument type="service" id="router"/>
             <argument type="service" id="security.password_encoder"/>
             <argument type="service" id="security.csrf.token_manager"/>
+            <argument type="service" id="request_stack" />
         </service>
         <service id="marlinc.user.formauth.admin" parent="Marlinc\UserBundle\Security\LoginFormAuthenticator" class="Marlinc\UserBundle\Security\LoginFormAuthenticator" public="false">
             <call method="setLoginRoute">

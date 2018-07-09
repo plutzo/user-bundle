@@ -4,6 +4,7 @@ namespace Marlinc\UserBundle\Security;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
@@ -38,26 +39,33 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     /**
      * @var string
      */
-    private $redirectRoute;
+    private $redirectPath;
 
     /**
      * @var string
      */
-    private $loginRoute;
+    private $loginPath;
+
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
 
     /**
      * LoginFormAuthenticator constructor.
      * @param RouterInterface $router
      * @param UserPasswordEncoder $passwordEncoder
      * @param CsrfTokenManagerInterface $csrfTokenManager
+     * @param RequestStack $requestStack
      */
-    public function __construct(RouterInterface $router, UserPasswordEncoder $passwordEncoder, CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(RouterInterface $router, UserPasswordEncoder $passwordEncoder, CsrfTokenManagerInterface $csrfTokenManager, RequestStack $requestStack)
     {
         $this->router = $router;
         $this->passwordEncoder = $passwordEncoder;
         $this->csrfTokenManager = $csrfTokenManager;
-        $this->redirectRoute = 'homepage';
-        $this->loginRoute = 'login';
+        $this->requestStack = $requestStack;
+        $this->redirectPath = $this->router->generate('login');
+        $this->loginPath = $this->router->generate('login');
     }
 
     /**
@@ -66,7 +74,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function supports(Request $request)
     {
         // Only try to authenticate if current path matches login route
-        if ($request->getBaseUrl().$request->getPathInfo() != $this->router->generate($this->loginRoute) || !$request->isMethod('POST')) {
+        if ($request->getBaseUrl().$request->getPathInfo() != $this->loginPath || !$request->isMethod('POST')) {
             return false;
         }
 
@@ -122,7 +130,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         // the URL they were on, and probably where you want to redirect to
         $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
         if (!$targetPath) {
-            $targetPath = $this->router->generate($this->redirectRoute);
+            $targetPath = $this->redirectPath;
         }
         return new RedirectResponse($targetPath);
     }
@@ -132,27 +140,39 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     protected function getLoginUrl()
     {
-        return $this->router->generate($this->loginRoute);
+        return $this->loginPath;
     }
 
     /**
      * @param string $redirectRoute
+     * @param bool $withHost
      * @return LoginFormAuthenticator
      */
-    public function setRedirectRoute(string $redirectRoute): LoginFormAuthenticator
+    public function setRedirectRoute(string $redirectRoute, bool $withHost = false): LoginFormAuthenticator
     {
-        $this->redirectRoute = $redirectRoute;
+        $requirements = [];
+        if ($withHost) {
+            $requirements['host'] = $this->requestStack->getCurrentRequest()->getHost();
+        }
+
+        $this->redirectPath = $this->router->generate($redirectRoute, $requirements);
 
         return $this;
     }
 
     /**
      * @param string $loginRoute
+     * @param bool $withHost
      * @return LoginFormAuthenticator
      */
-    public function setLoginRoute(string $loginRoute): LoginFormAuthenticator
+    public function setLoginRoute(string $loginRoute, bool $withHost = false): LoginFormAuthenticator
     {
-        $this->loginRoute = $loginRoute;
+        $requirements = [];
+        if ($withHost) {
+            $requirements['host'] = $this->requestStack->getCurrentRequest()->getHost();
+        }
+
+        $this->loginPath = $this->router->generate($loginRoute, $requirements);
 
         return $this;
     }
