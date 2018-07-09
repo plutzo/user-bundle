@@ -3,5 +3,4 @@
     <route id="marlinc_user_admin_security_login" path="/login">
         <default key="_controller">Marlinc\UserBundle\Controller\AdminSecurityController::loginAction</default>
     </route>
-    <route id="marlinc_user_admin_security_check" path="/login_check" methods="POST" />
 </routes>
