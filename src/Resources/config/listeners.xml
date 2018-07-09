@@ -12,7 +12,7 @@
             <argument type="service" id="marlinc.security.user_checker" />
             <argument type="service" id="request_stack" />
             <argument type="service" id="security.authentication.session_strategy" />
-            <argument type="service" id="security.firewall.context" />
+            <argument type="service" id="security.firewall.map" />
             <argument type="service" id="security.token_storage" />
             <tag name="kernel.event_subscriber" />
         </service>

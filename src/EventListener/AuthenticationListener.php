@@ -7,6 +7,7 @@ use Marlinc\UserBundle\Event\UserEvent;
 use Marlinc\UserBundle\Event\UserEvents;
 use Marlinc\UserBundle\Model\UserInterface;
 use Symfony\Bundle\SecurityBundle\Security\FirewallContext;
+use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,9 +44,9 @@ class AuthenticationListener implements EventSubscriberInterface
     private $sessionStrategy;
 
     /**
-     * @var FirewallContext
+     * @var FirewallMap
      */
-    private $firewallContext;
+    private $firewallMap;
 
     /**
      * @var TokenStorageInterface
@@ -55,13 +56,13 @@ class AuthenticationListener implements EventSubscriberInterface
     public function __construct(UserCheckerInterface $userChecker,
                                 RequestStack $requestStack,
                                 SessionAuthenticationStrategyInterface $sessionStrategy,
-                                FirewallContext $firewallContext,
+                                FirewallMap $firewallMap,
                                 TokenStorageInterface $tokenStorage)
     {
         $this->userChecker = $userChecker;
         $this->requestStack = $requestStack;
         $this->sessionStrategy = $sessionStrategy;
-        $this->firewallContext = $firewallContext;
+        $this->firewallMap = $firewallMap;
         $this->tokenStorage = $tokenStorage;
     }
 
@@ -89,8 +90,8 @@ class AuthenticationListener implements EventSubscriberInterface
 
             $this->userChecker->checkPreAuth($user);
 
-            $token = $this->createAuthenticatedToken($user, $this->firewallContext->getConfig()->getName());
             $request = $this->requestStack->getCurrentRequest();
+            $token = $this->createAuthenticatedToken($user, $this->firewallMap->getFirewallConfig($request)->getName());
 
             $this->migrateSession($request, $token);
             $this->tokenStorage->setToken($token);
