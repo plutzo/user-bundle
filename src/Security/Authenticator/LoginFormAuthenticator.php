@@ -1,10 +1,9 @@
 <?php
 
-namespace Marlinc\UserBundle\Security;
+namespace Marlinc\UserBundle\Security\Authenticator;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
@@ -39,33 +38,29 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     /**
      * @var string
      */
-    private $redirectPath;
+    private $redirectRoute;
 
     /**
      * @var string
      */
-    private $loginPath;
+    private $loginRoute;
 
     /**
-     * @var RequestStack
+     * @var string|null
      */
-    private $requestStack;
+    private $host;
 
     /**
      * LoginFormAuthenticator constructor.
      * @param RouterInterface $router
      * @param UserPasswordEncoder $passwordEncoder
      * @param CsrfTokenManagerInterface $csrfTokenManager
-     * @param RequestStack $requestStack
      */
-    public function __construct(RouterInterface $router, UserPasswordEncoder $passwordEncoder, CsrfTokenManagerInterface $csrfTokenManager, RequestStack $requestStack)
+    public function __construct(RouterInterface $router, UserPasswordEncoder $passwordEncoder, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $this->router = $router;
         $this->passwordEncoder = $passwordEncoder;
         $this->csrfTokenManager = $csrfTokenManager;
-        $this->requestStack = $requestStack;
-        $this->redirectPath = $this->router->generate('login');
-        $this->loginPath = $this->router->generate('login');
     }
 
     /**
@@ -74,7 +69,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function supports(Request $request)
     {
         // Only try to authenticate if current path matches login route
-        if ($request->getBaseUrl().$request->getPathInfo() != $this->loginPath || !$request->isMethod('POST')) {
+        $loginPath = $this->generateRoute($this->loginRoute);
+        if ($request->getBaseUrl().$request->getPathInfo() != $loginPath || !$request->isMethod('POST')) {
             return false;
         }
 
@@ -130,7 +126,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         // the URL they were on, and probably where you want to redirect to
         $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
         if (!$targetPath) {
-            $targetPath = $this->redirectPath;
+            $targetPath = $this->generateRoute($this->redirectRoute);
         }
         return new RedirectResponse($targetPath);
     }
@@ -140,39 +136,53 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     protected function getLoginUrl()
     {
-        return $this->loginPath;
+        return $this->generateRoute($this->loginRoute);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function generateRoute(string $name): string
+    {
+        if ($this->host !== null) {
+            return $this->router->generate($name, [
+                'host' => $this->host
+            ]);
+        } else {
+            return $this->router->generate($name);
+        }
     }
 
     /**
      * @param string $redirectRoute
-     * @param bool $withHost
      * @return LoginFormAuthenticator
      */
-    public function setRedirectRoute(string $redirectRoute, bool $withHost = false): LoginFormAuthenticator
+    public function setRedirectRoute(string $redirectRoute): LoginFormAuthenticator
     {
-        $requirements = [];
-        if ($withHost) {
-            $requirements['host'] = $this->requestStack->getCurrentRequest()->getHost();
-        }
-
-        $this->redirectPath = $this->router->generate($redirectRoute, $requirements);
+        $this->redirectRoute = $redirectRoute;
 
         return $this;
     }
 
     /**
      * @param string $loginRoute
-     * @param bool $withHost
      * @return LoginFormAuthenticator
      */
-    public function setLoginRoute(string $loginRoute, bool $withHost = false): LoginFormAuthenticator
+    public function setLoginRoute(string $loginRoute): LoginFormAuthenticator
     {
-        $requirements = [];
-        if ($withHost) {
-            $requirements['host'] = $this->requestStack->getCurrentRequest()->getHost();
-        }
+        $this->loginRoute = $loginRoute;
 
-        $this->loginPath = $this->router->generate($loginRoute, $requirements);
+        return $this;
+    }
+
+    /**
+     * @param null|string $host
+     * @return LoginFormAuthenticator
+     */
+    public function setHost(?string $host): LoginFormAuthenticator
+    {
+        $this->host = $host;
 
         return $this;
     }

@@ -28,13 +28,12 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="doctrine.dbal.marlinc_connection"/>
         </service>
-        <service id="Marlinc\UserBundle\Security\LoginFormAuthenticator" public="false" abstract="true">
+        <service id="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" public="false" abstract="true">
             <argument type="service" id="router"/>
             <argument type="service" id="security.password_encoder"/>
             <argument type="service" id="security.csrf.token_manager"/>
-            <argument type="service" id="request_stack" />
         </service>
-        <service id="marlinc.user.formauth.admin" parent="Marlinc\UserBundle\Security\LoginFormAuthenticator" class="Marlinc\UserBundle\Security\LoginFormAuthenticator" public="false">
+        <service id="marlinc.user.formauth.admin" parent="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" class="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" public="false">
             <call method="setLoginRoute">
                 <argument>%marlinc.user.admin.login%</argument>
             </call>
