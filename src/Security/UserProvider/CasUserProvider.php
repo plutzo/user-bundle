@@ -1,11 +1,16 @@
 <?php
 
-namespace Marlinc\UserBundle\Security;
+namespace Marlinc\UserBundle\Security\UserProvider;
 
+use Marlinc\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Try to load the user data from the GDHS CAS System and migrate it
+ * to the Marlinc2 user system.
+ */
 class CasUserProvider implements UserProviderInterface
 {
     protected $em;
@@ -48,6 +53,6 @@ class CasUserProvider implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        return 'Marlinc\UserBundle\Entity\User' === $class;
+        return $class === User::class;
     }
 }

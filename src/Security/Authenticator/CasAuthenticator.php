@@ -1,8 +1,9 @@
 <?php
 
-namespace Marlinc\UserBundle\Security;
+namespace Marlinc\UserBundle\Security\Authenticator;
 
 use Marlinc\UserBundle\Entity\User;
+use Marlinc\UserBundle\Security\UserProvider\CasUserProvider;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

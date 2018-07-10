@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Marlinc\UserBundle\Model\GroupableInterface;
 use Marlinc\UserBundle\Model\GroupInterface;
 use Marlinc\UserBundle\Model\UserInterface;
@@ -149,6 +150,41 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
         $this->enabled = false;
         $this->roles = [];
         $this->person = new Person();
+    }
+
+    /**
+     * @param array $credentials
+     * @return User
+     */
+    public static function createFromLegacyAccount(array $credentials): User
+    {
+        $user = new self();
+        $user
+            ->setEmail($credentials['email'])
+            ->setPlainPassword(random_bytes(10))
+            ->setEnabled(true)
+            ->setLocale('de')
+            ->addRole('ROLE_USER');
+        $person = $user->getPerson();
+
+        $name = explode(' ', $credentials['name']);
+        $person
+            ->setFirstname(array_shift($name))
+            ->setLastname(implode(' ', $name));
+
+        foreach ($credentials['data'] as $key => $value) {
+            switch ($key) {
+                case 'salutation':
+                    $person->setGender(($value == 'Herr')
+                        ? GenderEnumType::GENDER_MALE
+                        : (($value == 'Frau')
+                            ? GenderEnumType::GENDER_FEMALE
+                            : GenderEnumType::GENDER_UNKNOWN));
+                    break;
+            }
+        }
+
+        return $user;
     }
 
     public function __toString()

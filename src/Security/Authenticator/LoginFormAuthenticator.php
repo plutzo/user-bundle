@@ -19,11 +19,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    use ConfigurableRoutesTrait;
 
     /**
      * @var UserPasswordEncoder
@@ -34,21 +30,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      * @var CsrfTokenManagerInterface
      */
     private $csrfTokenManager;
-
-    /**
-     * @var string
-     */
-    private $redirectRoute;
-
-    /**
-     * @var string
-     */
-    private $loginRoute;
-
-    /**
-     * @var string|null
-     */
-    private $host;
 
     /**
      * LoginFormAuthenticator constructor.
@@ -114,6 +95,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
+        // TODO: Alter check if user is migrated from Marlinc1
+
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
@@ -137,53 +120,5 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     protected function getLoginUrl()
     {
         return $this->generateRoute($this->loginRoute);
-    }
-
-    /**
-     * @param string $name
-     * @return string
-     */
-    private function generateRoute(string $name): string
-    {
-        if ($this->host !== null) {
-            return $this->router->generate($name, [
-                'host' => $this->host
-            ]);
-        } else {
-            return $this->router->generate($name);
-        }
-    }
-
-    /**
-     * @param string $redirectRoute
-     * @return LoginFormAuthenticator
-     */
-    public function setRedirectRoute(string $redirectRoute): LoginFormAuthenticator
-    {
-        $this->redirectRoute = $redirectRoute;
-
-        return $this;
-    }
-
-    /**
-     * @param string $loginRoute
-     * @return LoginFormAuthenticator
-     */
-    public function setLoginRoute(string $loginRoute): LoginFormAuthenticator
-    {
-        $this->loginRoute = $loginRoute;
-
-        return $this;
-    }
-
-    /**
-     * @param null|string $host
-     * @return LoginFormAuthenticator
-     */
-    public function setHost(?string $host): LoginFormAuthenticator
-    {
-        $this->host = $host;
-
-        return $this;
     }
 }

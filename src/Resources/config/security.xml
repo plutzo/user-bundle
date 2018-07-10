@@ -7,33 +7,40 @@
         <parameter key="marlinc.user.admin.redirect">sonata_admin_dashboard</parameter>
     </parameters>
     <services>
-        <service id="marlinc.user.user_manager" class="Marlinc\UserBundle\Manager\UserManager" public="false">
+        <defaults public="false" />
+        <service id="Marlinc\UserBundle\Manager\UserManager">
             <argument type="service" id="Marlinc\UserBundle\Util\PasswordUpdaterInterface"/>
             <argument type="service" id="Marlinc\UserBundle\Util\CanonicalizerInterface"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument>%marlinc.user.class.user%</argument>
         </service>
-        <service id="marlinc.user.group_manager" class="Marlinc\UserBundle\Manager\GroupManager" public="false">
+        <service id="Marlinc\UserBundle\Manager\GroupManager">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument>%marlinc.user.class.group%</argument>
         </service>
-        <service id="cas.authenticator" class="Marlinc\UserBundle\Security\CasAuthenticator" public="false"/>
-        <service id="cas.user.provider" class="Marlinc\UserBundle\Security\CasUserProvider">
+        <service id="Marlinc\UserBundle\Manager\Marlinc1UserLoader" />
+        <service id="Marlinc\UserBundle\Security\Authenticator\CasAuthenticator" />
+        <service id="Marlinc\UserBundle\Security\UserProvider\CasUserProvider">
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
-        <service id="marlinc1.authenticator" class="Marlinc\UserBundle\Security\Marlinc1Authenticator">
-            <argument type="service" id="security.http_utils"/>
+        <service id="Marlinc\UserBundle\Security\Authenticator\Marlinc1Authenticator">
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="lexik_jwt_authentication.extractor.authorization_header_extractor" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="Marlinc\UserBundle\Manager\Marlinc1UserLoader" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
-        <service id="marlinc1.user.provider" class="Marlinc\UserBundle\Security\Marlinc1UserProvider">
+        <service id="Marlinc\UserBundle\Security\UserProvider\Marlinc1UserProvider">
             <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="doctrine.dbal.marlinc_connection"/>
+            <argument type="service" id="marlinc.user.user_manager" />
+            <argument type="service" id="Marlinc\UserBundle\Manager\Marlinc1UserLoader"/>
         </service>
-        <service id="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" public="false" abstract="true">
+        <service id="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" abstract="true">
             <argument type="service" id="router"/>
             <argument type="service" id="security.password_encoder"/>
             <argument type="service" id="security.csrf.token_manager"/>
         </service>
-        <service id="marlinc.user.formauth.admin" parent="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" class="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" public="false">
+        <service id="marlinc.user.formauth.admin" parent="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" class="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator">
             <call method="setLoginRoute">
                 <argument>%marlinc.user.admin.login%</argument>
             </call>
@@ -41,7 +48,7 @@
                 <argument>%marlinc.user.admin.redirect%</argument>
             </call>
         </service>
-        <service id="marlinc.user.editable_role_builder" class="Marlinc\UserBundle\Security\RolesBuilder\EditableRolesBuilder" public="false">
+        <service id="Marlinc\UserBundle\Security\RolesBuilder\EditableRolesBuilder">
             <argument type="service" id="security.token_storage"/>
             <argument type="service" id="security.authorization_checker"/>
             <argument type="service" id="sonata.admin.pool"/>
@@ -50,25 +57,22 @@
                 <argument type="service" id="translator"/>
             </call>
         </service>
-        <service id="marlinc.user.matrix_roles_builder" class="Marlinc\UserBundle\Security\RolesBuilder\MatrixRolesBuilder" public="false">
+        <service id="Marlinc\UserBundle\Security\RolesBuilder\MatrixRolesBuilder">
             <argument type="service" id="security.token_storage"/>
             <argument type="service" id="marlinc.user.admin_roles_builder"/>
             <argument type="service" id="marlinc.user.security_roles_builder"/>
         </service>
-        <service id="marlinc.user.admin_roles_builder" class="Marlinc\UserBundle\Security\RolesBuilder\AdminRolesBuilder" public="false">
+        <service id="Marlinc\UserBundle\Security\RolesBuilder\AdminRolesBuilder">
             <argument type="service" id="security.authorization_checker"/>
             <argument type="service" id="sonata.admin.pool"/>
             <argument type="service" id="translator"/>
         </service>
-        <service id="marlinc.user.security_roles_builder" class="Marlinc\UserBundle\Security\RolesBuilder\SecurityRolesBuilder" public="false">
+        <service id="Marlinc\UserBundle\Security\RolesBuilder\SecurityRolesBuilder">
             <argument type="service" id="security.authorization_checker"/>
             <argument type="service" id="sonata.admin.pool"/>
             <argument type="service" id="translator"/>
             <argument>%security.role_hierarchy.roles%</argument>
         </service>
-        <service id="marlinc.user.provider.default" class="Marlinc\UserBundle\Security\UserProvider" public="false">
-            <argument type="service" id="marlinc.user.user_manager" />
-        </service>
-        <service id="marlinc.security.user_checker" class="Marlinc\UserBundle\Security\UserChecker" />
+        <service id="Marlinc\UserBundle\Security\UserChecker" />
     </services>
 </container>
