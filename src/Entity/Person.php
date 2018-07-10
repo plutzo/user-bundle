@@ -8,8 +8,8 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints\Enum as AssertEnum;
 use libphonenumber\PhoneNumber;
 use Marlinc\EntityBundle\Entity\EntityReference;
 use Marlinc\PostalCodeBundle\Entity\PostalCodeLocation;
+use Marlinc\UserBundle\Doctrine\GenderEnumType;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhone;
-use Sonata\UserBundle\Model\UserInterface;
 use Symfony\Component\Form\Exception\BadMethodCallException;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -163,7 +163,7 @@ class Person extends EntityReference
     {
         parent::__construct();
 
-        $this->gender = UserInterface::GENDER_UNKNOWN;
+        $this->gender = GenderEnumType::GENDER_UNKNOWN;
         $this->formal = true;
     }
 
