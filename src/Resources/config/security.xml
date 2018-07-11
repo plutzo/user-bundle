@@ -53,7 +53,7 @@
             <argument type="service" id="security.password_encoder"/>
             <argument type="service" id="security.csrf.token_manager"/>
         </service>
-        <service id="marlinc.user.formauth.admin" parent="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" class="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator">
+        <service id="marlinc.user.formauth.admin" parent="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" class="Marlinc\UserBundle\Security\Authenticator\LoginFormAuthenticator" public="false">
             <call method="setLoginRoute">
                 <argument>%marlinc.user.admin.login%</argument>
             </call>

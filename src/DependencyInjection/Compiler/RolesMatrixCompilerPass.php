@@ -19,7 +19,7 @@ final class RolesMatrixCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('sonata.admin') as $name => $items) {
             foreach ($items as $item) {
                 if (($item['show_in_roles_matrix'] ?? true) === false) {
-                    $container->getDefinition('marlinc.user.admin_roles_builder')
+                    $container->getDefinition('Marlinc\UserBundle\Security\RolesBuilder\AdminRolesBuilder')
                         ->addMethodCall('addExcludeAdmin', [$name]);
                 }
             }
