@@ -70,6 +70,10 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
             ]);
         }
 
+        if (!empty($config['cas'])) {
+            $this->configureCasAuthenticator($config['cas'], $container);
+        }
+
         $container->setParameter('marlinc.user.default_avatar', $config['profile']['default_avatar']);
         $container->setParameter('marlinc.user.impersonating', $config['impersonating']);
     }
@@ -130,6 +134,19 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
 
         $container->getDefinition('marlinc.user.google.authenticator.provider')
             ->replaceArgument(0, $config['google_authenticator']['server']);
+    }
+
+    /**
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    private function configureCasAuthenticator(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter('marlinc.user.cas.serverurl', $config['server_url']);
+        $container->setParameter('marlinc.user.cas.ticketname', $config['ticket_parameter_name']);
+        $container->setParameter('marlinc.user.cas.servicename', $config['service_parameter_name']);
+        $container->setParameter('marlinc.user.cas.username', $config['user_attribute_name']);
+        $container->setParameter('marlinc.user.cas.xmlnamespace', $config['xml_namespace']);
     }
 
     /**

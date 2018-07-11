@@ -2,10 +2,12 @@
 
 namespace Marlinc\UserBundle\Security\UserProvider;
 
-use Doctrine\ORM\EntityManager;
 use Marlinc\UserBundle\Entity\User;
+use Marlinc\UserBundle\Event\UserEvents;
+use Marlinc\UserBundle\Event\UserImportEvent;
 use Marlinc\UserBundle\Model\UserManagerInterface;
 use Marlinc\UserBundle\Manager\Marlinc1UserLoader;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 /**
@@ -20,37 +22,40 @@ class Marlinc1UserProvider extends AbstractUserProvider
     private $userLoader;
 
     /**
-     * @var EntityManager
+     * @var EventDispatcherInterface
      */
-    private $em;
+    private $eventDispatcher;
 
-    public function __construct(EntityManager $em, UserManagerInterface $userManager, Marlinc1UserLoader $userLoader)
+    /**
+     * Marlinc1UserProvider constructor.
+     * @param UserManagerInterface $userManager
+     * @param Marlinc1UserLoader $userLoader
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(UserManagerInterface $userManager, Marlinc1UserLoader $userLoader, EventDispatcherInterface $eventDispatcher)
     {
         parent::__construct($userManager);
 
-        $this->em = $em;
+        $this->eventDispatcher = $eventDispatcher;
         $this->userLoader = $userLoader;
     }
 
     public function loadUserByUsername($username)
     {
         $credentials = $this->userLoader->findUserByLogin($username);
-        $user = false;
 
         if ($credentials !== null) {
             $user = User::createFromLegacyAccount($credentials);
 
-            $this->em->persist($user);
-            $this->em->flush();
+            $this->userManager->updateUser($user);
 
-            // TODO: Emit event -> Add flash message, assign to client
+            $event = new UserImportEvent($user, $credentials);
+            $this->eventDispatcher->dispatch(UserEvents::SECURITY_LEGACY_IMPORT, $event);
+            // TODO: Add event listener -> Add flash message, assign to client, force user to reset password
+
+            return $user;
         }
 
-        if (!$user) {
-            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
-        }
-
-        return $user;
+        throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
     }
-
 }

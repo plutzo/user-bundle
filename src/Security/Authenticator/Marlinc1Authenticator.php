@@ -2,18 +2,18 @@
 
 namespace Marlinc\UserBundle\Security\Authenticator;
 
-use Doctrine\DBAL\FetchMode;
-use Doctrine\ORM\EntityManager;
 use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\TokenExtractorInterface;
-use Marlinc\UserBundle\Entity\User;
+use Marlinc\UserBundle\Event\UserEvent;
+use Marlinc\UserBundle\Event\UserEvents;
 use Marlinc\UserBundle\Manager\Marlinc1UserLoader;
+use Marlinc\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
@@ -32,7 +32,7 @@ class Marlinc1Authenticator extends AbstractGuardAuthenticator
     /**
      * @var EventDispatcherInterface
      */
-    private $dispatcher;
+    private $eventDispatcher;
 
     /**
      * @var TokenExtractorInterface
@@ -50,25 +50,18 @@ class Marlinc1Authenticator extends AbstractGuardAuthenticator
     private $userLoader;
 
     /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
      * Marlinc1Authenticator constructor.
      * @param EventDispatcherInterface $dispatcher
      * @param TokenExtractorInterface $tokenExtractor
      * @param TokenStorageInterface $preAuthenticationTokenStorage
      * @param Marlinc1UserLoader $userLoader
-     * @param EntityManager $em
      */
-    public function __construct(EventDispatcherInterface $dispatcher, TokenExtractorInterface $tokenExtractor, TokenStorageInterface $preAuthenticationTokenStorage, Marlinc1UserLoader $userLoader, EntityManager $em)
+    public function __construct(EventDispatcherInterface $dispatcher, TokenExtractorInterface $tokenExtractor, TokenStorageInterface $preAuthenticationTokenStorage, Marlinc1UserLoader $userLoader)
     {
-        $this->dispatcher = $dispatcher;
+        $this->eventDispatcher = $dispatcher;
         $this->tokenExtractor = $tokenExtractor;
         $this->preAuthenticationTokenStorage = $preAuthenticationTokenStorage;
         $this->userLoader = $userLoader;
-        $this->em = $em;
     }
 
     /**
@@ -123,26 +116,20 @@ class Marlinc1Authenticator extends AbstractGuardAuthenticator
         $user = $userProvider->loadUserByUsername($credentials['email']);
 
         if ($user instanceof UserInterface) {
-            // TODO: Emit event (new user already exists) -> Add flash message for new login
+            $event = new UserEvent($user);
+            $this->eventDispatcher->dispatch(UserEvents::SECURITY_LEGACY_LOGIN, $event);
+            // TODO: Add event listener -> Add flash message for new login
+
             return $user;
         }
 
-        // Create user, if not found
-        $user = User::createFromLegacyAccount($credentials);
-
-        $this->em->persist($user);
-        $this->em->flush();
-
-        // TODO: Emit event -> Add flash message, assign to client
-        // TODO: Force user to reset password
-
-        return $user;
+        return null;
     }
 
     /**
      * @inheritDoc
      */
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, SecurityUserInterface $user)
     {
         if ($credentials === false) {
             return false;

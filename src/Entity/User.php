@@ -75,6 +75,13 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
     protected $enabled;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=109, nullable=true)
+     */
+    protected $casLogin;
+
+    /**
      * If not null, a two step verification with GoogleAuthenticator app will be used on each login.
      *
      * @var string
@@ -183,6 +190,29 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
                     break;
             }
         }
+
+        return $user;
+    }
+
+    /**
+     * @param array $credentials
+     * @return User
+     */
+    public static function createFromCasAccount(array $credentials): User
+    {
+        $user = new self();
+        $user
+            ->setEmail($credentials['USERID'].'@default.temp')
+            ->setPlainPassword(random_bytes(10))
+            ->setEnabled(true)
+            ->setLocale('de')
+            ->addRole('ROLE_USER');
+        $person = $user->getPerson();
+
+        $name = explode(' ', $credentials['FULLNAME']);
+        $person
+            ->setFirstname(array_shift($name))
+            ->setLastname(implode(' ', $name));
 
         return $user;
     }
@@ -642,6 +672,25 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
     public function getTimezone(): ?string
     {
         return $this->timezone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCasLogin(): string
+    {
+        return $this->casLogin;
+    }
+
+    /**
+     * @param string $casLogin
+     * @return User
+     */
+    public function setCasLogin(string $casLogin): User
+    {
+        $this->casLogin = $casLogin;
+
+        return $this;
     }
 
     /**

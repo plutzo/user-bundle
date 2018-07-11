@@ -21,10 +21,17 @@ class Marlinc1UserLoader
 
     /**
      * Marlinc1DbLoader constructor.
+     * @param array $connections
      */
-    public function __construct()
+    public function __construct(array $connections)
     {
         $this->connections = [];
+
+        foreach ($connections as $name => $connection) {
+            if (strpos($name, 'marlinc') === 0) {
+                $this->connections[] = $connection;
+            }
+        }
     }
 
     /**

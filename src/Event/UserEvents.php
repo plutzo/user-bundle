@@ -255,4 +255,15 @@ final class UserEvents
      * @Event("Marlinc\UserBundle\Event\UserEvent")
      */
     const USER_DEMOTED = 'marlinc.user.user.demoted';
+
+    /**
+     * The LEGACY_LOGIN event occurs when the user logs in via a legacy system.
+     *
+     * This event allows you to access the user object and add some behaviour after the login.
+     */
+    const SECURITY_LEGACY_LOGIN = 'marlinc.user.login.legacy';
+
+    const SECURITY_CAS_IMPORT = 'marlinc.user.import.cas';
+
+    const SECURITY_LEGACY_IMPORT = 'marlinc.user.import.legacy';
 }

@@ -1,58 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: em
+ * Date: 11.07.18
+ * Time: 11:06
+ */
 
 namespace Marlinc\UserBundle\Security\UserProvider;
 
-use Marlinc\UserBundle\Entity\User;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\ORM\EntityManager;
 
-/**
- * Try to load the user data from the GDHS CAS System and migrate it
- * to the Marlinc2 user system.
- */
-class CasUserProvider implements UserProviderInterface
+use Marlinc\UserBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+
+class CasUserProvider extends AbstractUserProvider
 {
-    protected $em;
-
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }    
-    
-    public function getUsernameForApiKey($authUserId)
-    {
-        // Look up the username based on the token in the database.
-        $CasUser = $this->em
-            ->getRepository('MarlincUserBundle:CasUser')
-            ->findOneBy([
-                'username' => base64_decode($authUserId)
-            ]);
-                  
-        if($CasUser->getUsername() != '') {
-            return $CasUser->getUser()->getUsername();
-        } else {
-            return false;
-        }
-    }
-
+    /**
+     * @inheritDoc
+     */
     public function loadUserByUsername($username)
     {
-        $user = $this->em
-            ->getRepository('MarlincUserBundle:User')
-            ->findOneBy([
-                'username' => $username
-            ]);
-        return $user;
-    }
+        $user = $this->userManager->findUserBy(['casLogin' => $username]);
 
-    public function refreshUser(UserInterface $user)
-    {
-        return $user;
-    }
+        if ($user instanceof UserInterface) {
+            return $user;
+        }
 
-    public function supportsClass($class)
-    {
-        return $class === User::class;
+        throw new UsernameNotFoundException();
     }
 }
