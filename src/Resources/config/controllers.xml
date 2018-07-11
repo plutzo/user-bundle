@@ -11,7 +11,7 @@
         <service id="Marlinc\UserBundle\Controller\AdminResettingController" public="true">
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="marlinc.user.resetting.form.factory" />
-            <argument type="service" id="marlinc.user.user_manager" />
+            <argument type="service" id="Marlinc\UserBundle\Manager\UserManager" />
             <argument type="service" id="marlinc.user.util.token_generator" />
             <argument type="service" id="Marlinc\UserBundle\Mailer\MailerInterface" />
             <argument>%marlinc.user.resetting.retry_ttl%</argument>

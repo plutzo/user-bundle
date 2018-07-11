@@ -4,7 +4,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="marlinc.user.util.user_manipulator" class="Marlinc\UserBundle\Util\UserManipulator">
-            <argument type="service" id="marlinc.user.user_manager"/>
+            <argument type="service" id="Marlinc\UserBundle\Manager\UserManager"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="request_stack"/>
         </service>

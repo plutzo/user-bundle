@@ -22,11 +22,11 @@
         <service id="marlinc.user.google.authenticator.success_handler" class="Marlinc\UserBundle\EventListener\TwoFactorLoginSuccessHandler" public="false">
             <argument type="service" id="sonata.templating"/>
             <argument type="service" id="marlinc.user.google.authenticator.provider"/>
-            <argument type="service" id="marlinc.user.user_manager"/>
+            <argument type="service" id="Marlinc\UserBundle\Manager\UserManager"/>
         </service>
         <service id="marlinc.user.command.two_step_verification" class="Marlinc\UserBundle\Command\TwoStepVerificationCommand">
             <argument type="service" id="marlinc.user.google.authenticator.provider" />
-            <argument type="service" id="marlinc.user.user_manager" />
+            <argument type="service" id="Marlinc\UserBundle\Manager\UserManager" />
             <tag name="console.command" command="marlinc:user:two-step-verification" />
         </service>
     </services>
