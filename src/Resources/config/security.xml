@@ -24,7 +24,7 @@
             <argument>%marlinc.user.class.group%</argument>
         </service>
         <service id="Marlinc\UserBundle\Manager\Marlinc1UserLoader">
-            <argument type="service" id="doctrine.connections" />
+            <argument type="service" id="doctrine" />
         </service>
         <service id="marlinc.user.authenticator.cas" class="Marlinc\UserBundle\Security\Authenticator\CasAuthenticator">
             <argument type="service" id="event_dispatcher" />

@@ -9,6 +9,7 @@
 namespace Marlinc\UserBundle\Manager;
 
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 
@@ -21,13 +22,13 @@ class Marlinc1UserLoader
 
     /**
      * Marlinc1DbLoader constructor.
-     * @param array $connections
+     * @param ManagerRegistry $doctrine
      */
-    public function __construct(array $connections)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->connections = [];
 
-        foreach ($connections as $name => $connection) {
+        foreach ($doctrine->getConnections() as $name => $connection) {
             if (strpos($name, 'marlinc') === 0) {
                 $this->connections[] = $connection;
             }
