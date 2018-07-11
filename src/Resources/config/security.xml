@@ -86,6 +86,6 @@
             <argument type="service" id="translator"/>
             <argument>%security.role_hierarchy.roles%</argument>
         </service>
-        <service id="Marlinc\UserBundle\Security\UserChecker" />
+        <service id="marlinc.security.user_checker" class="Marlinc\UserBundle\Security\UserChecker" />
     </services>
 </container>

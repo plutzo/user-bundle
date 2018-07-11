@@ -9,7 +9,7 @@
             <tag name="kernel.event_subscriber" />
         </service>
         <service id="marlinc.user.listener.authentication" class="Marlinc\UserBundle\EventListener\AuthenticationListener">
-            <argument type="service" id="Marlinc\UserBundle\Security\UserChecker" />
+            <argument type="service" id="marlinc.security.user_checker" />
             <argument type="service" id="request_stack" />
             <argument type="service" id="security.authentication.session_strategy" />
             <argument type="service" id="security.firewall.map" />
