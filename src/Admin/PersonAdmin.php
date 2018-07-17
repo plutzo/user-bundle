@@ -113,7 +113,8 @@ class PersonAdmin extends AbstractAdmin
             ->with('Additional Information', ['class' => 'col-md-6'])
                 ->add('birthday', null, [
                     'widget' => 'single_text',
-                    'html5' => true
+                    'html5' => true,
+                    'required' => false
                 ])
             ->end();
     }
