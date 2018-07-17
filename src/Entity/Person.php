@@ -139,7 +139,7 @@ class Person extends EntityReference
      * @ORM\Column(name="newsletter", type="boolean")
      * @Assert\NotNull(groups={"newsletter"})
      */
-    private $newsletter = false;
+    private $newsletter;
 
     /**
      * @var string
@@ -165,6 +165,7 @@ class Person extends EntityReference
 
         $this->gender = GenderEnumType::GENDER_UNKNOWN;
         $this->formal = true;
+        $this->newsletter = false;
     }
 
     public function __toString()

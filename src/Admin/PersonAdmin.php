@@ -102,6 +102,7 @@ class PersonAdmin extends AbstractAdmin
             ->end()
             ->with('Newsletter', ['class' => 'col-md-6'])
                 ->add('newsletter', null, [
+                    'required' => false,
                     'help' => 'If set, this person will receive newsletters via email. For legal reasons in general this box shouldn\'t be checked manually.'
                 ])
                 ->add('newsletterToken', null, [
