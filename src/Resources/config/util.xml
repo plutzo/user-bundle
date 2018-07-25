@@ -8,7 +8,7 @@
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="request_stack"/>
         </service>
-        <service id="marlinc.user.util.token_generator" class="Marlinc\UserBundle\Util\TokenGenerator" public="false" />
+        <service id="marlinc.user.util.token_generator" class="Marlinc\UserBundle\Util\TokenGenerator" public="true" />
         <service id="Marlinc\UserBundle\Util\TokenGeneratorInterface" alias="marlinc.user.util.token_generator" public="false" />
         <service id="marlinc.user.util.password_updater" class="Marlinc\UserBundle\Util\PasswordUpdater" public="false">
             <argument type="service" id="security.encoder_factory" />
