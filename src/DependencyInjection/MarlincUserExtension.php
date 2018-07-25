@@ -52,7 +52,7 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
             $container,
             new FileLocator(__DIR__ . '/../Resources/config')
         );
-        foreach (['services', 'util', 'commands', 'forms', 'controllers', 'security', 'listeners', 'admin'] as $basename) {
+        foreach (['services', 'util', 'commands', 'forms', 'controllers', 'security', 'listeners', 'admin', 'mailer'] as $basename) {
             $loader->load(sprintf('%s.xml', $basename));
         }
 
