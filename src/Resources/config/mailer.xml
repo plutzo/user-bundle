@@ -12,7 +12,7 @@
             <argument type="service" id="twig" />
             <argument type="collection">
                 <argument key="template" type="collection">
-                    <argument key="resetting">@MarlincUser/Mails/resetting_request.html.twig</argument>
+                    <argument key="resetting">@MarlincUser/Admin/Mails/resetting_request.html.twig</argument>
                 </argument>
                 <argument key="route" type="collection">
                     <argument key="resetting">marlinc_user_admin_resetting_reset</argument>
