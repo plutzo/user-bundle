@@ -106,7 +106,7 @@ abstract class AbstractResettingController extends Controller
      */
     public function sendEmailAction(Request $request)
     {
-        $username = $request->request->get('username');
+        $username = $request->get('username');
 
         $user = $this->userManager->findUserByEmail($username);
 

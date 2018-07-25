@@ -13,7 +13,7 @@
             <argument type="service" id="marlinc.user.resetting.form.factory" />
             <argument type="service" id="Marlinc\UserBundle\Manager\UserManager" />
             <argument type="service" id="marlinc.user.util.token_generator" />
-            <argument type="service" id="Marlinc\UserBundle\Mailer\MailerInterface" />
+            <argument type="service" id="marlinc.user.mailer.admin" />
             <argument>%marlinc.user.resetting.retry_ttl%</argument>
             <call method="setContainer">
                 <argument type="service" id="service_container" />

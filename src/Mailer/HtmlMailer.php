@@ -61,7 +61,7 @@ class HtmlMailer implements MailerInterface
     public function sendConfirmationEmailMessage(UserInterface $user)
     {
         $template = $this->parameters['template']['confirmation'];
-        $url = $this->router->generate('fos_user_registration_confirm', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->router->generate($this->parameters['route']['confirmation'], ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $context = [
             'user' => $user,
@@ -77,7 +77,7 @@ class HtmlMailer implements MailerInterface
     public function sendResettingEmailMessage(UserInterface $user)
     {
         $template = $this->parameters['template']['resetting'];
-        $url = $this->router->generate('fos_user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->router->generate($this->parameters['route']['resetting'], ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $context = [
             'user' => $user,
@@ -98,7 +98,6 @@ class HtmlMailer implements MailerInterface
         $template = $this->twig->load($templateName);
         $subject = $template->renderBlock('subject', $context);
         $textBody = $template->renderBlock('body_text', $context);
-
         $htmlBody = '';
 
         if ($template->hasBlock('body_html', $context)) {

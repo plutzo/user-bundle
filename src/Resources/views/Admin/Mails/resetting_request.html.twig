@@ -1,0 +1,35 @@
+{% block subject -%}
+    Passwort zurücksetzen
+{%- endblock %}
+
+{% block body_html %}
+    <p>Sehr {% if user.person.gender == 'm' -%}
+            geehrter Herr
+        {%- elseif user.person.gender == 'f' -%}
+            geehrte Frau
+        {%- else -%}
+            geehrte(r)
+        {%- endif %} {{ user.person.firstname }} {{ user.person.lastname }},</p>
+
+    <p>Sie haben ein neues Passwort für Ihren Benutzeraccount {{ user.email }} angefordert!</p>
+
+    <p>Um ein neues Passwort zu wählen, klicken Sie bitte auf den folgenden Link: <a href="{{ confirmationUrl }}">Neues Passwort festlegen</a></p>
+
+    <p>Ihr Marlinc-Team</p>
+{% endblock %}
+
+{% block body_text %}
+    Sehr {% if user.person.gender == 'm' -%}
+    geehrter Herr
+{%- elseif user.person.gender == 'f' -%}
+    geehrte Frau
+{%- else -%}
+    geehrte(r)
+{%- endif %} {{ user.person.firstname }} {{ user.person.lastname }},
+
+    Sie haben ein neues Passwort für Ihren Benutzeraccount {{ user.email }} angefordert!
+
+    Um ein neues Passwort zu wählen, klicken Sie bitte auf den folgenden Link: {{ confirmationUrl }}
+
+    Ihr Marlinc-Team
+{% endblock %}
