@@ -2,6 +2,7 @@
 
 namespace Marlinc\UserBundle\Entity;
 
+use Doctrine\ORM\EntityNotFoundException;
 use Marlinc\EntityBundle\Entity\EntityReference;
 use Marlinc\ClientBundle\Entity\Client;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -219,7 +220,11 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
 
     public function __toString()
     {
-        return $this->getFullName().' ('.$this->email.')';
+        try {
+            return $this->getFullName().' ('.$this->email.')';
+        } catch (EntityNotFoundException $e) {
+            return $this->email;
+        }
     }
 
     /**
