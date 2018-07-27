@@ -96,7 +96,7 @@ interface UserInterface extends BaseUserInterface
      *
      * @return string
      */
-    public function getEmail(): string;
+    public function getEmail(): ?string;
 
     /**
      * Sets the email.

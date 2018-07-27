@@ -318,7 +318,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
     /**
      * {@inheritdoc}
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
