@@ -53,6 +53,23 @@ class PersonAdmin extends AbstractAdmin
     }
 
     /**
+     * {@inheritdoc}
+     */
+    protected function configureTrashFields(ListMapper $listMapper): void
+    {
+        $listMapper
+            ->add('gender')
+            ->add('firstname')
+            ->add('lastname')
+            ->add('deletedAt')
+            ->add('_action', null, [
+                'actions' => [
+                    'untrash' => [],
+                ]
+            ]);
+    }
+
+    /**
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)

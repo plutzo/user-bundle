@@ -49,6 +49,22 @@ class UserAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
+    protected function configureTrashFields(ListMapper $listMapper): void
+    {
+        $listMapper
+            ->add('email')
+            ->add('enabled')
+            ->add('deletedAt')
+            ->add('_action', null, [
+                'actions' => [
+                    'untrash' => [],
+                ]
+            ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function configureDatagridFilters(DatagridMapper $filterMapper): void
     {
         $filterMapper
