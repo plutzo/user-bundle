@@ -11,6 +11,7 @@ namespace Marlinc\UserBundle\Traits;
 
 use Marlinc\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Marlinc\EntityBundle\Annotation as Marlinc;
 
 trait BlameableSoftDeleteEntity
 {
@@ -19,6 +20,7 @@ trait BlameableSoftDeleteEntity
      *
      * @ORM\ManyToOne(targetEntity="Marlinc\UserBundle\Entity\User")
      * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
+     * @Marlinc\Blameable
      */
     private $deletedBy;
 
