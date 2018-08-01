@@ -33,10 +33,10 @@ trait BlameableSoftDeleteEntity
     }
 
     /**
-     * @param User $deletedBy
+     * @param User|null $deletedBy
      * @return $this
      */
-    public function setDeletedBy(User $deletedBy)
+    public function setDeletedBy(User $deletedBy = null)
     {
         $this->deletedBy = $deletedBy;
 
