@@ -32,18 +32,16 @@ class UserAdmin extends AbstractAdmin
             ->add('enabled', null, ['editable' => true])
             ->add('createdAt')
             ->add('allReferencingEntities', 'array')
-            ->add('_action', null, [
-                'actions' => [
-                    'show' => [],
-                    'edit' => [],
-                    'delete' => [],
-                ]
-            ]);
+        ;
 
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
             $listMapper
-                ->add('impersonating', 'string', ['template' => '@MarlincUser/Admin/Field/impersonating.html.twig']);
+                ->add('impersonating', 'string', [
+                    'template' => '@MarlincUser/Admin/Field/impersonating.html.twig'
+                ]);
         }
+
+        parent::configureListFields($listMapper);
     }
 
     /**
@@ -54,12 +52,9 @@ class UserAdmin extends AbstractAdmin
         $listMapper
             ->add('email')
             ->add('enabled')
-            ->add('deletedAt')
-            ->add('_action', null, [
-                'actions' => [
-                    'untrash' => [],
-                ]
-            ]);
+        ;
+
+        parent::configureTrashFields($listMapper);
     }
 
     /**

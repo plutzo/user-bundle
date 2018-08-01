@@ -44,12 +44,9 @@ class PersonAdmin extends AbstractAdmin
             ->add('firstname')
             ->add('lastname')
             ->add('referencingEntities')
-            ->add('_action', null, [
-                'actions' => [
-                    'show' => [],
-                    'edit' => [],
-                ]
-            ]);
+        ;
+
+        parent::configureListFields($listMapper);
     }
 
     /**
@@ -61,12 +58,9 @@ class PersonAdmin extends AbstractAdmin
             ->add('gender')
             ->add('firstname')
             ->add('lastname')
-            ->add('deletedAt')
-            ->add('_action', null, [
-                'actions' => [
-                    'untrash' => [],
-                ]
-            ]);
+        ;
+
+        parent::configureTrashFields($listMapper);
     }
 
     /**
