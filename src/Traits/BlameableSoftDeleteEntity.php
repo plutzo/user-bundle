@@ -11,7 +11,7 @@ namespace Marlinc\UserBundle\Traits;
 
 use Marlinc\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
-use Marlinc\EntityBundle\Annotation as Marlinc;
+use Marlinc\EntityBundle\BlameableSoftDelete\Annotation as Marlinc;
 
 trait BlameableSoftDeleteEntity
 {
