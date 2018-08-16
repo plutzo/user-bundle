@@ -84,6 +84,7 @@ class Person extends EntityReference
     /**
      * @var string
      *
+     * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="email", type="string", length=190, nullable=true)
      * @Assert\Email()
      * @Assert\NotBlank(groups={"email"})
@@ -93,6 +94,7 @@ class Person extends EntityReference
     /**
      * @var string
      *
+     * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="thoroughfare", type="string", length=190, nullable=true)
      * @Assert\NotBlank(groups={"FullAddress","thoroughfare"})
      */
@@ -101,6 +103,7 @@ class Person extends EntityReference
     /**
      * @var PostalCodeLocation
      *
+     * @Groups({"person_read", "person_write"})
      * @ORM\ManyToOne(targetEntity="Marlinc\PostalCodeBundle\Entity\PostalCodeLocation")
      * @ORM\JoinColumn(nullable=true)
      * @Assert\NotBlank(groups={"FullAddress","postalCode"})
@@ -110,6 +113,7 @@ class Person extends EntityReference
     /**
      * @var PhoneNumber
      *
+     * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="phone", type="phone", nullable=true)
      * @AssertPhone()
      * @Assert\NotBlank(groups={"phone"})
@@ -119,6 +123,7 @@ class Person extends EntityReference
     /**
      * @var PhoneNumber
      *
+     * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="mobile", type="phone", nullable=true)
      * @AssertPhone()
      * @Assert\NotBlank(groups={"mobile"})
