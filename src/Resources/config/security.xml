@@ -19,6 +19,7 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument>%marlinc.user.class.user%</argument>
         </service>
+        <service id="marlinc.user.manager.user" alias="Marlinc\UserBundle\Manager\UserManager" public="true" />
         <service id="Marlinc\UserBundle\Manager\GroupManager">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument>%marlinc.user.class.group%</argument>
