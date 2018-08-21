@@ -2,6 +2,7 @@
 
 namespace Marlinc\UserBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints\Enum as AssertEnum;
@@ -113,6 +114,7 @@ class Person extends EntityReference
     /**
      * @var PhoneNumber
      *
+     * @ApiProperty(writableLink=true)
      * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="phone", type="phone", nullable=true)
      * @AssertPhone()
@@ -123,6 +125,7 @@ class Person extends EntityReference
     /**
      * @var PhoneNumber
      *
+     * @ApiProperty(writableLink=true)
      * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="mobile", type="phone", nullable=true)
      * @AssertPhone()
