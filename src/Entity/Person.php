@@ -329,7 +329,7 @@ class Person extends EntityReference
      *
      * @return Person
      */
-    public function setPhone($phone)
+    public function setPhone(PhoneNumber $phone = null)
     {
         $this->phone = $phone;
 
@@ -353,7 +353,7 @@ class Person extends EntityReference
      *
      * @return Person
      */
-    public function setMobile($mobile)
+    public function setMobile(PhoneNumber $mobile = null)
     {
         $this->mobile = $mobile;
 
