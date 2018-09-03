@@ -4,7 +4,6 @@ namespace Marlinc\UserBundle\Entity;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Marlinc\EntityBundle\Entity\EntityReference;
-use Marlinc\ClientBundle\Entity\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -142,15 +141,6 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
      */
     protected $person;
 
-    /**
-     * @var Client
-     *
-     * TODO: Migrate reference to client object (person relation).
-     * @ORM\ManyToOne(targetEntity="Marlinc\ClientBundle\Entity\Client")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    protected $client;
-
     public function __construct()
     {
         parent::__construct();
@@ -245,14 +235,6 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
     }
 
     /**
-     * @return Client
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
      * @return Collection
      */
     public function getAllReferencingEntities(): Collection
@@ -267,16 +249,6 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
             }
         }
         return $all;
-    }
-
-    /**
-     * @param Client $client
-     * @return User
-     */
-    public function setClient(Client $client): User
-    {
-        $this->client = $client;
-        return $this;
     }
 
     /**
