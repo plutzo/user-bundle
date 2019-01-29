@@ -93,6 +93,20 @@ class PersonAdmin extends AbstractAdmin
                     'help' => 'The information about locality and country is encoded with the postal code.'
                 ])
             ->end()
+            ->with('Passport & Licenses', ['class' => 'col-md-6'])
+                ->add('passportNr', null)
+                ->add('passportIssueDate', null, [
+                    'widget' => 'single_text',
+                    'html5' => true,
+                    'required' => false
+                ])
+                ->add('passportIssueDate', null, [
+                    'widget' => 'single_text',
+                    'html5' => true,
+                    'required' => false
+                ])
+                ->add('driverLicenseNr', null)
+            ->end()
             ->with('Contact', ['class' => 'col-md-6'])
                 ->add('crmChannel', null, [
                     'help' => 'Select the preferred way to contact this person.'
