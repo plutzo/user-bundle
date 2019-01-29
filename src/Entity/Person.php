@@ -165,6 +165,39 @@ class Person extends EntityReference
     private $birthday;
 
     /**
+     * @var string
+     *
+     * @Groups({"person_read", "person_write"})
+     * @ORM\Column(name="passportNr", type="string", length=190, nullable=true)
+     */
+    private $passportNr;
+
+    /**
+     * @var \DateTime
+     *
+     * @Groups({"person_read", "person_write"})
+     * @ORM\Column(name="passportIssueDate", type="date", nullable=true)
+     */
+    private $passportIssueDate;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @Groups({"person_read", "person_write"})
+     * @ORM\Column(name="passportValidDate", type="date", nullable=true)
+     */
+    private $passportValidDate;
+
+    /**
+     * @var string
+     *
+     * @Groups({"person_read", "person_write"})
+     * @ORM\Column(name="driverLicenseNr", type="string", length=190, nullable=true)
+     */
+    private $driverLicenseNr;
+
+    /**
      * Person constructor.
      */
     public function __construct()
@@ -465,6 +498,71 @@ class Person extends EntityReference
         $this->crmChannel = $crmChannel;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getPassportNr(): ?string
+    {
+        return $this->passportNr;
+    }
+
+    /**
+     * @param string $passportNr
+     */
+    public function setPassportNr(string $passportNr): Person
+    {
+        $this->passportNr = $passportNr;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPassportIssueDate(): ?\DateTime
+    {
+        return $this->passportIssueDate;
+    }
+
+    /**
+     * @param \DateTime $passportIssueDate
+     */
+    public function setPassportIssueDate(\DateTime $passportIssueDate): Person
+    {
+        $this->passportIssueDate = $passportIssueDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPassportValidDate(): ?\DateTime
+    {
+        return $this->passportValidDate;
+    }
+
+    /**
+     * @param \DateTime $passportValidDate
+     */
+    public function setPassportValidDate(\DateTime $passportValidDate): Person
+    {
+        $this->passportValidDate = $passportValidDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDriverLicenseNr(): ?string
+    {
+        return $this->driverLicenseNr;
+    }
+
+    /**
+     * @param string $driverLicenseNr
+     */
+    public function setDriverLicenseNr(string $driverLicenseNr): Person
+    {
+        $this->driverLicenseNr = $driverLicenseNr;
+    }
+
 
     /**
      * @return bool
