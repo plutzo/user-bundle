@@ -69,78 +69,82 @@ class PersonAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('Name', ['class' => 'col-md-6'])
-                ->add('formal', ChoiceType::class, [
-                    'choices' => [
-                        'Yes' => true,
-                        'No' => false
-                    ],
-                    'expanded' => true
-                ])
-                ->add('gender', ChoiceType::class, [
-                    'choices' => GenderEnumType::getChoices()
-                ])
-                ->add('firstname')
-                ->add('lastname')
+            ->tab('Personal data')
+                ->with('Name', ['class' => 'col-md-6'])
+                    ->add('formal', ChoiceType::class, [
+                        'choices' => [
+                            'Yes' => true,
+                            'No' => false
+                        ],
+                        'expanded' => true
+                    ])
+                    ->add('gender', ChoiceType::class, [
+                        'choices' => GenderEnumType::getChoices()
+                    ])
+                    ->add('firstname')
+                    ->add('lastname')
+                ->end()
+                ->with('Address', ['class' => 'col-md-6'])
+                    ->add('thoroughfare', null, [
+                        'required' => false
+                    ])
+                    ->add('postalCode', PostalCodeSelectType::class, [
+                        'width' => '100%',
+                        'placeholder' => 'Please select a postal code.',
+                        'help' => 'The information about locality and country is encoded with the postal code.'
+                    ])
+                ->end()
+                ->with('Contact', ['class' => 'col-md-6'])
+                    ->add('crmChannel', null, [
+                        'help' => 'Select the preferred way to contact this person.'
+                    ])
+                    ->add('email')
+                    ->add('phone', PhoneNumberType::class, [
+                        'default_region' => 'DE',
+                        'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+                        'country_choices' => ['DE', 'AT', 'CH'],
+                        'required' => false
+                    ])
+                    ->add('mobile', PhoneNumberType::class, [
+                        'default_region' => 'DE',
+                        'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+                        'country_choices' => ['DE', 'AT', 'CH'],
+                        'required' => false
+                    ])
+                ->end()
+                ->with('Newsletter', ['class' => 'col-md-6'])
+                    ->add('newsletter', null, [
+                        'required' => false,
+                        'help' => 'If set, this person will receive newsletters via email. For legal reasons in general this box shouldn\'t be checked manually.'
+                    ])
+                    ->add('newsletterToken', null, [
+                        'disabled' => true,
+                        'help' => 'If this field is not empty, the newsletter double-opt-in process hasn\'t been confirmed by the person.'
+                    ])
+                ->end()
+                ->with('Additional Information', ['class' => 'col-md-6'])
+                    ->add('birthday', null, [
+                        'widget' => 'single_text',
+                        'html5' => true,
+                        'required' => false
+                    ])
+                ->end()
             ->end()
-            ->with('Address', ['class' => 'col-md-6'])
-                ->add('thoroughfare', null, [
-                    'required' => false
-                ])
-                ->add('postalCode', PostalCodeSelectType::class, [
-                    'width' => '100%',
-                    'placeholder' => 'Please select a postal code.',
-                    'help' => 'The information about locality and country is encoded with the postal code.'
-                ])
-            ->end()
-            ->with('Passport & Licenses', ['class' => 'col-md-6'])
-                ->add('passportNr', null)
-                ->add('passportIssueDate', null, [
-                    'widget' => 'single_text',
-                    'html5' => true,
-                    'required' => false
-                ])
-                ->add('passportIssueDate', null, [
-                    'widget' => 'single_text',
-                    'html5' => true,
-                    'required' => false
-                ])
-                ->add('driverLicenseNr', null)
-            ->end()
-            ->with('Contact', ['class' => 'col-md-6'])
-                ->add('crmChannel', null, [
-                    'help' => 'Select the preferred way to contact this person.'
-                ])
-                ->add('email')
-                ->add('phone', PhoneNumberType::class, [
-                    'default_region' => 'DE',
-                    'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
-                    'country_choices' => ['DE', 'AT', 'CH'],
-                    'required' => false
-                ])
-                ->add('mobile', PhoneNumberType::class, [
-                    'default_region' => 'DE',
-                    'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
-                    'country_choices' => ['DE', 'AT', 'CH'],
-                    'required' => false
-                ])
-            ->end()
-            ->with('Newsletter', ['class' => 'col-md-6'])
-                ->add('newsletter', null, [
-                    'required' => false,
-                    'help' => 'If set, this person will receive newsletters via email. For legal reasons in general this box shouldn\'t be checked manually.'
-                ])
-                ->add('newsletterToken', null, [
-                    'disabled' => true,
-                    'help' => 'If this field is not empty, the newsletter double-opt-in process hasn\'t been confirmed by the person.'
-                ])
-            ->end()
-            ->with('Additional Information', ['class' => 'col-md-6'])
-                ->add('birthday', null, [
-                    'widget' => 'single_text',
-                    'html5' => true,
-                    'required' => false
-                ])
+            ->tab('Additional Data')
+                ->with('Passport & Licenses', ['class' => 'col-md-6'])
+                    ->add('passportNr', null)
+                    ->add('passportIssueDate', null, [
+                        'widget' => 'single_text',
+                        'html5' => true,
+                        'required' => false
+                    ])
+                    ->add('passportIssueDate', null, [
+                        'widget' => 'single_text',
+                        'html5' => true,
+                        'required' => false
+                    ])
+                    ->add('driverLicenseNr', null)
+                ->end()
             ->end();
     }
 
