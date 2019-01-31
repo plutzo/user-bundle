@@ -632,4 +632,3 @@ class Person extends EntityReference
         return $this;
     }
 }
-
