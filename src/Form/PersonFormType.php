@@ -144,6 +144,13 @@ class PersonFormType extends AbstractType
                 ]
             );
         }
+
+        if (in_array('nationality', $options['enabled_fields'])) {
+            $builder->add('nationality', null, [
+                    'required' => in_array('nationality', $options['required_fields'])
+                ]
+            );
+        }
     }
 
     /**

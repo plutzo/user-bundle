@@ -193,6 +193,14 @@ class Person extends EntityReference
      * @var string
      *
      * @Groups({"person_read", "person_write"})
+     * @ORM\Column(name="nationality", type="string", length=190, nullable=true)
+     */
+    private $nationality;
+
+    /**
+     * @var string
+     *
+     * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="driverLicenseNr", type="string", length=190, nullable=true)
      */
     private $driverLicenseNr;
@@ -545,6 +553,22 @@ class Person extends EntityReference
     public function setPassportValidDate(\DateTime $passportValidDate)
     {
         $this->passportValidDate = $passportValidDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNationality(): string
+    {
+        return $this->nationality;
+    }
+
+    /**
+     * @param string $nationality
+     */
+    public function setNationality(string $nationality): void
+    {
+        $this->nationality = $nationality;
     }
 
     /**
