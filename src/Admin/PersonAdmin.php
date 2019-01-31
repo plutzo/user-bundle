@@ -143,6 +143,7 @@ class PersonAdmin extends AbstractAdmin
                         'html5' => true,
                         'required' => false
                     ])
+                    ->add('nationality', null)
                     ->add('driverLicenseNr', null)
                 ->end()
             ->end();
