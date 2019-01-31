@@ -12,6 +12,7 @@ use Marlinc\PostalCodeBundle\Form\Type\PostalCodeSelectType;
 use Marlinc\UserBundle\Entity\Person;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -107,6 +108,40 @@ class PersonFormType extends AbstractType
                 'format' => 'dd.MM.yyyy',
                 'required' => in_array('birthday', $options['required_fields']),
             ]);
+        }
+
+        if (in_array('passportNr', $options['enabled_fields'])) {
+            $builder->add('passportNr', null, [
+                'required' => in_array('passportNr', $options['required_fields'])
+                ]
+            );
+        }
+
+        if (in_array('passportIssueDate', $options['enabled_fields'])) {
+            $builder->add('passportIssueDate', null, [
+                    'widget' => 'single_text',
+                    'html5' => false,
+                    'format' => 'dd.MM.yyyy',
+                    'required' => in_array('passportIssueDate', $options['required_fields'])
+                ]
+            );
+        }
+
+        if (in_array('passportValidDate', $options['enabled_fields'])) {
+            $builder->add('passportValidDate', null, [
+                    'widget' => 'single_text',
+                    'html5' => false,
+                    'format' => 'dd.MM.yyyy',
+                    'required' => in_array('passportValidDate', $options['required_fields'])
+                ]
+            );
+        }
+
+        if (in_array('driverLicenseNr', $options['enabled_fields'])) {
+            $builder->add('driverLicenseNr', null, [
+                    'required' => in_array('driverLicenseNr', $options['required_fields'])
+                ]
+            );
         }
     }
 
