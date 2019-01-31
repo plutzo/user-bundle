@@ -120,7 +120,7 @@ class PersonFormType extends AbstractType
 
         if (in_array('passportIssueDate', $options['enabled_fields'])) {
             $builder->add('passportIssueDate', DateType::class, [
-                    'widget' => 'choice',
+                    'widget' => 'single_text',
                     'html5' => true,
                     'format' => 'dd.MM.yyyy',
                     'required' => in_array('passportIssueDate', $options['required_fields'])
@@ -130,7 +130,7 @@ class PersonFormType extends AbstractType
 
         if (in_array('passportValidDate', $options['enabled_fields'])) {
             $builder->add('passportValidDate', null, [
-                    'widget' => 'choice',
+                    'widget' => 'single_text',
                     'html5' => false,
                     'format' => 'dd.MM.yyyy',
                     'required' => in_array('passportValidDate', $options['required_fields'])
