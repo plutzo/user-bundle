@@ -106,7 +106,7 @@ class PersonFormType extends AbstractType
             $builder->add('birthday', null, [
                 'widget' => 'single_text',
                 'html5' => true,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'yyyy-MM-dd',
                 'required' => in_array('birthday', $options['required_fields']),
             ]);
         }
@@ -122,7 +122,7 @@ class PersonFormType extends AbstractType
             $builder->add('passportIssueDate', null, [
                     'widget' => 'single_text',
                     'html5' => true,
-                    'format' => 'dd.MM.yyyy',
+                    'format' => 'yyyy-MM-dd',
                     'required' => in_array('passportIssueDate', $options['required_fields'])
                 ]
             );
@@ -132,7 +132,7 @@ class PersonFormType extends AbstractType
             $builder->add('passportValidDate', null, [
                     'widget' => 'single_text',
                     'html5' => true,
-                    'format' => 'dd.MM.yyyy',
+                    'format' => 'yyyy-MM-dd',
                     'required' => in_array('passportValidDate', $options['required_fields'])
                 ]
             );
