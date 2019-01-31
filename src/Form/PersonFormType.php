@@ -13,6 +13,7 @@ use Marlinc\UserBundle\Entity\Person;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -118,9 +119,9 @@ class PersonFormType extends AbstractType
         }
 
         if (in_array('passportIssueDate', $options['enabled_fields'])) {
-            $builder->add('passportIssueDate', null, [
-                    'widget' => 'single_text',
-                    'html5' => false,
+            $builder->add('passportIssueDate', DateType::class, [
+                    'widget' => 'choice',
+                    'html5' => true,
                     'format' => 'dd.MM.yyyy',
                     'required' => in_array('passportIssueDate', $options['required_fields'])
                 ]
@@ -129,7 +130,7 @@ class PersonFormType extends AbstractType
 
         if (in_array('passportValidDate', $options['enabled_fields'])) {
             $builder->add('passportValidDate', null, [
-                    'widget' => 'single_text',
+                    'widget' => 'choice',
                     'html5' => false,
                     'format' => 'dd.MM.yyyy',
                     'required' => in_array('passportValidDate', $options['required_fields'])

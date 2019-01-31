@@ -510,7 +510,7 @@ class Person extends EntityReference
     /**
      * @param string $passportNr
      */
-    public function setPassportNr(string $passportNr): Person
+    public function setPassportNr(string $passportNr)
     {
         $this->passportNr = $passportNr;
     }
@@ -526,7 +526,7 @@ class Person extends EntityReference
     /**
      * @param \DateTime $passportIssueDate
      */
-    public function setPassportIssueDate(\DateTime $passportIssueDate): Person
+    public function setPassportIssueDate(\DateTime $passportIssueDate)
     {
         $this->passportIssueDate = $passportIssueDate;
     }
@@ -542,7 +542,7 @@ class Person extends EntityReference
     /**
      * @param \DateTime $passportValidDate
      */
-    public function setPassportValidDate(\DateTime $passportValidDate): Person
+    public function setPassportValidDate(\DateTime $passportValidDate)
     {
         $this->passportValidDate = $passportValidDate;
     }
@@ -558,7 +558,7 @@ class Person extends EntityReference
     /**
      * @param string $driverLicenseNr
      */
-    public function setDriverLicenseNr(string $driverLicenseNr): Person
+    public function setDriverLicenseNr(string $driverLicenseNr)
     {
         $this->driverLicenseNr = $driverLicenseNr;
     }

@@ -138,7 +138,7 @@ class PersonAdmin extends AbstractAdmin
                         'html5' => true,
                         'required' => false
                     ])
-                    ->add('passportIssueDate', null, [
+                    ->add('passportValidDate', null, [
                         'widget' => 'single_text',
                         'html5' => true,
                         'required' => false
