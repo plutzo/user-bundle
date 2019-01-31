@@ -558,7 +558,7 @@ class Person extends EntityReference
     /**
      * @return string
      */
-    public function getNationality(): string
+    public function getNationality(): ?string
     {
         return $this->nationality;
     }
