@@ -209,7 +209,6 @@ class Person extends EntityReference
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=true)
-     * @Gedmo\Versioned
      */
     private $driverLicenseValid;
 
