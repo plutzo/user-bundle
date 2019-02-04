@@ -206,6 +206,14 @@ class Person extends EntityReference
     private $driverLicenseNr;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned
+     */
+    private $driverLicenseValid;
+
+    /**
      * Person constructor.
      */
     public function __construct()
@@ -587,6 +595,21 @@ class Person extends EntityReference
         $this->driverLicenseNr = $driverLicenseNr;
     }
 
+    /**
+     * @return bool
+     */
+    public function isDriverLicenseValid()
+    {
+        return $this->driverLicenseValid;
+    }
+
+    /**
+     * @param bool $driverLicenseValid
+     */
+    public function setDriverLicenseValid(bool $driverLicenseValid): void
+    {
+        $this->driverLicenseValid = $driverLicenseValid;
+    }
 
     /**
      * @return bool
