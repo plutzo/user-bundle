@@ -145,6 +145,7 @@ class PersonAdmin extends AbstractAdmin
                     ])
                     ->add('nationality', null)
                     ->add('driverLicenseNr', null)
+                    ->add('driverLicenseValid', null)
                 ->end()
             ->end();
     }
