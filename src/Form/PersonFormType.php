@@ -107,7 +107,8 @@ class PersonFormType extends AbstractType
                 'widget' => 'text',
                 'html5' => true,
                 'format' => 'dd.MM.yyyy',
-                'placeholder' => '01.01.2019',
+                'placeholder' => ['year' => 'Jahr', 'month' => 'Monat (Zahl)', 'day' => 'Tag'],
+                'attr' => ['class' => 'personDateField'],
                 'required' => in_array('birthday', $options['required_fields']),
             ]);
         }
@@ -124,7 +125,8 @@ class PersonFormType extends AbstractType
                     'widget' => 'text',
                     'html5' => true,
                     'format' => 'dd.MM.yyyy',
-                    'placeholder' => '01.01.2019',
+                    'placeholder' => ['year' => 'Jahr', 'month' => 'Monat (Zahl)', 'day' => 'Tag'],
+                    'attr' => ['class' => 'personDateField'],
                     'required' => in_array('passportIssueDate', $options['required_fields'])
                 ]
             );
@@ -135,7 +137,8 @@ class PersonFormType extends AbstractType
                     'widget' => 'text',
                     'html5' => true,
                     'format' => 'dd.MM.yyyy',
-                    'placeholder' => '01.01.2019',
+                    'placeholder' => ['year' => 'Jahr', 'month' => 'Monat (Zahl)', 'day' => 'Tag'],
+                    'attr' => ['class' => 'personDateField'],
                     'required' => in_array('passportValidDate', $options['required_fields'])
                 ]
             );
