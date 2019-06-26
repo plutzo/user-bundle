@@ -157,7 +157,7 @@ class Person extends EntityReference
     private $newsletterToken;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
      * @ORM\Column(type="date", nullable=true)
      * @Assert\NotNull(groups={"birthday"})
@@ -165,7 +165,7 @@ class Person extends EntityReference
     private $birthday;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="passportNr", type="string", length=190, nullable=true)
@@ -173,7 +173,7 @@ class Person extends EntityReference
     private $passportNr;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
      * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="passportIssueDate", type="date", nullable=true)
@@ -182,7 +182,7 @@ class Person extends EntityReference
 
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
      * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="passportValidDate", type="date", nullable=true)
@@ -190,7 +190,7 @@ class Person extends EntityReference
     private $passportValidDate;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="nationality", type="string", length=190, nullable=true)
@@ -198,7 +198,7 @@ class Person extends EntityReference
     private $nationality;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="driverLicenseNr", type="string", length=190, nullable=true)
@@ -211,6 +211,15 @@ class Person extends EntityReference
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $driverLicenseValid;
+
+    /**
+     * @var string|null
+     *
+     * @Groups({"person_read", "person_write"})
+     * @ORM\Column(name="company", type="string", length=190, nullable=true)
+     */
+    private $company;
+
 
     /**
      * Person constructor.
@@ -469,10 +478,10 @@ class Person extends EntityReference
     }
 
     /**
-     * @param \DateTime $birthday
+     * @param \DateTime|null $birthday
      * @return Person
      */
-    public function setBirthday($birthday): Person
+    public function setBirthday(?$birthday): Person
     {
         $this->birthday = $birthday;
         return $this;
@@ -523,9 +532,9 @@ class Person extends EntityReference
     }
 
     /**
-     * @param string $passportNr
+     * @param string|null $passportNr
      */
-    public function setPassportNr(string $passportNr)
+    public function setPassportNr(?string $passportNr)
     {
         $this->passportNr = $passportNr;
     }
@@ -539,9 +548,9 @@ class Person extends EntityReference
     }
 
     /**
-     * @param \DateTime $passportIssueDate
+     * @param \DateTime|null $passportIssueDate
      */
-    public function setPassportIssueDate(\DateTime $passportIssueDate)
+    public function setPassportIssueDate(?\DateTime $passportIssueDate)
     {
         $this->passportIssueDate = $passportIssueDate;
     }
@@ -555,9 +564,9 @@ class Person extends EntityReference
     }
 
     /**
-     * @param \DateTime $passportValidDate
+     * @param \DateTime|null $passportValidDate
      */
-    public function setPassportValidDate(\DateTime $passportValidDate)
+    public function setPassportValidDate(?\DateTime $passportValidDate)
     {
         $this->passportValidDate = $passportValidDate;
     }
@@ -571,9 +580,9 @@ class Person extends EntityReference
     }
 
     /**
-     * @param string $nationality
+     * @param string|null $nationality
      */
-    public function setNationality(string $nationality): void
+    public function setNationality(?string $nationality): void
     {
         $this->nationality = $nationality;
     }
@@ -587,9 +596,9 @@ class Person extends EntityReference
     }
 
     /**
-     * @param string $driverLicenseNr
+     * @param string $driverLicenseNr|null
      */
-    public function setDriverLicenseNr(string $driverLicenseNr)
+    public function setDriverLicenseNr(?string $driverLicenseNr)
     {
         $this->driverLicenseNr = $driverLicenseNr;
     }
@@ -608,6 +617,22 @@ class Person extends EntityReference
     public function setDriverLicenseValid(bool $driverLicenseValid): void
     {
         $this->driverLicenseValid = $driverLicenseValid;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompany(): ?string
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param string|null $company
+     */
+    public function setCompany(?string $company): void
+    {
+        $this->company = $company;
     }
 
     /**
