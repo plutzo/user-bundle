@@ -220,6 +220,14 @@ class Person extends EntityReference
      */
     private $company;
 
+    /**
+     * @var string|null
+     *
+     * @Groups({"person_read", "person_write"})
+     * @ORM\Column(name="customerId", type="string", length=190, nullable=true)
+     */
+    private $customerId;
+
 
     /**
      * Person constructor.
@@ -633,6 +641,22 @@ class Person extends EntityReference
     public function setCompany(?string $company): void
     {
         $this->company = $company;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomerId(): ?string
+    {
+        return $this->customerId;
+    }
+
+    /**
+     * @param string|null $customerId
+     */
+    public function setCustomerId(?string $customerId): void
+    {
+        $this->customerId = $customerId;
     }
 
     /**
