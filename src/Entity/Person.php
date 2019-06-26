@@ -489,7 +489,7 @@ class Person extends EntityReference
      * @param \DateTime|null $birthday
      * @return Person
      */
-    public function setBirthday(?$birthday): Person
+    public function setBirthday(?\DateTime $birthday): Person
     {
         $this->birthday = $birthday;
         return $this;
