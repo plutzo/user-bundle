@@ -163,22 +163,6 @@ class Person
     private $birthday;
 
     /**
-     * @var string|null
-     *
-     * @Groups({"person_read", "person_write"})
-     * @ORM\Column(name="iban", type="string", length=31, nullable=true)
-     */
-    private $iban;
-
-    /**
-     * @var string|null
-     *
-     * @Groups({"person_read", "person_write"})
-     * @ORM\Column(name="bic", type="string", length=11, nullable=true)
-     */
-    private $bic;
-
-    /**
      * Person constructor.
      */
     public function __construct()
@@ -424,39 +408,6 @@ class Person
         $this->birthday = $birthday;
         return $this;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getIban(): ?string
-    {
-        return $this->iban;
-    }
-
-    /**
-     * @param string|null $iban
-     */
-    public function setIban(?string $iban): void
-    {
-        $this->iban = $iban;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getBic(): ?string
-    {
-        return $this->bic;
-    }
-
-    /**
-     * @param string|null $bic
-     */
-    public function setBic(?string $bic): void
-    {
-        $this->bic = $bic;
-    }
-
 
     /**
      * @return string
