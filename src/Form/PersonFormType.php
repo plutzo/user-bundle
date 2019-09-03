@@ -32,7 +32,8 @@ class PersonFormType extends AbstractType
                 'choices' => [
                     'Please choose' => '',
                     'Male' => 'm',
-                    'Female' => 'f'
+                    'Female' => 'f',
+                    'Diverse' => 'd'
                 ],
             ])
             ->add('firstname')
