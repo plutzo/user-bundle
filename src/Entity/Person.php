@@ -83,6 +83,15 @@ class Person extends EntityReference
     private $lastname;
 
     /**
+     * @var string|null
+     *
+     * @Groups({"person_read", "person_write"})
+     * @ORM\Column(type="string", length=190, nullable=true)
+     * @Assert\NotBlank()
+     */
+    private $title;
+
+    /**
      * @var string
      *
      * @Groups({"person_read", "person_write"})
@@ -265,6 +274,22 @@ class Person extends EntityReference
     public function getEntityLabel(): string
     {
         return $this->__toString();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(?string $title): void
+    {
+        $this->title = $title;
     }
 
     /**

@@ -81,6 +81,7 @@ class PersonAdmin extends AbstractAdmin
                     ->add('gender', ChoiceType::class, [
                         'choices' => GenderEnumType::getChoices()
                     ])
+                    ->add('title')
                     ->add('firstname')
                     ->add('lastname')
                 ->end()
