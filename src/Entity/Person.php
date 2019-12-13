@@ -86,8 +86,7 @@ class Person extends EntityReference
      * @var string|null
      *
      * @Groups({"person_read", "person_write"})
-     * @ORM\Column(type="string", length=190, nullable=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="title", type="string", length=190, nullable=true)
      */
     private $title;
 
@@ -276,7 +275,7 @@ class Person extends EntityReference
         return $this->__toString();
     }
 
-     /**
+    /**
      * @return string|null
      */
     public function getTitle(): ?string
