@@ -276,8 +276,8 @@ class Person extends EntityReference
         return $this->__toString();
     }
 
-    /**
-     * @return string
+     /**
+     * @return string|null
      */
     public function getTitle(): ?string
     {
@@ -285,7 +285,7 @@ class Person extends EntityReference
     }
 
     /**
-     * @param string $title
+     * @param string|null $title
      */
     public function setTitle(?string $title): void
     {
