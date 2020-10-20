@@ -16,13 +16,13 @@ class GenderEnumType extends AbstractEnumType
 
     const GENDER_FEMALE = 'f';
     const GENDER_MALE = 'm';
-    /*const GENDER_DIVERSE = 'd';*/
+    const GENDER_DIVERSE = 'd';
     const GENDER_UNKNOWN = 'u';
 
     protected static $choices = [
         self::GENDER_UNKNOWN => 'Unknown',
         self::GENDER_FEMALE => 'Female',
         self::GENDER_MALE => 'Male',
-        /*self::GENDER_DIVERSE => 'Diverse'*/
+        self::GENDER_DIVERSE => 'Diverse'
     ];
 }

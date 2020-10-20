@@ -102,14 +102,14 @@ class PersonAdmin extends AbstractAdmin
                     ->add('email')
                     ->add('phone', PhoneNumberType::class, [
                         'default_region' => 'DE',
-                        'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
-                        'country_choices' => ['DE', 'AT', 'CH'],
+                        /*'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+                        'country_choices' => ['DE', 'AT', 'CH'],*/
                         'required' => false
                     ])
                     ->add('mobile', PhoneNumberType::class, [
                         'default_region' => 'DE',
-                        'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
-                        'country_choices' => ['DE', 'AT', 'CH'],
+                        /*'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+                        'country_choices' => ['DE', 'AT', 'CH'],*/
                         'required' => false
                     ])
                 ->end()

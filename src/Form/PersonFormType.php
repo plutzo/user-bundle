@@ -33,7 +33,7 @@ class PersonFormType extends AbstractType
                     'Please choose' => '',
                     'Male' => 'm',
                     'Female' => 'f',
-/*                    'Diverse' => 'd'*/
+                    'Diverse' => 'd'
                 ],
             ])
             ->add('firstname')
@@ -72,8 +72,8 @@ class PersonFormType extends AbstractType
         if (in_array('phone', $options['enabled_fields'])) {
             $builder->add('phone', PhoneNumberType::class, [
                 'default_region' => 'DE',
-                'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
-                'country_choices' => ['DE', 'AT', 'CH', 'BE', 'NL', 'LU'],
+                /*'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+                'country_choices' => ['DE', 'AT', 'CH', 'BE', 'NL', 'LU'],*/
                 'preferred_country_choices' => ['DE'],
                 'required' => in_array('phone', $options['required_fields']),
             ]);
@@ -82,8 +82,8 @@ class PersonFormType extends AbstractType
         if (in_array('mobile', $options['enabled_fields'])) {
             $builder->add('mobile', PhoneNumberType::class, [
                 'default_region' => 'DE',
-                'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
-                'country_choices' => ['DE', 'AT', 'CH'],
+                /*'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,*/
+                /*'country_choices' => ['DE', 'AT', 'CH'],*/
                 'required' => in_array('mobile', $options['required_fields']),
             ]);
         }
