@@ -8,7 +8,7 @@
 
 namespace Marlinc\UserBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Marlinc\UserBundle\Model\UserInterface;
 use Marlinc\UserBundle\Model\UserManagerInterface;
@@ -53,7 +53,7 @@ class UserManager implements UserManagerInterface, ManagerInterface
      * @param ObjectManager $om
      * @param string $class
      */
-    public function __construct(PasswordUpdaterInterface $passwordUpdater, CanonicalizerInterface $canonicalFieldsUpdater, ObjectManager $om, $class)
+    public function __construct(PasswordUpdaterInterface $passwordUpdater, CanonicalizerInterface $canonicalFieldsUpdater, EntityManager $om, $class)
     {
         $this->passwordUpdater = $passwordUpdater;
         $this->canonicalFieldsUpdater = $canonicalFieldsUpdater;

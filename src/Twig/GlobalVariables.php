@@ -36,7 +36,7 @@ class GlobalVariables
      * @param string $avatar
      * @param AdminInterface $userAdmin
      */
-    public function __construct(array $impersonating, string $avatar, AdminInterface $userAdmin)
+    public function __construct(array $impersonating=[], string $avatar, AdminInterface $userAdmin)
     {
         $this->impersonating = $impersonating;
         $this->avatar = $avatar;

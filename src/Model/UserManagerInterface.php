@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Model;
 
-use Sonata\CoreBundle\Model\PageableManagerInterface;
-
 /**
  * @author Hugo Briand <briand@ekino.com>
  */
-interface UserManagerInterface extends PageableManagerInterface
+interface UserManagerInterface
 {
     /**
      * Returns the user's fully qualified class name.
