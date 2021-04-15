@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('impersonating_route')->end()
                 ->arrayNode('impersonating')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('route')->defaultFalse()->end()
                         ->arrayNode('parameters')
