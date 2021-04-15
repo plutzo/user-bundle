@@ -142,7 +142,6 @@ class MarlincUserExtension extends Extension implements PrependExtensionInterfac
      */
     private function configureCasAuthenticator(array $config, ContainerBuilder $container)
     {
-        $container->setParameter('marlinc.user.cas.serverurl', $config['server_url']);
         $container->setParameter('marlinc.user.cas.ticketname', $config['ticket_parameter_name']);
         $container->setParameter('marlinc.user.cas.servicename', $config['service_parameter_name']);
         $container->setParameter('marlinc.user.cas.username', $config['user_attribute_name']);

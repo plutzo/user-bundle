@@ -14,11 +14,10 @@ use Marlinc\UserBundle\Model\UserInterface;
 use Marlinc\UserBundle\Model\UserManagerInterface;
 use Marlinc\UserBundle\Util\CanonicalizerInterface;
 use Marlinc\UserBundle\Util\PasswordUpdaterInterface;
-use Sonata\CoreBundle\Model\ManagerInterface;
 use Sonata\DatagridBundle\Pager\Doctrine\Pager;
 use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
 
-class UserManager implements UserManagerInterface, ManagerInterface
+class UserManager implements UserManagerInterface
 {
     /**
      * @var ObjectManager

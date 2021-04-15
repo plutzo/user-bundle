@@ -125,37 +125,6 @@ class UserAdmin extends AbstractAdmin
     }
 
     /**
-     * Override form builder to set specific validation groups based on operation.
-     *
-     * {@inheritdoc}
-     */
-    public function getFormBuilder()
-    {
-        $this->formOptions['data_class'] = $this->getClass();
-
-        $options = $this->formOptions;
-        $options['validation_groups'] = (!$this->getSubject() || null === $this->getSubject()->getId()) ? 'Registration' : 'Profile';
-
-        $formBuilder = $this->getFormContractor()->getFormBuilder($this->getUniqid(), $options);
-
-        $this->defineFormBuilder($formBuilder);
-
-        return $formBuilder;
-    }
-
-    /**
-     * Avoid security fields to be exported.
-     *
-     * {@inheritdoc}
-     */
-    public function getExportFields()
-    {
-        return array_filter(parent::getExportFields(), function ($v) {
-            return !in_array($v, ['plainPassword', 'password', 'salt']);
-        });
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function preUpdate($user): void
