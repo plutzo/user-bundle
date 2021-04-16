@@ -24,5 +24,8 @@
         <service id="Marlinc\UserBundle\Admin\ExportFieldsExtension" public="true">
             <tag name="sonata.admin.extension" global="true" />
         </service>
+        <service id="Marlinc\UserBundle\Admin\FormOptionsExtension" public="true">
+            <tag name="sonata.admin.extension" global="true" />
+        </service>
     </services>
 </container>
