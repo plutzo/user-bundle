@@ -9,7 +9,7 @@ use Marlinc\UserBundle\Event\UserEvents;
 use Marlinc\UserBundle\Form\Factory\FactoryInterface;
 use Marlinc\UserBundle\Model\UserInterface;
 use Marlinc\UserBundle\Model\UserManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @author Christophe Coevoet <stof@notk.org>
  */
-abstract class AbstractProfileController extends Controller
+abstract class AbstractProfileController extends AbstractController
 {
     /**
      * @var EventDispatcherInterface

@@ -11,7 +11,7 @@ use Marlinc\UserBundle\Form\Factory\FactoryInterface;
 use Marlinc\UserBundle\Mailer\MailerInterface;
 use Marlinc\UserBundle\Model\UserManagerInterface;
 use Marlinc\UserBundle\Util\TokenGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  * @author Christophe Coevoet <stof@notk.org>
  */
-abstract class AbstractResettingController extends Controller
+abstract class AbstractResettingController extends AbstractController
 {
     /**
      * @var EventDispatcherInterface
