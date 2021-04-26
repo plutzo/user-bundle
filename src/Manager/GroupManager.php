@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
 use Marlinc\UserBundle\Model\GroupInterface;
 use Marlinc\UserBundle\Model\GroupManagerInterface;
 use Sonata\DatagridBundle\Pager\Doctrine\Pager;

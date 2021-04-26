@@ -7,7 +7,7 @@ namespace Marlinc\UserBundle\Security\RolesBuilder;
 use Sonata\AdminBundle\Admin\Pool;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EditableRolesBuilder
 {

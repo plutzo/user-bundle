@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\GoogleAuthenticator;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -40,9 +40,9 @@ class RequestListener
     }
 
     /**
-     * @param GetResponseEvent $event
+     * @param ResponseEvent $event
      */
-    public function onCoreRequest(GetResponseEvent $event): void
+    public function onCoreRequest(ResponseEvent $event): void
     {
         if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
             return;

@@ -3,7 +3,7 @@
 namespace Marlinc\UserBundle\Mailer;
 
 use Marlinc\UserBundle\Model\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**

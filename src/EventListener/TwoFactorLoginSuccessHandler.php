@@ -7,7 +7,7 @@ namespace Marlinc\UserBundle\EventListener;
 use Marlinc\UserBundle\Entity\User;
 use Marlinc\UserBundle\GoogleAuthenticator\Authenticator;
 use Marlinc\UserBundle\Model\UserManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

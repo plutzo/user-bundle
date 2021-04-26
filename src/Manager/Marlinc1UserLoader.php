@@ -9,7 +9,7 @@
 namespace Marlinc\UserBundle\Manager;
 
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 

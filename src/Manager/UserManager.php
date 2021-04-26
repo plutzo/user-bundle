@@ -9,7 +9,7 @@
 namespace Marlinc\UserBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 use Marlinc\UserBundle\Model\UserInterface;
 use Marlinc\UserBundle\Model\UserManagerInterface;
 use Marlinc\UserBundle\Util\CanonicalizerInterface;

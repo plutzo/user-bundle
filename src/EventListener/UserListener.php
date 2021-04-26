@@ -3,8 +3,8 @@
 namespace Marlinc\UserBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Doctrine\Persistence\ObjectManager;
 use Marlinc\UserBundle\Model\UserInterface;
 use Marlinc\UserBundle\Util\CanonicalizerInterface;
 use Marlinc\UserBundle\Util\PasswordUpdaterInterface;

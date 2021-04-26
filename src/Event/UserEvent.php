@@ -3,7 +3,7 @@
 namespace Marlinc\UserBundle\Event;
 
 use Marlinc\UserBundle\Model\UserInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserEvent extends Event
