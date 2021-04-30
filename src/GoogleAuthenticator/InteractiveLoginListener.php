@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\GoogleAuthenticator;
 
-use Sonata\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -37,10 +36,6 @@ class InteractiveLoginListener
         }
 
         $token = $event->getAuthenticationToken();
-
-        if (! $token->getUser() instanceof UserInterface) {
-            return;
-        }
 
         if (! $token->getUser()->getTwoStepVerificationCode()) {
             return;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Model;
 
-use Sonata\CoreBundle\Model\PageableManagerInterface;
+use Sonata\Doctrine\Model\PageableManagerInterface;
 
 /**
  * @author Hugo Briand <briand@ekino.com>
