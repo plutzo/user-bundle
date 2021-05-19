@@ -23,8 +23,8 @@
     "stof/doctrine-extensions-bundle": "^1.5",
     "fresh/doctrine-enum-bundle": "^7.1",
     "api-platform/core": "^2.6",
-    "marlinc/entity-bundle": "3.0.0-alpha5",
-    "marlinc/postalcode-bundle": "2.0.0-alpha2",
+    "marlinc/entity-bundle": "3.0.0",
+    "marlinc/postalcode-bundle": "2.0.0",
     "marlinc/admin-bundle": "2.0.0"
   },
   "require-dev": {
