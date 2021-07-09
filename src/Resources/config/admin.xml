@@ -10,7 +10,7 @@
             <tag name="sonata.admin" manager_type="orm" group="%marlinc.user.admin.groupname%" label="users" label_catalogue="%marlinc.user.admin.translation_domain%" label_translator_strategy="sonata.admin.label.strategy.underscore" icon="%marlinc.user.admin.groupicon%"/>
             <argument/>
             <argument>Marlinc\UserBundle\Entity\User</argument>
-            <argument>MarlincAdminBundle:MarlincAdmin</argument>
+            <argument>Marlinc\AdminBundle\Controller\MarlincAdminController</argument>
             <call method="setUserManager">
                 <argument type="service" id="Marlinc\UserBundle\Manager\UserManager"/>
             </call>
@@ -22,7 +22,7 @@
             <tag name="sonata.admin" manager_type="orm" group="%marlinc.user.admin.groupname%" label="groups" label_catalogue="%marlinc.user.admin.translation_domain%" label_translator_strategy="sonata.admin.label.strategy.underscore"/>
             <argument/>
             <argument>Marlinc\UserBundle\Entity\Group</argument>
-            <argument>MarlincAdminBundle:MarlincAdmin</argument>
+            <argument>Marlinc\AdminBundle\Controller\MarlincAdminController</argument>
             <call method="setTranslationDomain">
                 <argument>%marlinc.user.admin.translation_domain%</argument>
             </call>
@@ -31,7 +31,7 @@
             <tag name="sonata.admin" manager_type="orm" group="%marlinc.user.admin.groupname%" label="Person"/>
             <argument>null</argument>
             <argument>Marlinc\UserBundle\Entity\Person</argument>
-            <argument>MarlincAdminBundle:MarlincAdmin</argument>
+            <argument>Marlinc\AdminBundle\Controller\MarlincAdminController</argument>
         </service>
     </services>
 </container>
