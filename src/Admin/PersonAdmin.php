@@ -26,7 +26,7 @@ class PersonAdmin extends AbstractAdmin
             ->add('firstname')
             ->add('lastname')
             ->add('email')
-            ->add('referencingEntities', null, [], EntityReferenceSelectType::class, [
+            ->add('referencingEntities', null, [],[
                 'allow_edit' => true,
                 'width' => '100%'
             ])

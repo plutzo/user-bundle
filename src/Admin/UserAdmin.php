@@ -68,7 +68,7 @@ class UserAdmin extends AbstractAdmin
             ->add('person.lastname')
             ->add('person.newsletter')
             ->add('groups')
-            ->add('referencingEntities', null, [], EntityReferenceSelectType::class, [
+            ->add('referencingEntities', null, [],[
                 'allow_edit' => true,
                 'width' => '100%'
             ])
@@ -104,7 +104,7 @@ class UserAdmin extends AbstractAdmin
                     ->add('enabled', null, ['required' => false])
                 ->end()
                 ->with('Groups', ['class' => 'col-md-4'])
-                    ->add('groups', 'sonata_type_model', [
+                    ->add('groups', null , [
                         'required' => false,
                         'expanded' => true,
                         'multiple' => true,
