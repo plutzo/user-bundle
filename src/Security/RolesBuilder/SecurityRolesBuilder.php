@@ -96,10 +96,13 @@ final class SecurityRolesBuilder implements ExpandableRolesBuilderInterface
 
     private function getHierarchy(): array
     {
-        return array_merge([
-            $this->pool->getOption('role_super_admin') => [],
-            $this->pool->getOption('role_admin') => [],
-        ], $this->rolesHierarchy);
+        //function getOption not exist
+        return array_merge(
+        //           [
+        //            $this->pool->getOption('role_super_admin') => [],
+        //            $this->pool->getOption('role_admin') => [],
+        //        ],
+            $this->rolesHierarchy);
     }
 
     private function getSecurityRole(string $role, ?string $domain): array
