@@ -27,16 +27,6 @@ class GroupAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    public function getNewInstance():object
-    {
-        $class = $this->getClass();
-
-        return new $class('', []);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function configureListFields(ListMapper $listMapper): void
     {
         parent::configureListFields($listMapper);
