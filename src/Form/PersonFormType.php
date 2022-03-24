@@ -193,13 +193,7 @@ class PersonFormType extends AbstractType
 
         if (in_array('vaccinationStatus', $options['enabled_fields'])) {
             $builder->add('vaccinationStatus', ChoiceType::class, [
-                'choices' => [
-                    'Please choose' => '',
-                    'Vaccined' => 'v',
-                    'Bosstered' => 'b',
-                    'None' => 'n',
-                    'Unknown' => 'u'
-                ],
+                'choices' => VaccinationStatusEnumType::getChoices(),
                 'required' => in_array('vaccinationStatus', $options['required_fields'])
             ]);
         }
