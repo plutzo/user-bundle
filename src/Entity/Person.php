@@ -221,6 +221,15 @@ class Person extends EntityReference
     private $driverLicenseValid;
 
     /**
+     * @var string
+     *
+     * @Groups({"person_read", "person_write"})
+     * @ORM\Column(type="enumvaccination", nullable=true)
+     * @AssertEnum(entity="Marlinc\UserBundle\Doctrine\VaccinationEnumType")
+     */
+    private $vaccinationStatus;
+
+    /**
      * @var string|null
      *
      * @Groups({"person_read", "person_write"})
@@ -724,6 +733,24 @@ class Person extends EntityReference
 
         $this->user = $user;
 
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVaccinationStatus(): ?string
+    {
+        return $this->vaccinationStatus;
+    }
+
+    /**
+     * @param string|null $vaccinationStatus
+     * @return Person
+     */
+    public function setVaccinationStatus(?string $vaccinationStatus): self
+    {
+        $this->vaccinationStatus = $vaccinationStatus;
         return $this;
     }
 }
