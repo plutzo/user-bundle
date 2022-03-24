@@ -223,7 +223,6 @@ class Person extends EntityReference
     /**
      * @var string
      *
-     * @Groups({"person_read", "person_write"})
      * @ORM\Column(type="enumvaccination", nullable=true)
      * @AssertEnum(entity="Marlinc\UserBundle\Doctrine\VaccinationEnumType")
      */
@@ -232,6 +231,7 @@ class Person extends EntityReference
     /**
      * @var string|null
      *
+     * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="company", type="string", length=190, nullable=true)
      */
     private $company;
