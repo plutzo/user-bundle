@@ -224,7 +224,7 @@ class Person extends EntityReference
      * @var string
      *
      * @ORM\Column(type="enumvaccination", nullable=true)
-     * @AssertEnum(entity="Marlinc\UserBundle\Doctrine\VaccinationEnumType")
+     * @AssertEnum(entity="Marlinc\UserBundle\Doctrine\VaccinationStatusEnumType")
      */
     private $vaccinationStatus;
 
