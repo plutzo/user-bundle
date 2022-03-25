@@ -9,6 +9,7 @@
 namespace Marlinc\UserBundle\Form;
 
 use Marlinc\PostalCodeBundle\Form\Type\PostalCodeSelectType;
+use Marlinc\UserBundle\Doctrine\VaccinationStatusEnumType;
 use Marlinc\UserBundle\Entity\Person;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Symfony\Component\Form\AbstractType;
@@ -189,6 +190,14 @@ class PersonFormType extends AbstractType
                     'required' => in_array('title', $options['required_fields'])
                 ]
             );
+        }
+
+        if (in_array('vaccinationStatus', $options['enabled_fields'])) {
+            $builder->add('vaccinationStatus', ChoiceType::class, [
+                'choices' => VaccinationStatusEnumType::getChoices(),
+                'placeholder' => 'Please choose',
+                'required' => in_array('vaccinationStatus', $options['required_fields'])
+            ]);
         }
 
     }

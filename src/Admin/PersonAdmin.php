@@ -7,6 +7,7 @@ use Marlinc\EntityBundle\Admin\Filter\HasReferenceFilter;
 use Marlinc\EntityBundle\Form\Type\EntityReferenceSelectType;
 use Marlinc\PostalCodeBundle\Form\Type\PostalCodeSelectType;
 use Marlinc\UserBundle\Doctrine\GenderEnumType;
+use Marlinc\UserBundle\Doctrine\VaccinationStatusEnumType;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -147,6 +148,11 @@ class PersonAdmin extends AbstractAdmin
                     ->add('nationality', null)
                     ->add('driverLicenseNr', null)
                     ->add('driverLicenseValid', null)
+                ->end()
+                ->with('Health Information', ['class' => 'col-md-6'])
+                    ->add('vaccinationStatus', ChoiceType::class, [
+                        'choices' => VaccinationStatusEnumType::getChoices()
+                    ])
                 ->end()
             ->end();
     }
