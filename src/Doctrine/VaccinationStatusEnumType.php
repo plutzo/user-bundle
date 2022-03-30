@@ -18,13 +18,11 @@ class VaccinationStatusEnumType extends AbstractEnumType
     const VACCINATION_RECOVERED = 'r';
     const VACCINATION_BOOSTERED  = 'b';
     const VACCINATION_NONE  = 'n';
-    const VACCINATION_UNKNOWN = 'u';
 
     protected static $choices = [
         self::VACCINATION_COMPLETE => 'vaccinated',
         self::VACCINATION_RECOVERED => 'recovered',
         self::VACCINATION_BOOSTERED => 'boostered',
         self::VACCINATION_NONE => 'none',
-        self::VACCINATION_UNKNOWN => 'unknown',
     ];
 }
