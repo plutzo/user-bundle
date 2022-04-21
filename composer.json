@@ -21,7 +21,7 @@
     "doctrine/doctrine-bundle": "^2.2",
     "stof/doctrine-extensions-bundle": "^1.5",
     "fresh/doctrine-enum-bundle": "^7.1",
-    "marlinc/admin-bundle": "2.0.0-beta12"
+    "marlinc/admin-bundle": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
