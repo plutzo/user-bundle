@@ -9,7 +9,6 @@
 namespace Marlinc\UserBundle\Admin;
 
 use Marlinc\AdminBundle\Admin\AbstractAdmin;
-use Marlinc\EntityBundle\Form\Type\MachineNameType;
 use Marlinc\UserBundle\Form\Type\RolesMatrixType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -57,7 +56,6 @@ class GroupAdmin extends AbstractAdmin
             ->tab('Group')
                 ->with('General', ['class' => 'col-md-6'])
                     ->add('name')
-                    ->add('machineName', MachineNameType::class, ['source_field' => 'name'])
                     ->add('weight')
                 ->end()
             ->end()

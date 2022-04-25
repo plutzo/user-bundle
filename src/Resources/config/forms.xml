@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="Marlinc\UserBundle\Form\PersonFormType">
-            <tag name="form.type" />
-        </service>
         <service id="marlinc.user.registration.form.factory" class="Marlinc\UserBundle\Form\Factory\FormFactory">
             <argument type="service" id="form.factory" />
             <argument>marlinc_user_registration_form</argument>

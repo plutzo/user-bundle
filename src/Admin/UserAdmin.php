@@ -3,8 +3,6 @@
 namespace Marlinc\UserBundle\Admin;
 
 use Marlinc\AdminBundle\Admin\AbstractAdmin;
-use Marlinc\EntityBundle\Admin\Filter\HasReferenceFilter;
-use Marlinc\EntityBundle\Form\Type\EntityReferenceSelectType;
 use Marlinc\UserBundle\Form\Type\RolesMatrixType;
 use Marlinc\UserBundle\Model\UserManagerInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -64,15 +62,11 @@ class UserAdmin extends AbstractAdmin
     {
         $filterMapper
             ->add('email')
-            ->add('person.firstname')
-            ->add('person.lastname')
-            ->add('person.newsletter')
             ->add('groups')
             ->add('referencingEntities', null, [],[
                 'allow_edit' => true,
                 'width' => '100%'
             ])
-            ->add('has_reference', HasReferenceFilter::class)
         ;
     }
 
@@ -86,17 +80,11 @@ class UserAdmin extends AbstractAdmin
                 ->with('User data', ['class' => 'col-md-6'])
                     ->add('email')
                     ->add('plainPassword', RepeatedType::class, [
-                        'required' => (!$this->getSubject() || is_null($this->getSubject()->getId())),
+                        'required' => true,
                         'first_options' => ['label' => 'Password'],
                         'second_options' => ['label' => 'Repeat Password'],
                     ])
                     ->add('locale', LanguageType::class)
-                ->end()
-                ->with('Personal info', ['class' => 'col-md-6'])
-                    ->add('person', AdminType::class, [
-                        'delete' => false,
-                        'by_reference' => true,
-                    ])
                 ->end()
             ->end()
             ->tab('Security')

@@ -6,8 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Marlinc\EntityBundle\MachineName\MachineNameInterface;
-use Marlinc\EntityBundle\MachineName\MachineNameTrait;
 use Marlinc\UserBundle\Model\GroupInterface;
 
 /**
@@ -17,9 +15,8 @@ use Marlinc\UserBundle\Model\GroupInterface;
  * @ORM\Table(name="user_groups")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class Group implements GroupInterface, MachineNameInterface
+class Group implements GroupInterface
 {
-    use MachineNameTrait;
     use TimestampableEntity;
     use SoftDeleteableEntity;
 

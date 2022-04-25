@@ -70,10 +70,6 @@ class UserManipulator
         $user = $this->userManager->createUser();
         $user->setEmail($email);
         $user->setPlainPassword($password);
-        if ($user instanceof User) {
-            $user->getPerson()->setFirstname($firstname);
-            $user->getPerson()->setLastname($lastname);
-        }
         $user->setEnabled((bool) $active);
         $user->setSuperAdmin((bool) $superadmin);
         $this->userManager->updateUser($user);

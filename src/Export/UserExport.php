@@ -26,28 +26,10 @@ class UserExport extends ExportFormat
             ['email']
         );
         $this->addColumn(
-            'Vorname',
-            ExportColumn::TYPE_SINGLE,
-            null,
-            ['person.firstname']
-        );
-        $this->addColumn(
-            'Nachname',
-            ExportColumn::TYPE_SINGLE,
-            null,
-            ['person.lastname']
-        );
-        $this->addColumn(
             'Firma',
             ExportColumn::TYPE_SINGLE,
             null,
             ['client.name']
-        );
-        $this->addColumn(
-            'Newsletter',
-            ExportColumn::TYPE_SINGLE,
-            null,
-            ['person.newsletter']
         );
     }
 }

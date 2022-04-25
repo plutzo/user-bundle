@@ -3,7 +3,6 @@
 namespace Marlinc\UserBundle\Entity;
 
 use Doctrine\ORM\EntityNotFoundException;
-use Marlinc\EntityBundle\Entity\EntityReference;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,8 +23,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @Gedmo\Loggable
  * @UniqueEntity("email")
  */
-class User extends EntityReference implements UserInterface, GroupableInterface, \Serializable
+class User implements UserInterface, GroupableInterface, \Serializable
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private int $id;
+
     /**
      * @var \DateTime
      *
@@ -39,6 +45,11 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $passwordRequestedAt;
+
+    /**
+     * @var string
+     */
+    protected string $realname;
 
     /**
      * @var string
@@ -134,20 +145,10 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
      */
     protected $timezone;
 
-    /**
-     * @var Person
-     *
-     * @ORM\OneToOne(targetEntity="Marlinc\UserBundle\Entity\Person",cascade={"persist"},inversedBy="user")
-     */
-    protected $person;
-
     public function __construct()
     {
-        parent::__construct();
-
         $this->enabled = false;
         $this->roles = [];
-        $this->person = new Person();
     }
 
     /**
@@ -163,24 +164,8 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
             ->setEnabled(true)
             ->setLocale('de')
             ->addRole('ROLE_USER');
-        $person = $user->getPerson();
 
         $name = explode(' ', $credentials['name']);
-        $person
-            ->setFirstname(array_shift($name))
-            ->setLastname(implode(' ', $name));
-
-        foreach ($credentials['data'] as $key => $value) {
-            switch ($key) {
-                case 'salutation':
-                    $person->setGender(($value == 'Herr')
-                        ? GenderEnumType::GENDER_MALE
-                        : (($value == 'Frau')
-                            ? GenderEnumType::GENDER_FEMALE
-                            : GenderEnumType::GENDER_UNKNOWN));
-                    break;
-            }
-        }
 
         return $user;
     }
@@ -198,12 +183,8 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
             ->setEnabled(true)
             ->setLocale('de')
             ->addRole('ROLE_USER');
-        $person = $user->getPerson();
 
         $name = explode(' ', $credentials['FULLNAME']);
-        $person
-            ->setFirstname(array_shift($name))
-            ->setLastname(implode(' ', $name));
 
         return $user;
     }
@@ -239,9 +220,7 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
      */
     public function getAllReferencingEntities(): Collection
     {
-        $all = new ArrayCollection(
-            array_merge($this->getReferencingEntities()->toArray(), $this->person->getReferencingEntities()->toArray())
-        );
+        $all = new ArrayCollection($this->getReferencingEntities()->toArray());
 
         foreach ($all as $key => $item) {
             if ($item instanceof User) {
@@ -386,14 +365,34 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
     }
 
     /**
+     * @return string
+     */
+    public function getRealname(): string
+    {
+        return $this->realname;
+    }
+
+    /**
+     * @param string $realname
+     */
+    public function setRealname(string $realname): UserInterface
+    {
+        $this->realname = $realname;
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setEmail(string $email): UserInterface
     {
         $this->email = $email;
-        if ($this->person instanceof Person) {
-            $this->person->setEmail($email);
-        }
 
         return $this;
     }
@@ -554,11 +553,6 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
         return $this;
     }
 
-    public function getFullName()
-    {
-        return $this->person->getFullName();
-    }
-
     /**
      * @return string|null
      */
@@ -592,31 +586,6 @@ class User extends EntityReference implements UserInterface, GroupableInterface,
     public function setLocale($locale): UserInterface
     {
         $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * @return Person
-     */
-    public function getPerson(): Person
-    {
-        return $this->person;
-    }
-
-    /**
-     * @param Person $person
-     * @return User
-     */
-    public function setPerson(Person $person): UserInterface
-    {
-        $this->person = $person;
-
-        if ($person === null && $this->person instanceof Person) {
-            $this->removeReferencedEntity($this->person);
-        } else {
-            $this->addReferencedEntity($person);
-        }
 
         return $this;
     }
