@@ -21,11 +21,5 @@
             <argument>%marlinc.user.default_avatar%</argument>
             <argument type="service" id="marlinc.user.admin.user"/>
         </service>
-        <service id="Marlinc\UserBundle\Admin\ExportFieldsExtension" public="true">
-            <tag name="sonata.admin.extension" global="true" />
-        </service>
-        <service id="Marlinc\UserBundle\Admin\FormOptionsExtension" public="true">
-            <tag name="sonata.admin.extension" global="true" />
-        </service>
     </services>
 </container>
