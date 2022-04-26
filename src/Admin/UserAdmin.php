@@ -25,10 +25,10 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
+            ->add('realname')
             ->addIdentifier('email')
             ->add('groups')
             ->add('enabled', null, ['editable' => true])
-            ->add('createdAt')
             ->add('allReferencingEntities', 'array')
         ;
 
@@ -61,6 +61,7 @@ class UserAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filterMapper): void
     {
         $filterMapper
+            ->add('realname')
             ->add('email')
             ->add('groups')
             ->add('referencingEntities', null, [],[
@@ -78,6 +79,7 @@ class UserAdmin extends AbstractAdmin
         $formMapper
             ->tab('User')
                 ->with('User data', ['class' => 'col-md-6'])
+                   ->add('realname')
                     ->add('email')
                     ->add('plainPassword', RepeatedType::class, [
                         'required' => true,

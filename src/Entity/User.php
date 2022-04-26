@@ -47,7 +47,8 @@ class User implements UserInterface, GroupableInterface, \Serializable
     protected $passwordRequestedAt;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     protected string $realname;
 
@@ -364,17 +365,11 @@ class User implements UserInterface, GroupableInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getRealname(): string
     {
         return $this->realname;
     }
 
-    /**
-     * @param string $realname
-     */
     public function setRealname(string $realname): UserInterface
     {
         $this->realname = $realname;
