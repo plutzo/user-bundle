@@ -25,10 +25,10 @@ class UserExport extends ExportFormat
                 null,
                 ['email'])
             ->addColumn(
-                'realname',
+                'Real Name',
                 ExportColumn::TYPE_SINGLE,
                 null,
-                ['email']
+                ['realname']
             );
     }
 }
