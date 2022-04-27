@@ -82,7 +82,7 @@ class UserAdmin extends AbstractAdmin
                    ->add('realname')
                     ->add('email')
                     ->add('plainPassword', RepeatedType::class, [
-                        'required' => (!$this->id($this->getSubject())),
+                        'required' => !$this->id($this->getSubject()),
                         'first_options' => ['label' => 'Password'],
                         'second_options' => ['label' => 'Repeat Password'],
                     ])
