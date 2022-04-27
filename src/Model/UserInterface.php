@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Model;
 
-use Marlinc\UserBundle\Entity\Person;
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
 interface UserInterface extends BaseUserInterface
@@ -194,18 +193,6 @@ interface UserInterface extends BaseUserInterface
      * @return string|null
      */
     public function getTwoStepVerificationCode(): ?string;
-
-    /**
-     * @param Person $person
-     *
-     * @return UserInterface
-     */
-    public function setPerson(Person $person): UserInterface;
-
-    /**
-     * @return Person
-     */
-    public function getPerson(): Person;
 
     /**
      * @param string $locale

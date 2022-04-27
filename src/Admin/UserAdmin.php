@@ -25,8 +25,8 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
-            ->add('realname')
             ->addIdentifier('email')
+            ->add('realname')
             ->add('groups')
             ->add('enabled', null, ['editable' => true])
             ->add('allReferencingEntities', 'array')
@@ -82,7 +82,7 @@ class UserAdmin extends AbstractAdmin
                    ->add('realname')
                     ->add('email')
                     ->add('plainPassword', RepeatedType::class, [
-                        'required' => true,
+                        'required' => (!$this->id($this->getSubject())),
                         'first_options' => ['label' => 'Password'],
                         'second_options' => ['label' => 'Repeat Password'],
                     ])

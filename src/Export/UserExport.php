@@ -23,8 +23,14 @@ class UserExport extends ExportFormat
             'E-Mail',
             ExportColumn::TYPE_SINGLE,
             null,
-            ['email']
-        );
+            ['email'])
+            ->addColumn(
+                'realname',
+                ExportColumn::TYPE_SINGLE,
+                null,
+                ['email']
+            );
+
         $this->addColumn(
             'Firma',
             ExportColumn::TYPE_SINGLE,
