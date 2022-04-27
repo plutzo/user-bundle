@@ -20,22 +20,15 @@ class UserExport extends ExportFormat
     public function __construct()
     {
         $this->addColumn(
-            'E-Mail',
-            ExportColumn::TYPE_SINGLE,
-            null,
-            ['email'])
+                'E-Mail',
+                ExportColumn::TYPE_SINGLE,
+                null,
+                ['email'])
             ->addColumn(
                 'realname',
                 ExportColumn::TYPE_SINGLE,
                 null,
                 ['email']
             );
-
-        $this->addColumn(
-            'Firma',
-            ExportColumn::TYPE_SINGLE,
-            null,
-            ['client.name']
-        );
     }
 }

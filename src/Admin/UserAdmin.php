@@ -30,6 +30,7 @@ class UserAdmin extends AbstractAdmin
             ->add('groups')
             ->add('enabled', null, ['editable' => true])
             ->add('allReferencingEntities', 'array')
+            ->add('createdAt')
         ;
 
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
@@ -61,8 +62,8 @@ class UserAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filterMapper): void
     {
         $filterMapper
-            ->add('realname')
             ->add('email')
+            ->add('realname')
             ->add('groups')
             ->add('referencingEntities', null, [],[
                 'allow_edit' => true,
