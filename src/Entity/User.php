@@ -221,21 +221,6 @@ class User implements UserInterface, GroupableInterface, \Serializable
     }
 
     /**
-     * @return Collection
-     */
-    public function getAllReferencingEntities(): Collection
-    {
-        $all = new ArrayCollection($this->getReferencingEntities()->toArray());
-
-        foreach ($all as $key => $item) {
-            if ($item instanceof User) {
-                $all->remove($key);
-            }
-        }
-        return $all;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function addRole(string $role): UserInterface

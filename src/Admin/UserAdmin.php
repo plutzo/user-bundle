@@ -29,7 +29,6 @@ class UserAdmin extends AbstractAdmin
             ->add('realname')
             ->add('groups')
             ->add('enabled', null, ['editable' => true])
-            ->add('allReferencingEntities', 'array')
             ->add('createdAt')
         ;
 
