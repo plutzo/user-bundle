@@ -1,79 +1,75 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Marlinc\UserBundle\Command;
 
-use Marlinc\UserBundle\Util\UserManipulator;
+use Marlinc\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 
 /**
- * @author Antoine Hérault <antoine.herault@gmail.com>
+ * @internal
  */
-class DeactivateUserCommand extends Command
+final class DeactivateUserCommand extends Command
 {
-    /**
-     * @var UserManipulator
-     */
-    private $userManipulator;
+    protected static $defaultName = 'sonata:user:deactivate';
+    protected static $defaultDescription = 'Deactivate a user';
 
-    public function __construct(UserManipulator $userManipulator)
+    private UserManagerInterface $userManager;
+
+    public function __construct(UserManagerInterface $userManager)
     {
         parent::__construct();
 
-        $this->userManipulator = $userManipulator;
+        $this->userManager = $userManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
+        \assert(null !== static::$defaultDescription);
+
         $this
-            ->setName('fos:user:deactivate')
-            ->setDescription('Deactivate a user')
+            ->setDescription(static::$defaultDescription)
             ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
             ])
-            ->setHelp(<<<'EOT'
-The <info>fos:user:deactivate</info> command deactivates a user (will not be able to log in)
+            ->setHelp(
+                <<<'EOT'
+The <info>%command.full_name%</info> command deactivates a user (so they will be unable to log in):
 
   <info>php %command.full_name% matthieu</info>
 EOT
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
 
-        $this->userManipulator->deactivate($username);
+        $user = $this->userManager->findUserByUsername($username);
 
-        $output->writeln(sprintf('User "%s" has been deactivated.', $username));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
-    {
-        if (!$input->getArgument('username')) {
-            $question = new Question('Please choose a username:');
-            $question->setValidator(function ($username) {
-                if (empty($username)) {
-                    throw new \Exception('Username can not be empty');
-                }
-
-                return $username;
-            });
-            $answer = $this->getHelper('question')->ask($input, $output, $question);
-
-            $input->setArgument('username', $answer);
+        if (null === $user) {
+            throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
         }
+
+        $user->setEnabled(false);
+
+        $this->userManager->save($user);
+
+        $output->writeln(sprintf('User "%s" has been activated.', $username));
+
+        return 0;
     }
 }

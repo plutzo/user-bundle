@@ -1,144 +1,92 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Marlinc\UserBundle\Command;
 
-use Marlinc\UserBundle\Util\UserManipulator;
+use Marlinc\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 
-class CreateUserCommand extends Command
+/**
+ * @internal
+ */
+final class CreateUserCommand extends Command
 {
-    /**
-     * @var UserManipulator
-     */
-    private $userManipulator;
+    protected static $defaultName = 'sonata:user:create';
+    protected static $defaultDescription = 'Create a user';
 
-    public function __construct(UserManipulator $userManipulator)
+    private UserManagerInterface $userManager;
+
+    public function __construct(UserManagerInterface $userManager)
     {
         parent::__construct();
 
-        $this->userManipulator = $userManipulator;
+        $this->userManager = $userManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
+        \assert(null !== static::$defaultDescription);
+
         $this
-            ->setName('marlinc:user:create')
-            ->setDescription('Create a user.')
+            ->setDescription(static::$defaultDescription)
             ->setDefinition([
+                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
-                new InputArgument('firstname', InputArgument::REQUIRED, 'The first name'),
-                new InputArgument('lastname', InputArgument::REQUIRED, 'The last name'),
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
             ])
-            ->setHelp(<<<'EOT'
-The <info>marlinc:user:create</info> command creates a user:
+            ->setHelp(
+                <<<'EOT'
+The <info>%command.full_name%</info> command creates a user:
 
-  <info>php %command.full_name% it@aha.biz</info>
-
-This interactive shell will ask you for a password and the user's first and last name.
-
-You can alternatively specify these options as arguments:
-
-  <info>php %command.full_name% it@aha.biz mypassword Paul Panzer</info>
+  <info>php %command.full_name% matthieu matthieu@example.com mypassword</info>
 
 You can create a super admin via the super-admin flag:
 
-  <info>php %command.full_name% it@aha.biz --super-admin</info>
+  <info>php %command.full_name% admin admi@example.com mypassword --super-admin</info>
 
 You can create an inactive user (will not be able to log in):
 
-  <info>php %command.full_name% it@aha.biz --inactive</info>
+  <info>php %command.full_name% user user@example.com mypassword --inactive</info>
 
 EOT
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $firstname = $input->getArgument('firstname');
-        $lastname = $input->getArgument('lastname');
+        $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
         $inactive = $input->getOption('inactive');
-        $superadmin = $input->getOption('super-admin');
+        $superAdmin = $input->getOption('super-admin');
 
-        $this->userManipulator->create($email, $password, $firstname, $lastname, !$inactive, $superadmin);
+        $user = $this->userManager->create();
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setPlainPassword($password);
+        $user->setEnabled(!$inactive);
+        $user->setSuperAdmin($superAdmin);
 
-        $output->writeln(sprintf('Created user <comment>%s</comment>', $email));
-    }
+        $this->userManager->save($user);
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
-    {
-        $questions = [];
+        $output->writeln(sprintf('Created user "%s".', $username));
 
-        if (!$input->getArgument('email')) {
-            $question = new Question('Please choose an email:');
-            $question->setValidator(function ($email) {
-                if (empty($email)) {
-                    throw new \Exception('Email can not be empty');
-                }
-
-                return $email;
-            });
-            $questions['email'] = $question;
-        }
-
-        if (!$input->getArgument('password')) {
-            $question = new Question('Please choose a password:');
-            $question->setValidator(function ($password) {
-                if (empty($password)) {
-                    throw new \Exception('Password can not be empty');
-                }
-
-                return $password;
-            });
-            $question->setHidden(true);
-            $questions['password'] = $question;
-        }
-
-        if (!$input->getArgument('firstname')) {
-            $question = new Question('Please choose a first name:');
-            $question->setValidator(function ($username) {
-                if (empty($username)) {
-                    throw new \Exception('Frist name can not be empty');
-                }
-
-                return $username;
-            });
-            $questions['firstname'] = $question;
-        }
-
-        if (!$input->getArgument('lastname')) {
-            $question = new Question('Please choose a last name:');
-            $question->setValidator(function ($username) {
-                if (empty($username)) {
-                    throw new \Exception('Last name can not be empty');
-                }
-
-                return $username;
-            });
-            $questions['lastname'] = $question;
-        }
-
-        foreach ($questions as $name => $question) {
-            $answer = $this->getHelper('question')->ask($input, $output, $question);
-            $input->setArgument($name, $answer);
-        }
+        return 0;
     }
 }

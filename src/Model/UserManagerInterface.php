@@ -2,110 +2,31 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Marlinc\UserBundle\Model;
 
+use Sonata\Doctrine\Model\ManagerInterface;
+
 /**
- * @author Hugo Briand <briand@ekino.com>
+ * @phpstan-extends ManagerInterface<\Marlinc\UserBundle\Model\UserInterface>
  */
-interface UserManagerInterface
+interface UserManagerInterface extends ManagerInterface
 {
-    /**
-     * Returns the user's fully qualified class name.
-     *
-     * @return string
-     */
-    public function getClass(): string;
+    public function updatePassword(UserInterface $user): void;
 
-    /**
-     * Creates an empty user instance.
-     *
-     * @return UserInterface
-     */
-    public function createUser(): UserInterface;
+    public function findUserByUsername(string $username): ?UserInterface;
 
-    /**
-     * Reloads a user.
-     *
-     * @param UserInterface $user
-     * @return UserManagerInterface
-     */
-    public function reloadUser(UserInterface $user): UserManagerInterface;
-
-    /**
-     * Updates a user.
-     *
-     * @param UserInterface $user
-     * @return UserManagerInterface
-     */
-    public function updateUser(UserInterface $user): UserManagerInterface;
-
-    /**
-     * Deletes a user.
-     *
-     * @param UserInterface $user
-     * @return UserManagerInterface
-     */
-    public function deleteUser(UserInterface $user): UserManagerInterface;
-
-    /**
-     * Updates the canonical username and email fields for a user.
-     *
-     * @param UserInterface $user
-     * @return UserManagerInterface
-     */
-    public function updateCanonicalFields(UserInterface $user): UserManagerInterface;
-
-    /**
-     * Updates a user password if a plain password is set.
-     *
-     * @param UserInterface $user
-     * @return UserManagerInterface
-     */
-    public function updatePassword(UserInterface $user): UserManagerInterface;
-
-    /**
-     * Finds one user by the given criteria.
-     *
-     * @param array $criteria
-     *
-     * @return UserInterface|null
-     */
-    public function findUserBy(array $criteria): ?UserInterface;
-
-    /**
-     * Finds a user by its email.
-     *
-     * @param string $email
-     *
-     * @return UserInterface|null
-     */
     public function findUserByEmail(string $email): ?UserInterface;
 
-    /**
-     * Finds a user by its confirmationToken.
-     *
-     * @param string $token
-     *
-     * @return UserInterface|null
-     */
+    public function findUserByUsernameOrEmail(string $usernameOrEmail): ?UserInterface;
+
     public function findUserByConfirmationToken(string $token): ?UserInterface;
-
-    /**
-     * Returns a collection with all user instances.
-     *
-     * @return UserInterface[]
-     */
-    public function findUsers(): array;
-
-    /**
-     * Alias for the repository method.
-     *
-     * @param array|null $criteria
-     * @param array|null $orderBy
-     * @param int|null   $limit
-     * @param int|null   $offset
-     *
-     * @return UserInterface[]
-     */
-    public function findUsersBy(array $criteria = null, array $orderBy = null, $limit = null, $offset = null): array;
 }

@@ -2,68 +2,87 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Marlinc\UserBundle\Twig;
 
 use Sonata\AdminBundle\Admin\AdminInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sonata\AdminBundle\Admin\Pool;
 
 /**
- * GlobalVariables.
- *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class GlobalVariables
+final class GlobalVariables
 {
-    /**
-     * @var array
-     */
-    protected $impersonating;
+    private ?Pool $pool;
+
+    private string $defaultAvatar;
+
+    private bool $impersonatingEnabled;
+
+    private string $impersonatingRoute;
 
     /**
-     * @var string
+     * @var array<string, mixed>
      */
-    protected $avatar;
+    private array $impersonatingRouteParameters;
 
     /**
-     * @var AdminInterface
+     * @param array<string, mixed> $impersonatingRouteParameters
      */
-    private $userAdmin;
-
-    /**
-     * GlobalVariables constructor.
-     *
-     * @param array $impersonating
-     * @param string $avatar
-     * @param AdminInterface $userAdmin
-     */
-    public function __construct(array $impersonating, string $avatar, AdminInterface $userAdmin)
-    {
-        $this->impersonating = $impersonating;
-        $this->avatar = $avatar;
-        $this->userAdmin = $userAdmin;
+    public function __construct(
+        ?Pool $pool,
+        string $defaultAvatar,
+        bool $impersonatingEnabled,
+        string $impersonatingRoute,
+        array $impersonatingRouteParameters = []
+    ) {
+        $this->pool = $pool;
+        $this->defaultAvatar = $defaultAvatar;
+        $this->impersonatingEnabled = $impersonatingEnabled;
+        $this->impersonatingRoute = $impersonatingRoute;
+        $this->impersonatingRouteParameters = $impersonatingRouteParameters;
     }
 
     /**
-     * @return array
+     * @return AdminInterface<object>
      */
-    public function getImpersonating()
+    public function getUserAdmin(): AdminInterface
     {
-        return $this->impersonating;
+        if (null === $this->pool) {
+            throw new \LogicException('Unable to get the UserAdmin, admin pool is not configured. You should install SonataAdminBundle in order to use admin-related features.');
+        }
+
+        return $this->pool->getAdminByAdminCode('sonata.user.admin.user');
+    }
+
+    public function getDefaultAvatar(): string
+    {
+        return $this->defaultAvatar;
+    }
+
+    public function isImpersonatingEnabled(): bool
+    {
+        return $this->impersonatingEnabled;
+    }
+
+    public function getImpersonatingRoute(): string
+    {
+        return $this->impersonatingRoute;
     }
 
     /**
-     * @return string
+     * @return array<string, mixed>
      */
-    public function getDefaultAvatar()
+    public function getImpersonatingRouteParameters(): array
     {
-        return $this->avatar;
-    }
-
-    /**
-     * @return AdminInterface
-     */
-    public function getUserAdmin()
-    {
-        return $this->userAdmin;
+        return $this->impersonatingRouteParameters;
     }
 }

@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Marlinc\UserBundle\Twig;
 
 use Marlinc\UserBundle\Security\RolesBuilder\MatrixRolesBuilderInterface;
@@ -17,10 +26,7 @@ use Twig\TwigFunction;
  */
 final class RolesMatrixExtension extends AbstractExtension
 {
-    /**
-     * @var MatrixRolesBuilderInterface
-     */
-    private $rolesBuilder;
+    private MatrixRolesBuilderInterface $rolesBuilder;
 
     public function __construct(MatrixRolesBuilderInterface $rolesBuilder)
     {
@@ -39,11 +45,6 @@ final class RolesMatrixExtension extends AbstractExtension
         ];
     }
 
-    public function getName(): string
-    {
-        return self::class;
-    }
-
     public function renderRolesList(Environment $environment, FormView $form): string
     {
         $roles = $this->rolesBuilder->getRoles();
@@ -55,13 +56,13 @@ final class RolesMatrixExtension extends AbstractExtension
 
             $roles[$role] = $attributes;
             foreach ($form->getIterator() as $child) {
-                if ($child->vars['value'] == $role) {
+                if ($child->vars['value'] === $role) {
                     $roles[$role]['form'] = $child;
                 }
             }
         }
 
-        return $environment->render('@MarlincUser/Form/roles_matrix_list.html.twig', [
+        return $environment->render('@SonataUser/Form/roles_matrix_list.html.twig', [
             'roles' => $roles,
         ]);
     }
@@ -76,13 +77,13 @@ final class RolesMatrixExtension extends AbstractExtension
 
             $groupedRoles[$attributes['admin_label']][$role] = $attributes;
             foreach ($form->getIterator() as $child) {
-                if ($child->vars['value'] == $role) {
+                if ($child->vars['value'] === $role) {
                     $groupedRoles[$attributes['admin_label']][$role]['form'] = $child;
                 }
             }
         }
 
-        return $environment->render('@MarlincUser/Form/roles_matrix.html.twig', [
+        return $environment->render('@SonataUser/Form/roles_matrix.html.twig', [
             'grouped_roles' => $groupedRoles,
             'permission_labels' => $this->rolesBuilder->getPermissionLabels(),
         ]);

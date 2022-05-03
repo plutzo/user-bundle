@@ -1,35 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Marlinc\UserBundle\Validator;
 
 use Marlinc\UserBundle\Model\UserInterface;
-use Marlinc\UserBundle\Util\CanonicalizerInterface;
+use Marlinc\UserBundle\Util\CanonicalFieldsUpdaterInterface;
 use Symfony\Component\Validator\ObjectInitializerInterface;
 
 /**
- * Automatically updates the canonical fields before validation.
- *
- * @author Christophe Coevoet <stof@notk.org>
+ * @internal
  */
-class UserInitializer implements ObjectInitializerInterface
+final class UserInitializer implements ObjectInitializerInterface
 {
-    /**
-     * @var CanonicalizerInterface
-     */
-    private $canonicalizer;
+    private CanonicalFieldsUpdaterInterface $canonicalFieldsUpdater;
 
-    public function __construct(CanonicalizerInterface $canonicalizer)
+    public function __construct(CanonicalFieldsUpdaterInterface $canonicalFieldsUpdater)
     {
-        $this->canonicalizer = $canonicalizer;
+        $this->canonicalFieldsUpdater = $canonicalFieldsUpdater;
     }
 
     /**
      * @param object $object
      */
-    public function initialize($object)
+    public function initialize($object): void
     {
-        if ($object instanceof UserInterface) {
-            $object->setEmail($this->canonicalizer->canonicalize($object->getEmail()));
+        if (!$object instanceof UserInterface) {
+            return;
         }
+
+        $this->canonicalFieldsUpdater->updateCanonicalFields($object);
     }
 }
