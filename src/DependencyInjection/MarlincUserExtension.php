@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-final class SonataUserExtension extends Extension implements PrependExtensionInterface
+final class MarlincUserExtension extends Extension implements PrependExtensionInterface
 {
     public function prepend(ContainerBuilder $container): void
     {
