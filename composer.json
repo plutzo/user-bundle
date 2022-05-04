@@ -24,7 +24,7 @@
         "url": "https://packages.aha.biz"
     }],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": ">=7.4",
         "doctrine/collections": "^1.6",
         "doctrine/common": "^3.1",
         "doctrine/persistence": "^2.1",
@@ -50,7 +50,7 @@
         "symfony/translation-contracts": "^1.1 || ^2.5 || ^3.0",
         "symfony/validator": "^4.4 || ^5.3 || ^6.0",
         "twig/twig": "^2.14 || ^3.0",
-        "marlinc/admin-bundle": "2.0.0-beta13"
+        "marlinc/admin-bundle": "2.0.0@beta"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.7",
@@ -89,13 +89,11 @@
         "sonata-project/doctrine-orm-admin-bundle": "For persisting entities"
     },
     "autoload": {
-        "psr-4": {
-            "Sonata\\UserBundle\\": "src/"
-        }
+        "psr-4": { "Marlinc\\UserBundle\\": "src/" }
     },
     "autoload-dev": {
         "psr-4": {
-            "Sonata\\UserBundle\\Tests\\": "tests/"
+            "Marlinc\\UserBundle\\Tests\\": "tests/"
         }
     },
     "config": {
