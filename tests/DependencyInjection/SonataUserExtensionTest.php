@@ -17,7 +17,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Marlinc\UserBundle\Admin\Entity\UserAdmin as EntityUserAdmin;
 use Marlinc\UserBundle\DependencyInjection\SonataUserExtension;
 use Marlinc\UserBundle\Entity\BaseUser as EntityBaseUser;
-use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 use Marlinc\UserBundle\Tests\Admin\Document\UserAdmin as DocumentUserAdmin;
 use Marlinc\UserBundle\Tests\Document\User as DocumentUser;
 use Marlinc\UserBundle\Tests\Entity\User as EntityUser;
@@ -138,23 +138,7 @@ final class SonataUserExtensionTest extends AbstractExtensionTestCase
     {
         $this->load(['admin' => ['user' => ['class' => EntityUserAdmin::class]]]);
     }
-
-    /**
-     * @doesNotPerformAssertions
-     */
-    public function testCorrectModelClassWithNotDefaultManagerType(): void
-    {
-        $this->load([
-            'manager_type' => 'mongodb',
-            'class' => [
-                'user' => DocumentUser::class,
-            ],
-            'admin' => [
-                'user' => ['class' => DocumentUserAdmin::class],
-            ],
-        ]);
-    }
-
+    
     /**
      * @doesNotPerformAssertions
      */
@@ -164,18 +148,7 @@ final class SonataUserExtensionTest extends AbstractExtensionTestCase
             'user' => UserInterface::class,
         ]]);
     }
-
-    public function testNotCorrespondingUserClass(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $this->expectExceptionMessage(
-            'Model class "Marlinc\UserBundle\Entity\BaseUser" does not correspond to manager type "mongodb".'
-        );
-
-        $this->load(['manager_type' => 'mongodb', 'class' => ['user' => EntityBaseUser::class]]);
-    }
-
+    
     public function testMailerConfigParameterIfNotSet(): void
     {
         $this->load();

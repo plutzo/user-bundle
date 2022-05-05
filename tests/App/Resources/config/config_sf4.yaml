@@ -4,7 +4,7 @@ framework:
 
 security:
     encoders:
-        Marlinc\UserBundle\Model\UserInterface: plaintext
+        Marlinc\UserBundle\Entity\UserInterface: plaintext
 
     firewalls:
         main:

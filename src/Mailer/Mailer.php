@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Mailer;
 
-use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 use Symfony\Component\Mailer\MailerInterface as SymfonyMailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

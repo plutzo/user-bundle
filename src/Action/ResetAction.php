@@ -16,7 +16,7 @@ namespace Marlinc\UserBundle\Action;
 use Sonata\AdminBundle\Admin\Pool;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Marlinc\UserBundle\Form\Type\ResettingFormType;
-use Marlinc\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

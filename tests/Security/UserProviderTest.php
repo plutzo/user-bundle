@@ -15,7 +15,7 @@ namespace Marlinc\UserBundle\Tests\Security;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Marlinc\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Marlinc\UserBundle\Security\UserProvider;
 use Marlinc\UserBundle\Tests\App\Entity\User;
 use Marlinc\UserBundle\Tests\Entity\User as EntityUser;

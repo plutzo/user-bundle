@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Security\Authorization\Voter;
 
-use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 use Symfony\Component\Security\Acl\Voter\AclVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 

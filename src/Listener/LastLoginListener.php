@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Listener;
 
-use Marlinc\UserBundle\Model\UserInterface;
-use Marlinc\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
+use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;

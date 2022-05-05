@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Entity;
 
-use Marlinc\UserBundle\Model\User as AbstractedUser;
+use Marlinc\UserBundle\Entity\User as AbstractedUser;
 
 class BaseUser extends AbstractedUser
 {

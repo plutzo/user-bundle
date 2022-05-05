@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Marlinc\UserBundle\Tests\Functional\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 use Marlinc\UserBundle\Tests\App\AppKernel;
 use Marlinc\UserBundle\Tests\App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Console\Application;

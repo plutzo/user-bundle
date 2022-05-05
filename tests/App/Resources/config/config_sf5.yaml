@@ -7,7 +7,7 @@ security:
     enable_authenticator_manager: true
 
     password_hashers:
-        Marlinc\UserBundle\Model\UserInterface:
+        Marlinc\UserBundle\Entity\UserInterface:
             algorithm: plaintext
 
     firewalls:

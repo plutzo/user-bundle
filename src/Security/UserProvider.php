@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Security;
 
-use Marlinc\UserBundle\Model\UserInterface;
-use Marlinc\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
+use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Validator;
 
-use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 use Marlinc\UserBundle\Util\CanonicalFieldsUpdaterInterface;
 use Symfony\Component\Validator\ObjectInitializerInterface;
 

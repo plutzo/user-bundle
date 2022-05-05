@@ -11,12 +11,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Marlinc\UserBundle\Model;
+namespace Marlinc\UserBundle\Entity;
 
 use Sonata\Doctrine\Model\ManagerInterface;
 
 /**
- * @phpstan-extends ManagerInterface<\Marlinc\UserBundle\Model\UserInterface>
+ * @phpstan-extends ManagerInterface<\Marlinc\UserBundle\Entity\UserInterface>
  */
 interface UserManagerInterface extends ManagerInterface
 {

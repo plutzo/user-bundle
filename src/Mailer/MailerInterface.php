@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Mailer;
 
-use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 
 interface MailerInterface
 {

@@ -22,12 +22,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class ResettingFormType extends AbstractType
 {
     /**
-     * @phpstan-var class-string<\Marlinc\UserBundle\Model\UserInterface>
+     * @phpstan-var class-string<\Marlinc\UserBundle\Entity\UserInterface>
      */
     private string $class;
 
     /**
-     * @phpstan-param class-string<\Marlinc\UserBundle\Model\UserInterface> $class
+     * @phpstan-param class-string<\Marlinc\UserBundle\Entity\UserInterface> $class
      */
     public function __construct(string $class)
     {

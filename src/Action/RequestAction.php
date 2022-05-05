@@ -17,7 +17,7 @@ use Sonata\AdminBundle\Admin\Pool;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Marlinc\UserBundle\Form\Type\ResetPasswordRequestFormType;
 use Marlinc\UserBundle\Mailer\MailerInterface;
-use Marlinc\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Marlinc\UserBundle\Util\TokenGeneratorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

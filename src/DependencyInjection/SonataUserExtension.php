@@ -128,7 +128,7 @@ final class SonataUserExtension extends Extension implements PrependExtensionInt
     {
         $managerType = $config['manager_type'];
 
-        if (!\in_array($managerType, ['orm', 'mongodb'], true)) {
+        if (!\in_array($managerType, ['orm'], true)) {
             throw new \InvalidArgumentException(sprintf('Invalid manager type "%s".', $managerType));
         }
 

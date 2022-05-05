@@ -14,14 +14,12 @@ declare(strict_types=1);
 namespace Marlinc\UserBundle\Listener;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Mapping\ClassMetadata as ODMClassMetadata;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadata as ORMClassMetadata;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Persistence\ObjectManager;
-use Marlinc\UserBundle\Model\UserInterface;
-use Marlinc\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
+use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Marlinc\UserBundle\Util\CanonicalFieldsUpdaterInterface;
 
 /**
@@ -86,10 +84,6 @@ final class UserListener implements EventSubscriber
             \assert($meta instanceof ORMClassMetadata);
 
             $om->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $user);
-        } elseif ($om instanceof DocumentManager) {
-            \assert($meta instanceof ODMClassMetadata);
-
-            $om->getUnitOfWork()->recomputeSingleDocumentChangeSet($meta, $user);
-        }
+        } 
     }
 }

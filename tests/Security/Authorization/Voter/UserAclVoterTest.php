@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Marlinc\UserBundle\Tests\Security\Authorization\Voter;
 
 use PHPUnit\Framework\TestCase;
-use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 use Marlinc\UserBundle\Security\Authorization\Voter\UserAclVoter;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;

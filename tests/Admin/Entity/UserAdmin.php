@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Tests\Admin\Entity;
 
-use Marlinc\UserBundle\Admin\Model\UserAdmin as BaseUserAdmin;
+use Marlinc\UserBundle\Admin\UserAdmin as BaseUserAdmin;
 
 /**
  * @author Anton Dyshkant <vyshkant@gmail.com>

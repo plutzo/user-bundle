@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\DependencyInjection;
 
-use Marlinc\UserBundle\Admin\Entity\UserAdmin;
+use Marlinc\UserBundle\Admin\UserAdmin;
 use Marlinc\UserBundle\Entity\BaseUser;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -36,7 +36,7 @@ final class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('sonata_user');
         $rootNode = $treeBuilder->getRootNode();
 
-        $supportedManagerTypes = ['orm', 'mongodb'];
+        $supportedManagerTypes = ['orm'];
 
         $rootNode
             ->children()

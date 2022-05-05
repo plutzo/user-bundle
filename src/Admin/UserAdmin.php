@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Marlinc\UserBundle\Admin\Model;
+namespace Marlinc\UserBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -20,11 +20,11 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Marlinc\UserBundle\Form\Type\RolesMatrixType;
-use Marlinc\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * @phpstan-extends AbstractAdmin<\Marlinc\UserBundle\Model\UserInterface>
+ * @phpstan-extends AbstractAdmin<\Marlinc\UserBundle\Entity\UserInterface>
  */
 class UserAdmin extends AbstractAdmin
 {

@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Tests\Functional\Command;
 
-use Marlinc\UserBundle\Model\UserInterface;
-use Marlinc\UserBundle\Model\UserManagerInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
+use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Marlinc\UserBundle\Tests\App\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

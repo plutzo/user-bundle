@@ -16,7 +16,7 @@ namespace Marlinc\UserBundle\Tests\DependencyInjection;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Marlinc\UserBundle\Mailer\Mailer;
-use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 use Symfony\Component\Mailer\MailerInterface as SymfonyMailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\RouterInterface;
