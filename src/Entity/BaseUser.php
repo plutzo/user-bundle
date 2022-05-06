@@ -17,14 +17,5 @@ use Marlinc\UserBundle\Entity\User as AbstractedUser;
 
 class BaseUser extends AbstractedUser
 {
-    public function prePersist(): void
-    {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
-    }
 
-    public function preUpdate(): void
-    {
-        $this->updatedAt = new \DateTime();
-    }
 }

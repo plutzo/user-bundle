@@ -348,4 +348,15 @@ abstract class User implements UserInterface
     {
         $this->setRoles($roles);
     }
+
+    public function prePersist(): void
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function preUpdate(): void
+    {
+        $this->updatedAt = new \DateTime();
+    }
 }
