@@ -39,24 +39,24 @@ file that was distributed with this source code.
             </div>
         {% endblock %}
         <div class="login-box-body">
-            {% block sonata_user_login_form %}
-                {% block sonata_user_login_error %}
+            {% block marlinc_user_login_form %}
+                {% block marlinc_user_login_error %}
                     {% if error %}
                         <div class="alert alert-danger alert-error">
                             {{ error.messageKey|trans(error.messageData, 'security') }}
                         </div>
                     {% endif %}
                 {% endblock %}
-                <p class="login-box-msg">{{ 'title_user_authentication'|trans({}, 'SonataUserBundle') }}</p>
+                <p class="login-box-msg">{{ 'title_user_authentication'|trans({}, 'MarlincUserBundle') }}</p>
 
-                <form action="{{ path("sonata_user_admin_security_check") }}" method="post" role="form">
+                <form action="{{ path("marlinc_user_admin_security_check") }}" method="post" role="form">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
 
                     <div class="form-group has-feedback">
                         <input class="form-control"
                             id="username"
                             name="_username"
-                            placeholder="{{ 'security.login.username'|trans({}, 'SonataUserBundle') }}"
+                            placeholder="{{ 'security.login.username'|trans({}, 'MarlincUserBundle') }}"
                             required="required"
                             type="text"
                             value="{{ last_username }}"/>
@@ -67,7 +67,7 @@ file that was distributed with this source code.
                         <input class="form-control"
                             id="password"
                             name="_password"
-                            placeholder="{{ 'security.login.password'|trans({}, 'SonataUserBundle') }}"
+                            placeholder="{{ 'security.login.password'|trans({}, 'MarlincUserBundle') }}"
                             required="required"
                             type="password"/>
                         <span class="fas fa-lock form-control-feedback"></span>
@@ -78,17 +78,17 @@ file that was distributed with this source code.
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
-                                    {{ 'security.login.remember_me'|trans({}, 'SonataUserBundle') }}
+                                    {{ 'security.login.remember_me'|trans({}, 'MarlincUserBundle') }}
                                 </label>
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <button type="submit" name="submit" class="btn btn-primary btn-block btn-flat">{{ 'security.login.submit'|trans({}, 'SonataUserBundle') }}</button>
+                            <button type="submit" name="submit" class="btn btn-primary btn-block btn-flat">{{ 'security.login.submit'|trans({}, 'MarlincUserBundle') }}</button>
                         </div>
                     </div>
                 </form>
 
-                <a href="{{ reset_route }}">{{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}</a>
+                <a href="{{ reset_route }}">{{ 'forgotten_password'|trans({}, 'MarlincUserBundle') }}</a>
             {% endblock %}
         </div>
     </div>

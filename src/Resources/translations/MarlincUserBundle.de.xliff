@@ -18,8 +18,8 @@
         <source>title_user_authentication</source>
         <target>Authentifizierung</target>
       </trans-unit>
-      <trans-unit id="sonata_user_submit">
-        <source>sonata_user_submit</source>
+      <trans-unit id="marlinc_user_submit">
+        <source>marlinc_user_submit</source>
         <target>Absenden</target>
       </trans-unit>
       <trans-unit id="breadcrumb.link_user_list">
@@ -338,8 +338,8 @@
         <source>label_two_step_code_error</source>
         <target>Zwei-Schritte Code Fehler</target>
       </trans-unit>
-      <trans-unit id="sonata_user">
-        <source>sonata_user</source>
+      <trans-unit id="marlinc_user">
+        <source>marlinc_user</source>
         <target>Benutzer</target>
       </trans-unit>
       <trans-unit id="label_gender">
@@ -562,16 +562,16 @@
         <source>forgotten_password</source>
         <target>Passwort vergessen?</target>
       </trans-unit>
-      <trans-unit id="sonata_user_profile_breadcrumb_index">
-        <source>sonata_user_profile_breadcrumb_index</source>
+      <trans-unit id="marlinc_user_profile_breadcrumb_index">
+        <source>marlinc_user_profile_breadcrumb_index</source>
         <target>Profil</target>
       </trans-unit>
-      <trans-unit id="sonata_user_profile_breadcrumb_edit">
-        <source>sonata_user_profile_breadcrumb_edit</source>
+      <trans-unit id="marlinc_user_profile_breadcrumb_edit">
+        <source>marlinc_user_profile_breadcrumb_edit</source>
         <target>bearbeiten</target>
       </trans-unit>
-      <trans-unit id="sonata_user_already_authenticated">
-        <source>sonata_user_already_authenticated</source>
+      <trans-unit id="marlinc_user_already_authenticated">
+        <source>marlinc_user_already_authenticated</source>
         <target>Sie sind schon angemeldet.</target>
       </trans-unit>
       <trans-unit id="security.login.username">

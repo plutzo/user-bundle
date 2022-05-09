@@ -39,14 +39,14 @@ file that was distributed with this source code.
             </div>
         {% endblock %}
         <div class="login-box-body">
-            {% block sonata_user_reset_request_form %}
-                <p class="login-box-msg">{{ 'resetting.request.submit'|trans({}, 'SonataUserBundle') }}</p>
+            {% block marlinc_user_reset_request_form %}
+                <p class="login-box-msg">{{ 'resetting.request.submit'|trans({}, 'MarlincUserBundle') }}</p>
 
                 {{ form_start(form) }}
                     <div class="form-group has-feedback">
                         {{ form_widget(form.username, {'attr': {
                             'class': 'form-control',
-                            'placeholder': 'resetting.request.username'|trans({}, 'SonataUserBundle')|replace({':': ''})
+                            'placeholder': 'resetting.request.username'|trans({}, 'MarlincUserBundle')|replace({':': ''})
                         }}) }}
                         <span class="fas fa-user form-control-feedback"></span>
                         {{ form_errors(form.username) }}
@@ -54,14 +54,14 @@ file that was distributed with this source code.
                     <div class="row">
                         <div class="col-xs-12">
                             <button type="submit" name="submit" class="btn btn-primary btn-block btn-flat">
-                                {{ 'resetting.request.submit'|trans({}, 'SonataUserBundle') }}
+                                {{ 'resetting.request.submit'|trans({}, 'MarlincUserBundle') }}
                             </button>
                         </div>
                     </div>
                 {{ form_end(form) }}
 
-                <a href="{{ path('sonata_user_admin_security_login') }}">
-                    {{ 'title_user_authentication'|trans({}, 'SonataUserBundle') }}
+                <a href="{{ path('marlinc_user_admin_security_login') }}">
+                    {{ 'title_user_authentication'|trans({}, 'MarlincUserBundle') }}
                 </a>
             {% endblock %}
         </div>

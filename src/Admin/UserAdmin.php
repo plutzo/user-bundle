@@ -64,7 +64,7 @@ class UserAdmin extends AbstractAdmin
             $list
                 ->add('impersonating', FieldDescriptionInterface::TYPE_STRING, [
                     'virtual_field' => true,
-                    'template' => '@SonataUser/Admin/Field/impersonating.html.twig',
+                    'template' => '@MarlincUser/Admin/Field/impersonating.html.twig',
                 ]);
         }
     }

@@ -24,14 +24,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
-        ->set('sonata.user.matrix_roles_builder', MatrixRolesBuilder::class)
+        ->set('marlinc.user.matrix_roles_builder', MatrixRolesBuilder::class)
             ->args([
                 new ReferenceConfigurator('security.token_storage'),
-                new ReferenceConfigurator('sonata.user.admin_roles_builder'),
-                new ReferenceConfigurator('sonata.user.security_roles_builder'),
+                new ReferenceConfigurator('marlinc.user.admin_roles_builder'),
+                new ReferenceConfigurator('marlinc.user.security_roles_builder'),
             ])
 
-        ->set('sonata.user.admin_roles_builder', AdminRolesBuilder::class)
+        ->set('marlinc.user.admin_roles_builder', AdminRolesBuilder::class)
             ->args([
                 new ReferenceConfigurator('security.authorization_checker'),
                 new ReferenceConfigurator('sonata.admin.pool'),
@@ -39,7 +39,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('translator'),
             ])
 
-        ->set('sonata.user.security_roles_builder', SecurityRolesBuilder::class)
+        ->set('marlinc.user.security_roles_builder', SecurityRolesBuilder::class)
             ->args([
                 new ReferenceConfigurator('security.authorization_checker'),
                 new ReferenceConfigurator('sonata.admin.configuration'),
@@ -47,16 +47,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 '%security.role_hierarchy.roles%',
             ])
 
-        ->set('sonata.user.form.roles_matrix_type', RolesMatrixType::class)
+        ->set('marlinc.user.form.roles_matrix_type', RolesMatrixType::class)
             ->public()
             ->tag('form.type')
             ->args([
-                new ReferenceConfigurator('sonata.user.matrix_roles_builder'),
+                new ReferenceConfigurator('marlinc.user.matrix_roles_builder'),
             ])
 
-        ->set('sonata.user.roles_matrix_extension', RolesMatrixExtension::class)
+        ->set('marlinc.user.roles_matrix_extension', RolesMatrixExtension::class)
             ->tag('twig.extension')
             ->args([
-                new ReferenceConfigurator('sonata.user.matrix_roles_builder'),
+                new ReferenceConfigurator('marlinc.user.matrix_roles_builder'),
             ]);
 };

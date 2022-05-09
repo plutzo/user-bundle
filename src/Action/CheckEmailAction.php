@@ -53,10 +53,10 @@ final class CheckEmailAction
 
         if (null === $username) {
             // the user does not come from the sendEmail action
-            return new RedirectResponse($this->urlGenerator->generate('sonata_user_admin_resetting_request'));
+            return new RedirectResponse($this->urlGenerator->generate('marlinc_user_admin_resetting_request'));
         }
 
-        return new Response($this->twig->render('@SonataUser/Admin/Security/Resetting/checkEmail.html.twig', [
+        return new Response($this->twig->render('@MarlincUser/Admin/Security/Resetting/checkEmail.html.twig', [
             'base_template' => $this->templateRegistry->getTemplate('layout'),
             'admin_pool' => $this->adminPool,
             'tokenLifetime' => ceil($this->tokenTtl / 3600),

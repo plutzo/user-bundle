@@ -96,12 +96,12 @@ final class RequestAction
                 $this->userManager->save($user);
             }
 
-            return new RedirectResponse($this->urlGenerator->generate('sonata_user_admin_resetting_check_email', [
+            return new RedirectResponse($this->urlGenerator->generate('marlinc_user_admin_resetting_check_email', [
                 'username' => $username,
             ]));
         }
 
-        return new Response($this->twig->render('@SonataUser/Admin/Security/Resetting/request.html.twig', [
+        return new Response($this->twig->render('@MarlincUser/Admin/Security/Resetting/request.html.twig', [
             'base_template' => $this->templateRegistry->getTemplate('layout'),
             'admin_pool' => $this->adminPool,
             'form' => $form->createView(),

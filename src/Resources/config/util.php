@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
 
-        ->set('sonata.user.util.canonical_fields_updater', CanonicalFieldsUpdater::class)
+        ->set('marlinc.user.util.canonical_fields_updater', CanonicalFieldsUpdater::class)
 
-        ->set('sonata.user.util.token_generator', TokenGenerator::class);
+        ->set('marlinc.user.util.token_generator', TokenGenerator::class);
 };

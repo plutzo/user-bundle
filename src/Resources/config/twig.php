@@ -19,7 +19,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4
     $containerConfigurator->services()
 
-        ->set('sonata.user.twig.global', GlobalVariables::class)
+        ->set('marlinc.user.twig.global', GlobalVariables::class)
             ->args([
                 (new ReferenceConfigurator('sonata.admin.pool'))->nullOnInvalid(),
                 '',

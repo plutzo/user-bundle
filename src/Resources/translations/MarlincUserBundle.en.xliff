@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="ja" datatype="plaintext" original="file.ext">
+  <file source-language="en" datatype="plaintext" original="file.ext">
     <body>
+      <trans-unit id="title_user_registration">
+        <source>title_user_registration</source>
+        <target>Register</target>
+      </trans-unit>
       <trans-unit id="title_user_account">
         <source>title_user_account</source>
-        <target>プロフィール</target>
+        <target>User Profile</target>
       </trans-unit>
       <trans-unit id="title_user_edit_profile">
         <source>title_user_edit_profile</source>
-        <target>編集</target>
+        <target>Edit</target>
       </trans-unit>
-      <trans-unit id="sonata_user_submit">
-        <source>sonata_user_submit</source>
-        <target>登録</target>
+      <trans-unit id="title_user_authentication">
+        <source>title_user_authentication</source>
+        <target>Authentication</target>
+      </trans-unit>
+      <trans-unit id="marlinc_user_submit">
+        <source>marlinc_user_submit</source>
+        <target>Submit</target>
       </trans-unit>
       <trans-unit id="breadcrumb.link_user_list">
         <source>breadcrumb.link_user_list</source>
-        <target>ユーザ</target>
+        <target>Users</target>
       </trans-unit>
       <trans-unit id="breadcrumb.link_user_create">
         <source>breadcrumb.link_user_create</source>
-        <target>新規作成</target>
+        <target>Create</target>
       </trans-unit>
       <trans-unit id="breadcrumb.link_user_edit">
         <source>breadcrumb.link_user_edit</source>
-        <target>編集</target>
+        <target>Edit</target>
       </trans-unit>
       <trans-unit id="breadcrumb.link_user_delete">
         <source>breadcrumb.link_user_delete</source>
-        <target>削除</target>
+        <target>Delete</target>
       </trans-unit>
       <trans-unit id="users">
         <source>users</source>
-        <target>ユーザ</target>
+        <target>Users</target>
       </trans-unit>
       <trans-unit id="show.group_users">
         <source>show.group_users</source>
-        <target>ユーザ</target>
+        <target>Users</target>
       </trans-unit>
       <trans-unit id="switch_user_exit">
         <source>switch_user_exit</source>
@@ -48,19 +56,23 @@
       </trans-unit>
       <trans-unit id="user_block_logout">
         <source>user_block_logout</source>
-        <target>ログアウト</target>
+        <target>Logout</target>
+      </trans-unit>
+      <trans-unit id="user_block_profile">
+        <source>user_block_profile</source>
+        <target>Profile</target>
       </trans-unit>
       <trans-unit id="user_form.label_username">
         <source>form.label_username</source>
-        <target>ユーザ名</target>
+        <target>Username</target>
       </trans-unit>
       <trans-unit id="form.label_email">
         <source>form.label_email</source>
-        <target>Eメールアドレス</target>
+        <target>E-Mail-Address</target>
       </trans-unit>
       <trans-unit id="form.label_plain_password">
         <source>form.label_plain_password</source>
-        <target>平文パスワード</target>
+        <target>Plain password</target>
       </trans-unit>
       <trans-unit id="form.label_roles">
         <source>form.label_roles</source>
@@ -84,27 +96,27 @@
       </trans-unit>
       <trans-unit id="form.label_created_at">
         <source>form.label_created_at</source>
-        <target>作成日時</target>
+        <target>Created at</target>
       </trans-unit>
       <trans-unit id="form.label_last_login">
         <source>form.label_last_login</source>
-        <target>最終ログイン</target>
+        <target>Last login</target>
       </trans-unit>
       <trans-unit id="user_form.label_name">
         <source>form.label_name</source>
-        <target>名前</target>
+        <target>Name</target>
       </trans-unit>
       <trans-unit id="filter.label_username">
         <source>filter.label_username</source>
-        <target>ユーザ名</target>
+        <target>Username</target>
       </trans-unit>
       <trans-unit id="filter.label_name">
         <source>filter.label_name</source>
-        <target>名前</target>
+        <target>Name</target>
       </trans-unit>
       <trans-unit id="filter.label_email">
         <source>filter.label_email</source>
-        <target>Eメールアドレス</target>
+        <target>E-Mail-Address</target>
       </trans-unit>
       <trans-unit id="filter.label_locked">
         <source>filter.label_locked</source>
@@ -114,33 +126,41 @@
         <source>filter.label_id</source>
         <target>ID</target>
       </trans-unit>
+      <trans-unit id="filter.label_enabled">
+        <source>filter.label_enabled</source>
+        <target>Active</target>
+      </trans-unit>
       <trans-unit id="filter.label_created_at">
         <source>filter.label_created_at</source>
-        <target>作成日時</target>
+        <target>Created at</target>
       </trans-unit>
       <trans-unit id="filter.label_last_login">
         <source>filter.label_last_login</source>
-        <target>最終ログイン</target>
+        <target>Last login</target>
       </trans-unit>
       <trans-unit id="filter.label_firstname">
         <source>filter.label_firstname</source>
-        <target>姓</target>
+        <target>Firstname</target>
       </trans-unit>
       <trans-unit id="filter.label_lastname">
         <source>filter.label_lastname</source>
-        <target>名</target>
+        <target>Lastname</target>
+      </trans-unit>
+      <trans-unit id="filter.label_roles">
+        <source>filter.label_roles</source>
+        <target>Roles</target>
       </trans-unit>
       <trans-unit id="list.label_username">
         <source>list.label_username</source>
-        <target>ユーザ名</target>
+        <target>Username</target>
       </trans-unit>
       <trans-unit id="list.label_name">
         <source>list.label_name</source>
-        <target>名前</target>
+        <target>Name</target>
       </trans-unit>
       <trans-unit id="list.label_email">
         <source>list.label_email</source>
-        <target>Eメールアドレス</target>
+        <target>E-Mail-Address</target>
       </trans-unit>
       <trans-unit id="list.label_locked">
         <source>list.label_locked</source>
@@ -152,11 +172,11 @@
       </trans-unit>
       <trans-unit id="list.label_created_at">
         <source>list.label_created_at</source>
-        <target>作成日時</target>
+        <target>Created at</target>
       </trans-unit>
       <trans-unit id="list.label_last_login">
         <source>list.label_last_login</source>
-        <target>最終ログイン</target>
+        <target>Last login</target>
       </trans-unit>
       <trans-unit id="list.label_impersonating">
         <source>list.label_impersonating</source>
@@ -168,11 +188,11 @@
       </trans-unit>
       <trans-unit id="list.label_firstname">
         <source>list.label_firstname</source>
-        <target>姓</target>
+        <target>Firstname</target>
       </trans-unit>
       <trans-unit id="list.label_lastname">
         <source>list.label_lastname</source>
-        <target>名</target>
+        <target>Lastname</target>
       </trans-unit>
       <trans-unit id="label_two_step_code">
         <source>label_two_step_code</source>
@@ -186,17 +206,21 @@
         <source>label_two_step_code_error</source>
         <target>The verification code is not valid</target>
       </trans-unit>
-      <trans-unit id="sonata_user">
-        <source>sonata_user</source>
-        <target>ユーザ管理</target>
+      <trans-unit id="marlinc_user">
+        <source>marlinc_user</source>
+        <target>Users</target>
       </trans-unit>
       <trans-unit id="form.group_general">
         <source>form.group_general</source>
-        <target>一般</target>
+        <target>General</target>
       </trans-unit>
       <trans-unit id="form_management">
-        <source>Management</source>
-        <target>管理</target>
+        <source>form_management</source>
+        <target>Management</target>
+      </trans-unit>
+      <trans-unit id="form_status">
+        <source>form_status</source>
+        <target>Status</target>
       </trans-unit>
       <trans-unit id="field.label_roles_editable">
         <source>field.label_roles_editable</source>
@@ -204,39 +228,39 @@
       </trans-unit>
       <trans-unit id="form.label_date_of_birth">
         <source>form.label_date_of_birth</source>
-        <target>誕生日</target>
+        <target>Date of birth</target>
       </trans-unit>
       <trans-unit id="form.label_firstname">
         <source>form.label_firstname</source>
-        <target>姓</target>
+        <target>Firstname</target>
       </trans-unit>
       <trans-unit id="form.label_lastname">
         <source>form.label_lastname</source>
-        <target>名</target>
+        <target>Lastname</target>
       </trans-unit>
       <trans-unit id="form.label_website">
         <source>form.label_website</source>
-        <target>ウェブサイト</target>
+        <target>Website</target>
       </trans-unit>
       <trans-unit id="form.label_biography">
         <source>form.label_biography</source>
-        <target>バイオグラフィー</target>
+        <target>Biography</target>
       </trans-unit>
       <trans-unit id="form.label_gender">
         <source>form.label_gender</source>
-        <target>性別</target>
+        <target>Gender</target>
       </trans-unit>
       <trans-unit id="form.label_locale">
         <source>form.label_locale</source>
-        <target>ロケール</target>
+        <target>Locale</target>
       </trans-unit>
       <trans-unit id="form.label_timezone">
         <source>form.label_timezone</source>
-        <target>タイムゾーン</target>
+        <target>Timezone</target>
       </trans-unit>
       <trans-unit id="form.label_phone">
         <source>form.label_phone</source>
-        <target>電話</target>
+        <target>Phone</target>
       </trans-unit>
       <trans-unit id="form.label_facebook_uid">
         <source>form.label_facebook_uid</source>
@@ -244,7 +268,7 @@
       </trans-unit>
       <trans-unit id="form.label_facebook_name">
         <source>form.label_facebook_name</source>
-        <target>Facebookのユーザ名</target>
+        <target>Facebook Name</target>
       </trans-unit>
       <trans-unit id="form.label_twitter_uid">
         <source>form.label_twitter_uid</source>
@@ -252,7 +276,7 @@
       </trans-unit>
       <trans-unit id="form.label_twitter_name">
         <source>form.label_twitter_name</source>
-        <target>Twitterのユーザ名</target>
+        <target>Twitter Name</target>
       </trans-unit>
       <trans-unit id="form.label_gplus_uid">
         <source>form.label_gplus_uid</source>
@@ -260,7 +284,7 @@
       </trans-unit>
       <trans-unit id="form.label_gplus_name">
         <source>form.label_gplus_name</source>
-        <target>Google+のユーザ名</target>
+        <target>Google+ Name</target>
       </trans-unit>
       <trans-unit id="form.label_token">
         <source>form.label_token</source>
@@ -272,47 +296,47 @@
       </trans-unit>
       <trans-unit id="show.label_username">
         <source>show.label_username</source>
-        <target>ユーザ名</target>
+        <target>Username</target>
       </trans-unit>
       <trans-unit id="show.label_email">
         <source>show.label_email</source>
-        <target>Eメール</target>
+        <target>Email</target>
       </trans-unit>
       <trans-unit id="show.label_date_of_birth">
         <source>show.label_date_of_birth</source>
-        <target>誕生日</target>
+        <target>Date of birth</target>
       </trans-unit>
       <trans-unit id="show.label_firstname">
         <source>show.label_firstname</source>
-        <target>姓</target>
+        <target>Firstname</target>
       </trans-unit>
       <trans-unit id="show.label_lastname">
         <source>show.label_lastname</source>
-        <target>名</target>
+        <target>Lastname</target>
       </trans-unit>
       <trans-unit id="show.label_website">
         <source>show.label_website</source>
-        <target>ウェブサイト</target>
+        <target>Website</target>
       </trans-unit>
       <trans-unit id="show.label_biography">
         <source>show.label_biography</source>
-        <target>バイオグラフィー</target>
+        <target>Biography</target>
       </trans-unit>
       <trans-unit id="show.label_gender">
         <source>show.label_gender</source>
-        <target>性別</target>
+        <target>Gender</target>
       </trans-unit>
       <trans-unit id="show.label_locale">
         <source>show.label_locale</source>
-        <target>ロケール</target>
+        <target>Locale</target>
       </trans-unit>
       <trans-unit id="show.label_timezone">
         <source>show.label_timezone</source>
-        <target>タイムゾーン</target>
+        <target>Timezone</target>
       </trans-unit>
       <trans-unit id="show.label_phone">
         <source>show.label_phone</source>
-        <target>電話</target>
+        <target>Phone</target>
       </trans-unit>
       <trans-unit id="show.label_facebook_uid">
         <source>show.label_facebook_uid</source>
@@ -320,7 +344,7 @@
       </trans-unit>
       <trans-unit id="show.label_facebook_name">
         <source>show.label_facebook_name</source>
-        <target>Facebookのユーザ名</target>
+        <target>Facebook Name</target>
       </trans-unit>
       <trans-unit id="show.label_twitter_uid">
         <source>show.label_twitter_uid</source>
@@ -328,7 +352,7 @@
       </trans-unit>
       <trans-unit id="show.label_twitter_name">
         <source>show.label_twitter_name</source>
-        <target>Twitterのユーザ名</target>
+        <target>Twitter Name</target>
       </trans-unit>
       <trans-unit id="show.label_gplus_uid">
         <source>show.label_gplus_uid</source>
@@ -336,7 +360,7 @@
       </trans-unit>
       <trans-unit id="show.label_gplus_name">
         <source>show.label_gplus_name</source>
-        <target>Google+のユーザ名</target>
+        <target>Google+ Name</target>
       </trans-unit>
       <trans-unit id="show.label_token">
         <source>show.label_token</source>
@@ -348,166 +372,223 @@
       </trans-unit>
       <trans-unit id="show.label_created_at">
         <source>show.label_created_at</source>
-        <target>作成日時</target>
+        <target>Created at</target>
       </trans-unit>
       <trans-unit id="show.label_last_login">
         <source>show.label_last_login</source>
-        <target>最終ログイン</target>
+        <target>Last login</target>
       </trans-unit>
       <trans-unit id="breadcrumb.link_user_show">
         <source>breadcrumb.link_user_show</source>
-        <target>表示</target>
+        <target>Show</target>
       </trans-unit>
       <trans-unit id="gender_unknown">
         <source>gender_unknown</source>
-        <target>不明</target>
+        <target>unknown</target>
       </trans-unit>
       <trans-unit id="gender_female">
         <source>gender_female</source>
-        <target>女性</target>
+        <target>female</target>
       </trans-unit>
       <trans-unit id="gender_male">
         <source>gender_male</source>
-        <target>男性</target>
+        <target>male</target>
       </trans-unit>
       <trans-unit id="sonata_profile_title">
         <source>sonata_profile_title</source>
-        <target>マイプロフィール</target>
+        <target>Dashboard</target>
       </trans-unit>
       <trans-unit id="link_show_profile">
         <source>link_show_profile</source>
-        <target>マイプロフィール</target>
+        <target>Dashboard</target>
       </trans-unit>
       <trans-unit id="link_edit_profile">
         <source>link_edit_profile</source>
-        <target>プロフィールを編集</target>
+        <target>Profile</target>
       </trans-unit>
       <trans-unit id="title_user_edit_authentication">
         <source>title_user_edit_authentication</source>
-        <target>認証</target>
+        <target>Authentication</target>
       </trans-unit>
       <trans-unit id="link_edit_authentication">
         <source>link_edit_authentication</source>
-        <target>認証</target>
+        <target>Authentication</target>
       </trans-unit>
       <trans-unit id="label_profile_gender">
         <source>label_profile_gender</source>
-        <target>性別</target>
+        <target>Gender</target>
       </trans-unit>
       <trans-unit id="label_profile_firstname">
         <source>label_profile_firstname</source>
-        <target>姓</target>
+        <target>Firstname</target>
       </trans-unit>
       <trans-unit id="label_profile_lastname">
         <source>label_profile_lastname</source>
-        <target>名</target>
+        <target>Lastname</target>
       </trans-unit>
       <trans-unit id="label_profile_website">
         <source>label_profile_website</source>
-        <target>ウェブサイト</target>
+        <target>Website</target>
       </trans-unit>
       <trans-unit id="label_profile_dob">
         <source>label_profile_dob</source>
-        <target>誕生日</target>
+        <target>Date of birth</target>
       </trans-unit>
       <trans-unit id="label_profile_biography">
         <source>label_profile_biography</source>
-        <target>バイオグラフィー</target>
+        <target>Biography</target>
       </trans-unit>
       <trans-unit id="label_profile_locale">
         <source>label_profile_locale</source>
-        <target>ロケール</target>
+        <target>Locale</target>
       </trans-unit>
       <trans-unit id="label_profile_timezone">
         <source>label_profile_timezone</source>
-        <target>タイムゾーン</target>
+        <target>Timezone</target>
       </trans-unit>
       <trans-unit id="label_profile_phone">
         <source>label_profile_phone</source>
-        <target>電話</target>
+        <target>Phone</target>
       </trans-unit>
       <trans-unit id="profile.flash.updated">
         <source>profile.flash.updated</source>
-        <target>プロフィールが更新されました。</target>
+        <target>Your profile has been updated.</target>
       </trans-unit>
       <trans-unit id="sonata_change_password_link">
         <source>sonata_change_password_link</source>
-        <target>パスワードを変更してください</target>
+        <target>Change your password</target>
       </trans-unit>
       <trans-unit id="link_register">
         <source>link_register</source>
-        <target>登録</target>
+        <target>Register</target>
       </trans-unit>
       <trans-unit id="link_login">
         <source>link_login</source>
-        <target>ログイン</target>
+        <target>Log In</target>
       </trans-unit>
       <trans-unit id="link_logout">
         <source>link_logout</source>
-        <target>ログアウト</target>
+        <target>Log out</target>
       </trans-unit>
       <trans-unit id="registration.flash.user_created">
         <source>registration.flash.user_created</source>
-        <target>あなたのアカウントの作成に成功しました!</target>
+        <target>Your account has been created successfully!</target>
       </trans-unit>
       <trans-unit id="forgotten_password">
         <source>forgotten_password</source>
-        <target>パスワードをお忘れですか？</target>
+        <target>Forgotten password?</target>
+      </trans-unit>
+      <trans-unit id="marlinc_user_profile_breadcrumb_index">
+        <source>marlinc_user_profile_breadcrumb_index</source>
+        <target>Dashboard</target>
+      </trans-unit>
+      <trans-unit id="marlinc_user_profile_breadcrumb_edit">
+        <source>marlinc_user_profile_breadcrumb_edit</source>
+        <target>Edit profile</target>
+      </trans-unit>
+      <trans-unit id="marlinc_user_already_authenticated">
+        <source>marlinc_user_already_authenticated</source>
+        <target>You are already logged in</target>
+      </trans-unit>
+      <trans-unit id="security.login.username">
+        <source>security.login.username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="security.login.password">
+        <source>security.login.password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="form.username">
+        <source>form.username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="form.email">
+        <source>form.email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="form.password">
+        <source>form.password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="form.password_confirmation">
+        <source>form.password_confirmation</source>
+        <target>Verification</target>
+      </trans-unit>
+      <trans-unit id="title_user_edit_password">
+        <source>title_user_edit_password</source>
+        <target>Change password</target>
+      </trans-unit>
+      <trans-unit id="title_user_resetting">
+        <source>title_user_resetting</source>
+        <target>Request password</target>
+      </trans-unit>
+      <trans-unit id="title_user_resetting_reset">
+        <source>title_user_resetting_reset</source>
+        <target>Reset password</target>
+      </trans-unit>
+      <trans-unit id="qr_code_secret">
+        <source>qr_code_secret</source>
+        <target>QR-code secret</target>
+      </trans-unit>
+      <trans-unit id="qr_go_next">
+        <source>qr_go_next</source>
+        <target>I scanned it. Move on.</target>
       </trans-unit>
       <trans-unit id="security.login.remember_me">
         <source>security.login.remember_me</source>
-        <target>ログイン状態を記憶する</target>
+        <target>Remember me</target>
       </trans-unit>
       <trans-unit id="security.login.submit">
         <source>security.login.submit</source>
-        <target>ログイン</target>
+        <target>Log in</target>
       </trans-unit>
       <trans-unit id="resetting.request.username">
         <source>resetting.request.username</source>
-        <target>ユーザー名またはメールアドレス</target>
+        <target>Username or email address</target>
       </trans-unit>
       <trans-unit id="resetting.request.submit">
         <source>resetting.request.submit</source>
-        <target>パスワードのリセット</target>
+        <target>Reset password</target>
       </trans-unit>
       <trans-unit id="resetting.check_email">
         <source>resetting.check_email</source>
         <target>
-          メールが送信されました。送信されたリンクをクリックしてパスワードをリセットして下さい。
-          注意：パスワードのリセットは %tokenLifetime% 時間のあいだに一度しか要求できません。
+          An email has been sent. It contains a link you must click to reset your password.
+          Note: You can only request a new password once within %tokenLifetime% hours.
 
-          もしメールが届かない場合は、迷惑メールフォルダをご確認いただき、その上で再度やり直して下さい。
+          If you don't get an email check your spam folder or try again.
         </target>
       </trans-unit>
       <trans-unit id="resetting.email.subject">
         <source>resetting.email.subject</source>
-        <target>パスワードのリセット</target>
+        <target>Reset Password</target>
       </trans-unit>
       <trans-unit id="resetting.email.message">
         <source>resetting.email.message</source>
         <target>
-          こんにちは %username% さん!
+          Hello %username%!
 
-          パスワードをリセットするには、次のリセット URL へアクセスしてください %confirmationUrl%
+          To reset your password - please visit %confirmationUrl%
 
-          開発チーム
+          Regards,
+          the Team.
         </target>
       </trans-unit>
       <trans-unit id="resetting.reset.submit">
         <source>resetting.reset.submit</source>
-        <target>パスワードの変更</target>
+        <target>Change password</target>
       </trans-unit>
       <trans-unit id="resetting.flash.success">
         <source>resetting.flash.success</source>
-        <target>パスワードのリセットが完了しました</target>
+        <target>The password has been reset successfully.</target>
       </trans-unit>
       <trans-unit id="form.new_password">
         <source>form.new_password</source>
-        <target>新しいパスワード</target>
+        <target>New password</target>
       </trans-unit>
       <trans-unit id="form.new_password_confirmation">
         <source>form.new_password_confirmation</source>
-        <target>確認</target>
+        <target>Repeat new password</target>
       </trans-unit>
     </body>
   </file>

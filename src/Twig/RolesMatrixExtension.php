@@ -62,7 +62,7 @@ final class RolesMatrixExtension extends AbstractExtension
             }
         }
 
-        return $environment->render('@SonataUser/Form/roles_matrix_list.html.twig', [
+        return $environment->render('@MarlincUser/Form/roles_matrix_list.html.twig', [
             'roles' => $roles,
         ]);
     }
@@ -83,7 +83,7 @@ final class RolesMatrixExtension extends AbstractExtension
             }
         }
 
-        return $environment->render('@SonataUser/Form/roles_matrix.html.twig', [
+        return $environment->render('@MarlincUser/Form/roles_matrix.html.twig', [
             'grouped_roles' => $groupedRoles,
             'permission_labels' => $this->rolesBuilder->getPermissionLabels(),
         ]);

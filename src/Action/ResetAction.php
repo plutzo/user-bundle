@@ -82,7 +82,7 @@ final class ResetAction
         }
 
         if (!$user->isPasswordRequestNonExpired($this->tokenTtl)) {
-            return new RedirectResponse($this->urlGenerator->generate('sonata_user_admin_resetting_request'));
+            return new RedirectResponse($this->urlGenerator->generate('marlinc_user_admin_resetting_request'));
         }
 
         $form = $this->formFactory->create(ResettingFormType::class);
@@ -96,7 +96,7 @@ final class ResetAction
 
             $request->getSession()->getFlashBag()->add(
                 'success',
-                $this->translator->trans('resetting.flash.success', [], 'SonataUserBundle')
+                $this->translator->trans('resetting.flash.success', [], 'MarlincUserBundle')
             );
 
             $response = new RedirectResponse($this->urlGenerator->generate('sonata_admin_dashboard'));
@@ -106,7 +106,7 @@ final class ResetAction
             return $response;
         }
 
-        return new Response($this->twig->render('@SonataUser/Admin/Security/Resetting/reset.html.twig', [
+        return new Response($this->twig->render('@MarlincUser/Admin/Security/Resetting/reset.html.twig', [
             'token' => $token,
             'form' => $form->createView(),
             'base_template' => $this->templateRegistry->getTemplate('layout'),

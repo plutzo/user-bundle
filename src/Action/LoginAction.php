@@ -68,8 +68,8 @@ final class LoginAction
     {
         if ($this->isAuthenticated()) {
             $request->getSession()->getFlashBag()->add(
-                'sonata_user_error',
-                $this->translator->trans('sonata_user_already_authenticated', [], 'SonataUserBundle')
+                'marlinc_user_error',
+                $this->translator->trans('marlinc_user_already_authenticated', [], 'MarlincUserBundle')
             );
 
             return new RedirectResponse($this->urlGenerator->generate('sonata_admin_dashboard'));
@@ -80,13 +80,13 @@ final class LoginAction
             $csrfToken = $this->csrfTokenManager->getToken('authenticate')->getValue();
         }
 
-        return new Response($this->twig->render('@SonataUser/Admin/Security/login.html.twig', [
+        return new Response($this->twig->render('@MarlincUser/Admin/Security/login.html.twig', [
             'admin_pool' => $this->adminPool,
             'base_template' => $this->templateRegistry->getTemplate('layout'),
             'csrf_token' => $csrfToken,
             'error' => $this->authenticationUtils->getLastAuthenticationError(),
             'last_username' => $this->authenticationUtils->getLastUsername(),
-            'reset_route' => $this->urlGenerator->generate('sonata_user_admin_resetting_request'),
+            'reset_route' => $this->urlGenerator->generate('marlinc_user_admin_resetting_request'),
         ]));
     }
 

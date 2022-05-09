@@ -12,12 +12,12 @@ file that was distributed with this source code.
 {% block sonata_security_roles_widget %}
 {% apply spaceless %}
     <div class="editable">
-        <h4>{{ 'field.label_roles_editable'|trans({}, "SonataUserBundle") }}</h4>
+        <h4>{{ 'field.label_roles_editable'|trans({}, "MarlincUserBundle") }}</h4>
         {{ block('choice_widget') }}
     </div>
     {% if read_only_choices|length > 0 %}
     <div class="readonly">
-        <h4>{{ 'field.label_roles_readonly'|trans({}, "SonataUserBundle") }}</h4>
+        <h4>{{ 'field.label_roles_readonly'|trans({}, "MarlincUserBundle") }}</h4>
         <ul>
         {% for choice in read_only_choices %}
             <li>{{ choice }}</li>

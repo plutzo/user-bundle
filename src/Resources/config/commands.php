@@ -24,39 +24,39 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $containerConfigurator->services()
 
-        ->set('sonata.user.command.activate_user', ActivateUserCommand::class)
+        ->set('marlinc.user.command.activate_user', ActivateUserCommand::class)
             ->tag('console.command')
             ->args([
-                new ReferenceConfigurator('sonata.user.manager.user'),
+                new ReferenceConfigurator('marlinc.user.manager.user'),
             ])
 
-        ->set('sonata.user.command.change_password', ChangePasswordCommand::class)
+        ->set('marlinc.user.command.change_password', ChangePasswordCommand::class)
             ->tag('console.command')
             ->args([
-                new ReferenceConfigurator('sonata.user.manager.user'),
+                new ReferenceConfigurator('marlinc.user.manager.user'),
             ])
 
-        ->set('sonata.user.command.create_user', CreateUserCommand::class)
+        ->set('marlinc.user.command.create_user', CreateUserCommand::class)
             ->tag('console.command')
             ->args([
-                new ReferenceConfigurator('sonata.user.manager.user'),
+                new ReferenceConfigurator('marlinc.user.manager.user'),
             ])
 
-        ->set('sonata.user.command.deactivate_user', DeactivateUserCommand::class)
+        ->set('marlinc.user.command.deactivate_user', DeactivateUserCommand::class)
             ->tag('console.command')
             ->args([
-                new ReferenceConfigurator('sonata.user.manager.user'),
+                new ReferenceConfigurator('marlinc.user.manager.user'),
             ])
 
-        ->set('sonata.user.command.promote_user', PromoteUserCommand::class)
+        ->set('marlinc.user.command.promote_user', PromoteUserCommand::class)
             ->tag('console.command')
             ->args([
-                new ReferenceConfigurator('sonata.user.manager.user'),
+                new ReferenceConfigurator('marlinc.user.manager.user'),
             ])
 
-        ->set('sonata.user.command.demote_user', DemoteUserCommand::class)
+        ->set('marlinc.user.command.demote_user', DemoteUserCommand::class)
             ->tag('console.command')
             ->args([
-                new ReferenceConfigurator('sonata.user.manager.user'),
+                new ReferenceConfigurator('marlinc.user.manager.user'),
             ]);
 };

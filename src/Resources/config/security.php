@@ -19,8 +19,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4
     $containerConfigurator->services()
 
-        ->set('sonata.user.security.user_provider', UserProvider::class)
+        ->set('marlinc.user.security.user_provider', UserProvider::class)
             ->args([
-                new ReferenceConfigurator('sonata.user.manager.user'),
+                new ReferenceConfigurator('marlinc.user.manager.user'),
             ]);
 };

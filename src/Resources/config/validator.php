@@ -19,9 +19,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4
     $containerConfigurator->services()
 
-        ->set('sonata.user.validator.user_initializer', UserInitializer::class)
+        ->set('marlinc.user.validator.user_initializer', UserInitializer::class)
             ->tag('validator.initializer')
             ->args([
-                new ReferenceConfigurator('sonata.user.util.canonical_fields_updater'),
+                new ReferenceConfigurator('marlinc.user.util.canonical_fields_updater'),
             ]);
 };

@@ -60,7 +60,7 @@ final class GlobalVariables
             throw new \LogicException('Unable to get the UserAdmin, admin pool is not configured. You should install SonataAdminBundle in order to use admin-related features.');
         }
 
-        return $this->pool->getAdminByAdminCode('sonata.user.admin.user');
+        return $this->pool->getAdminByAdminCode('marlinc.user.admin.user');
     }
 
     public function getDefaultAvatar(): string

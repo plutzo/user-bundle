@@ -20,12 +20,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
-        ->set('sonata.user.form.type.resetting', ResettingFormType::class)
-            ->tag('form.type', ['alias' => 'sonata_user_resetting'])
+        ->set('marlinc.user.form.type.resetting', ResettingFormType::class)
+            ->tag('form.type', ['alias' => 'marlinc_user_resetting'])
             ->args([
-                '%sonata.user.user.class%',
+                '%marlinc.user.user.class%',
             ])
 
-        ->set('sonata.user.form.type.reset_password_request', ResetPasswordRequestFormType::class)
-            ->tag('form.type', ['alias' => 'sonata_user_reset_password_request']);
+        ->set('marlinc.user.form.type.reset_password_request', ResetPasswordRequestFormType::class)
+            ->tag('form.type', ['alias' => 'marlinc_user_reset_password_request']);
 };

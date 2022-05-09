@@ -25,7 +25,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
-        ->set('sonata.user.action.request', RequestAction::class)
+        ->set('marlinc.user.action.request', RequestAction::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('twig'),
@@ -34,13 +34,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('sonata.admin.pool'),
                 new ReferenceConfigurator('sonata.admin.global_template_registry'),
                 new ReferenceConfigurator('form.factory'),
-                new ReferenceConfigurator('sonata.user.manager.user'),
-                new ReferenceConfigurator('sonata.user.mailer'),
-                new ReferenceConfigurator('sonata.user.util.token_generator'),
+                new ReferenceConfigurator('marlinc.user.manager.user'),
+                new ReferenceConfigurator('marlinc.user.mailer'),
+                new ReferenceConfigurator('marlinc.user.util.token_generator'),
                 0,
             ])
 
-        ->set('sonata.user.action.check_email', CheckEmailAction::class)
+        ->set('marlinc.user.action.check_email', CheckEmailAction::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('twig'),
@@ -50,7 +50,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 0,
             ])
 
-        ->set('sonata.user.action.reset', ResetAction::class)
+        ->set('marlinc.user.action.reset', ResetAction::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('twig'),
@@ -59,12 +59,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 new ReferenceConfigurator('sonata.admin.pool'),
                 new ReferenceConfigurator('sonata.admin.global_template_registry'),
                 new ReferenceConfigurator('form.factory'),
-                new ReferenceConfigurator('sonata.user.manager.user'),
+                new ReferenceConfigurator('marlinc.user.manager.user'),
                 new ReferenceConfigurator('translator'),
                 0,
             ])
 
-        ->set('sonata.user.action.login', LoginAction::class)
+        ->set('marlinc.user.action.login', LoginAction::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('twig'),
@@ -77,9 +77,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 (new ReferenceConfigurator('security.csrf.token_manager'))->nullOnInvalid(),
             ])
 
-        ->set('sonata.user.action.check_login', CheckLoginAction::class)
+        ->set('marlinc.user.action.check_login', CheckLoginAction::class)
             ->public()
 
-        ->set('sonata.user.action.logout', LogoutAction::class)
+        ->set('marlinc.user.action.logout', LogoutAction::class)
             ->public();
 };

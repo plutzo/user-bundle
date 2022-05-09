@@ -53,7 +53,7 @@ final class Mailer implements MailerInterface
 
     public function sendResettingEmailMessage(UserInterface $user): void
     {
-        $url = $this->urlGenerator->generate('sonata_user_admin_resetting_reset', [
+        $url = $this->urlGenerator->generate('marlinc_user_admin_resetting_reset', [
             'token' => $user->getConfirmationToken(),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 

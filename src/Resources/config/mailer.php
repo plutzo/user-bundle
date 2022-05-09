@@ -20,7 +20,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
-        ->set('sonata.user.mailer.default', Mailer::class)
+        ->set('marlinc.user.mailer.default', Mailer::class)
             ->args([
                 new ReferenceConfigurator('router'),
                 new ReferenceConfigurator('twig'),

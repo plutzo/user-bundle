@@ -26,11 +26,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
     $containerConfigurator->services()
 
-        ->set('sonata.user.manager.user', UserManager::class)
+        ->set('marlinc.user.manager.user', UserManager::class)
             ->args([
-                '%sonata.user.user.class%',
+                '%marlinc.user.user.class%',
                 new ReferenceConfigurator('doctrine'),
-                new ReferenceConfigurator('sonata.user.util.canonical_fields_updater'),
+                new ReferenceConfigurator('marlinc.user.util.canonical_fields_updater'),
                 new ReferenceConfigurator($passwordHasherId),
             ]);
 };

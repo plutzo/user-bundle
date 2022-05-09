@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\DependencyInjection;
 
-use Marlinc\UserBundle\Document\BaseUser as DocumentUser;
-use Marlinc\UserBundle\Entity\BaseUser as EntityUser;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,13 +23,22 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-final class SonataUserExtension extends Extension implements PrependExtensionInterface
+final class MarlincUserExtension extends Extension implements PrependExtensionInterface
 {
     public function prepend(ContainerBuilder $container): void
     {
+        // get all bundles
+        $bundles = $container->getParameter('kernel.bundles');
+
+        if (isset($bundles['SonataAdminBundle'])) {
+            $container->prependExtensionConfig('sonata_admin', [
+                'templates' => ['user_block' => '@MarlincUser/Admin/Core/user_block.html.twig']
+            ]);
+        }
+
         if ($container->hasExtension('twig')) {
             // add custom form widgets
-            $container->prependExtensionConfig('twig', ['form_themes' => ['@SonataUser/Form/form_admin_fields.html.twig']]);
+            $container->prependExtensionConfig('twig', ['form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']]);
         }
     }
 
@@ -87,7 +94,7 @@ final class SonataUserExtension extends Extension implements PrependExtensionInt
      */
     private function configureClass(array $config, ContainerBuilder $container): void
     {
-        $container->setParameter('sonata.user.user.class', $config['class']['user']);
+        $container->setParameter('marlinc.user.user.class', $config['class']['user']);
     }
 
     /**
@@ -95,9 +102,9 @@ final class SonataUserExtension extends Extension implements PrependExtensionInt
      */
     private function configureAdmin(array $config, ContainerBuilder $container): void
     {
-        $container->setParameter('sonata.user.admin.user.controller', $config['user']['controller']);
+        $container->setParameter('marlinc.user.admin.user.controller', $config['user']['controller']);
 
-        $container->getDefinition('sonata.user.admin.user')
+        $container->getDefinition('marlinc.user.admin.user')
             ->setClass($config['user']['class'])
             ->addMethodCall('setTranslationDomain', [$config['user']['translation']]);
     }
@@ -107,16 +114,16 @@ final class SonataUserExtension extends Extension implements PrependExtensionInt
      */
     private function configureResetting(array $config, ContainerBuilder $container): void
     {
-        $container->getDefinition('sonata.user.action.request')
+        $container->getDefinition('marlinc.user.action.request')
             ->replaceArgument(9, $config['retry_ttl']);
 
-        $container->getDefinition('sonata.user.action.check_email')
+        $container->getDefinition('marlinc.user.action.check_email')
             ->replaceArgument(4, $config['token_ttl']);
 
-        $container->getDefinition('sonata.user.action.reset')
+        $container->getDefinition('marlinc.user.action.reset')
             ->replaceArgument(8, $config['token_ttl']);
 
-        $container->getDefinition('sonata.user.mailer.default')
+        $container->getDefinition('marlinc.user.mailer.default')
             ->replaceArgument(3, [$config['email']['address'] => $config['email']['sender_name']])
             ->replaceArgument(4, $config['email']['template']);
     }
@@ -128,45 +135,18 @@ final class SonataUserExtension extends Extension implements PrependExtensionInt
     {
         $managerType = $config['manager_type'];
 
-        if (!\in_array($managerType, ['orm'], true)) {
+        if (!\in_array($managerType, ['orm', 'mongodb'], true)) {
             throw new \InvalidArgumentException(sprintf('Invalid manager type "%s".', $managerType));
         }
 
-        $this->prohibitModelTypeMapping(
-            $config['class']['user'],
-            'orm' === $managerType ? DocumentUser::class : EntityUser::class,
-            $managerType
-        );
     }
-
-    /**
-     * Prohibit using wrong model type mapping.
-     *
-     * @phpstan-param class-string $actualModelClass
-     * @phpstan-param class-string $prohibitedModelClass
-     */
-    private function prohibitModelTypeMapping(
-        string $actualModelClass,
-        string $prohibitedModelClass,
-        string $managerType
-    ): void {
-        if (is_a($actualModelClass, $prohibitedModelClass, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Model class "%s" does not correspond to manager type "%s".',
-                    $actualModelClass,
-                    $managerType
-                )
-            );
-        }
-    }
-
+    
     /**
      * @param array<string, mixed> $config
      */
     private function configureMailer(array $config, ContainerBuilder $container): void
     {
-        $container->setAlias('sonata.user.mailer', $config['mailer']);
+        $container->setAlias('marlinc.user.mailer', $config['mailer']);
     }
 
     /**
@@ -174,7 +154,7 @@ final class SonataUserExtension extends Extension implements PrependExtensionInt
      */
     private function configureDefaultAvatar(array $config, ContainerBuilder $container): void
     {
-        $container->getDefinition('sonata.user.twig.global')
+        $container->getDefinition('marlinc.user.twig.global')
             ->replaceArgument(1, $config['default_avatar']);
     }
 
@@ -183,7 +163,7 @@ final class SonataUserExtension extends Extension implements PrependExtensionInt
      */
     private function configureImpersonation(array $config, ContainerBuilder $container): void
     {
-        $container->getDefinition('sonata.user.twig.global')
+        $container->getDefinition('marlinc.user.twig.global')
             ->replaceArgument(2, $config['enabled'])
             ->replaceArgument(3, $config['route'])
             ->replaceArgument(4, $config['parameters']);

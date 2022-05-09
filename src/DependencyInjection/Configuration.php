@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Marlinc\UserBundle\DependencyInjection;
 
 use Marlinc\UserBundle\Admin\UserAdmin;
-use Marlinc\UserBundle\Entity\BaseUser;
+use Marlinc\UserBundle\Entity\User;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -33,7 +33,7 @@ final class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('sonata_user');
+        $treeBuilder = new TreeBuilder('marlinc_user');
         $rootNode = $treeBuilder->getRootNode();
 
         $supportedManagerTypes = ['orm'];
@@ -63,7 +63,7 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('class')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('user')->cannotBeEmpty()->defaultValue(BaseUser::class)->end()
+                        ->scalarNode('user')->cannotBeEmpty()->defaultValue(User::class)->end()
                     ->end()
                 ->end()
                 ->arrayNode('admin')
@@ -74,7 +74,7 @@ final class Configuration implements ConfigurationInterface
                             ->children()
                                 ->scalarNode('class')->cannotBeEmpty()->defaultValue(UserAdmin::class)->end()
                                 ->scalarNode('controller')->cannotBeEmpty()->defaultValue('%sonata.admin.configuration.default_controller%')->end()
-                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('SonataUserBundle')->end()
+                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('MarlincUserBundle')->end()
                             ->end()
                         ->end()
                     ->end()
@@ -82,10 +82,10 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('profile')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('default_avatar')->cannotBeEmpty()->defaultValue('bundles/sonatauser/default_avatar.png')->end()
+                        ->scalarNode('default_avatar')->cannotBeEmpty()->defaultValue('bundles/MarlincUser/default_avatar.png')->end()
                     ->end()
                 ->end()
-                ->scalarNode('mailer')->cannotBeEmpty()->defaultValue('sonata.user.mailer.default')->info('Custom mailer used to send reset password emails')->end()
+                ->scalarNode('mailer')->cannotBeEmpty()->defaultValue('marlinc.user.mailer.default')->info('Custom mailer used to send reset password emails')->end()
             ->end();
 
         $this->addResettingSection($rootNode);
@@ -112,7 +112,7 @@ final class Configuration implements ConfigurationInterface
                             ->isRequired()
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('template')->cannotBeEmpty()->defaultValue('@SonataUser/Admin/Security/Resetting/email.html.twig')->end()
+                                ->scalarNode('template')->cannotBeEmpty()->defaultValue('@MarlincUser/Admin/Security/Resetting/email.html.twig')->end()
                                 ->scalarNode('address')->isRequired()->cannotBeEmpty()->end()
                                 ->scalarNode('sender_name')->isRequired()->cannotBeEmpty()->end()
                             ->end()
