@@ -23,47 +23,42 @@ file that was distributed with this source code.
 {% block body_attributes %}class="sonata-bc login-page"{% endblock %}
 
 {% block sonata_wrapper %}
-
     <div class="login-box">
         {% block login_box_header %}
             <div class="login-logo">
                 <a href="{{ path('sonata_admin_dashboard') }}">
-                    {% if admin_pool.getOption('title_mode') in ['single_image', 'both'] %}
+                    {% if 'icon' == sonata_config.getOption('logo_content') or 'all' == sonata_config.getOption('logo_content') %}
                         <div>
-                            <img style="width:64px;" src="{{ asset(admin_pool.titlelogo) }}" alt="{{ admin_pool.title }}">
+                            <img style="width:64px;" src="{{ asset(sonata_config.logo) }}" alt="{{ sonata_config.title }}">
                         </div>
                     {% endif %}
-                    {% if admin_pool.getOption('title_mode') in ['single_text', 'both'] %}
-                        <span>{{ admin_pool.title }}</span>
+                    {% if 'text' == sonata_config.getOption('logo_content') or 'all' == sonata_config.getOption('logo_content') %}
+                        <span>{{ sonata_config.title }}</span>
                     {% endif %}
                 </a>
             </div>
         {% endblock %}
         <div class="login-box-body">
-            {% block sonata_user_reset_request_form %}
-                {% block sonata_user_reset_request_error %}
-                    {% if invalid_username is defined %}
-                        <div class="alert alert-danger">
-                            {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'MarlincUserBundle') }}
-                        </div>
-                    {% endif %}
-                {% endblock %}
+            {% block marlinc_user_reset_request_form %}
                 <p class="login-box-msg">{{ 'resetting.request.submit'|trans({}, 'MarlincUserBundle') }}</p>
-                <form action="{{ path('marlinc_user_admin_resetting_send_email') }}" method="post" role="form">
-                    <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="username"  name="username" required="required"
-                            placeholder="{{ 'resetting.request.username'|trans({}, 'MarlincUserBundle')|replace({':': ''}) }}"/>
-                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    </div>
 
+                {{ form_start(form) }}
+                    <div class="form-group has-feedback">
+                        {{ form_widget(form.username, {'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'resetting.request.username'|trans({}, 'MarlincUserBundle')|replace({':': ''})
+                        }}) }}
+                        <span class="fas fa-user form-control-feedback"></span>
+                        {{ form_errors(form.username) }}
+                    </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">
+                            <button type="submit" name="submit" class="btn btn-primary btn-block btn-flat">
                                 {{ 'resetting.request.submit'|trans({}, 'MarlincUserBundle') }}
                             </button>
                         </div>
                     </div>
-                </form>
+                {{ form_end(form) }}
 
                 <a href="{{ path('marlinc_user_admin_security_login') }}">
                     {{ 'title_user_authentication'|trans({}, 'MarlincUserBundle') }}
@@ -71,5 +66,4 @@ file that was distributed with this source code.
             {% endblock %}
         </div>
     </div>
-
 {% endblock sonata_wrapper %}

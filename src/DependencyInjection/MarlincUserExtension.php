@@ -1,9 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: elias
- * Date: 14.07.16
- * Time: 13:39
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Marlinc\UserBundle\DependencyInjection;
@@ -11,181 +16,156 @@ namespace Marlinc\UserBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class MarlincUserExtension extends Extension implements PrependExtensionInterface
+/**
+ * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ */
+final class MarlincUserExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function prepend(ContainerBuilder $container): void
     {
-        if ($container->hasExtension('twig')) {
-            // add custom form widgets
-            $container->prependExtensionConfig('twig', [
-                'form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']
+        // get all bundles
+        $bundles = $container->getParameter('kernel.bundles');
+
+        if (isset($bundles['SonataAdminBundle'])) {
+            $container->prependExtensionConfig('sonata_admin', [
+                'templates' => ['user_block' => '@MarlincUser/Admin/Core/user_block.html.twig']
             ]);
         }
 
-        if ($container->hasExtension('sonata_admin')) {
-            $container->prependExtensionConfig('sonata_admin', [
-                'templates' => [
-                    'user_block' => '@MarlincUser/Admin/Core/user_block.html.twig',
-                ],
-            ]);
+        if ($container->hasExtension('twig')) {
+            // add custom form widgets
+            $container->prependExtensionConfig('twig', ['form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']]);
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $processor = new Processor();
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
-        $config = $this->fixImpersonating($config);
 
-        $loader = new XmlFileLoader(
-            $container,
-            new FileLocator(__DIR__ . '/../Resources/config')
-        );
-        foreach (['services', 'util', 'commands', 'forms', 'controllers', 'security', 'listeners', 'admin', 'mailer'] as $basename) {
-            $loader->load(sprintf('%s.xml', $basename));
+        $bundles = $container->getParameter('kernel.bundles');
+        \assert(\is_array($bundles));
+
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+
+        if (isset($bundles['SonataAdminBundle'])) {
+            $loader->load('admin.php');
+            $loader->load(sprintf('admin_%s.php', $config['manager_type']));
+            $loader->load('actions.php');
         }
 
-        if (class_exists('Google\Authenticator\GoogleAuthenticator')) {
-            $loader->load('google_authenticator.xml');
-            $this->configureGoogleAuthenticator($config, $container);
+        $loader->load(sprintf('%s.php', $config['manager_type']));
+
+        $loader->load('twig.php');
+        $loader->load('commands.php');
+        $loader->load('listener.php');
+        $loader->load('mailer.php');
+        $loader->load('form.php');
+        $loader->load('security.php');
+        $loader->load('util.php');
+        $loader->load('validator.php');
+
+        if (true === $config['security_acl']) {
+            $loader->load('security_acl.php');
         }
 
-        if (!empty($config['resetting'])) {
-            $this->remapParametersNamespaces($config['resetting'], $container, [
-                '' => [
-                    'retry_ttl' => 'marlinc.user.resetting.retry_ttl',
-                    'token_ttl' => 'marlinc.user.resetting.token_ttl',
-                ],
-            ]);
+        $this->checkManagerTypeToModelTypesMapping($config);
+
+        $this->configureClass($config, $container);
+        $this->configureMailer($config, $container);
+        $this->configureDefaultAvatar($config['profile'], $container);
+        if (isset($bundles['SonataAdminBundle'])) {
+            $this->configureAdmin($config['admin'], $container);
+            $this->configureResetting($config['resetting'], $container);
         }
 
-        if (!empty($config['cas'])) {
-            $this->configureCasAuthenticator($config['cas'], $container);
-        }
-
-        $container->setParameter('marlinc.user.default_avatar', $config['profile']['default_avatar']);
-        $container->setParameter('marlinc.user.impersonating', $config['impersonating']);
-    }
-
-    /**
-     * @param array $config
-     * @throws \RuntimeException
-     * @return array
-     */
-    private function fixImpersonating(array $config)
-    {
-        if (isset($config['impersonating'], $config['impersonating_route'])) {
-            throw new \RuntimeException('you can\'t have `impersonating` and `impersonating_route` keys defined at the same time');
-        }
-
-        if (isset($config['impersonating_route'])) {
-            $config['impersonating'] = [
-                'route' => $config['impersonating_route'],
-                'parameters' => [],
-            ];
-        }
-
-        if (!isset($config['impersonating']['parameters'])) {
-            $config['impersonating']['parameters'] = [];
-        }
-
-        if (!isset($config['impersonating']['route'])) {
-            $config['impersonating'] = false;
-        }
-
-        return $config;
-    }
-
-    /**
-     * @param array $config
-     * @param ContainerBuilder $container
-     * @throws \RuntimeException
-     */
-    private function configureGoogleAuthenticator($config, ContainerBuilder $container)
-    {
-        $container->setParameter('marlinc.user.google.authenticator.enabled', $config['google_authenticator']['enabled']);
-
-        if (!$config['google_authenticator']['enabled']) {
-            $container->removeDefinition('marlinc.user.google.authenticator');
-            $container->removeDefinition('marlinc.user.google.authenticator.provider');
-            $container->removeDefinition('marlinc.user.google.authenticator.interactive_login_listener');
-            $container->removeDefinition('marlinc.user.google.authenticator.request_listener');
-
-            return;
-        }
-
-        if (!class_exists('Google\Authenticator\GoogleAuthenticator')) {
-            throw new \RuntimeException('Please add ``sonata-project/google-authenticator`` package');
-        }
-
-        $container->setParameter('marlinc.user.google.authenticator.forced_for_role', $config['google_authenticator']['forced_for_role']);
-        $container->setParameter('marlinc.user.google.authenticator.ip_white_list', $config['google_authenticator']['ip_white_list']);
-
-        $container->getDefinition('marlinc.user.google.authenticator.provider')
-            ->replaceArgument(0, $config['google_authenticator']['server']);
-    }
-
-    /**
-     * @param array $config
-     * @param ContainerBuilder $container
-     */
-    private function configureCasAuthenticator(array $config, ContainerBuilder $container)
-    {
-        $container->setParameter('marlinc.user.cas.serverurl', $config['server_url']);
-        $container->setParameter('marlinc.user.cas.ticketname', $config['ticket_parameter_name']);
-        $container->setParameter('marlinc.user.cas.servicename', $config['service_parameter_name']);
-        $container->setParameter('marlinc.user.cas.username', $config['user_attribute_name']);
-        $container->setParameter('marlinc.user.cas.xmlnamespace', $config['xml_namespace']);
-    }
-
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     * @param array            $namespaces
-     */
-    protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces)
-    {
-        foreach ($namespaces as $ns => $map) {
-            if ($ns) {
-                if (!array_key_exists($ns, $config)) {
-                    continue;
-                }
-                $namespaceConfig = $config[$ns];
-            } else {
-                $namespaceConfig = $config;
-            }
-            if (is_array($map)) {
-                $this->remapParameters($namespaceConfig, $container, $map);
-            } else {
-                foreach ($namespaceConfig as $name => $value) {
-                    $container->setParameter(sprintf($map, $name), $value);
-                }
-            }
+        if ($this->isConfigEnabled($container, $config['impersonating'])) {
+            $this->configureImpersonation($config['impersonating'], $container);
         }
     }
 
     /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     * @param array            $map
+     * @param array<string, mixed> $config
      */
-    protected function remapParameters(array $config, ContainerBuilder $container, array $map)
+    private function configureClass(array $config, ContainerBuilder $container): void
     {
-        foreach ($map as $name => $paramName) {
-            if (array_key_exists($name, $config)) {
-                $container->setParameter($paramName, $config[$name]);
-            }
+        $container->setParameter('marlinc.user.user.class', $config['class']['user']);
+    }
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function configureAdmin(array $config, ContainerBuilder $container): void
+    {
+        $container->setParameter('marlinc.user.admin.user.controller', $config['user']['controller']);
+
+        $container->getDefinition('marlinc.user.admin.user')
+            ->setClass($config['user']['class'])
+            ->addMethodCall('setTranslationDomain', [$config['user']['translation']]);
+    }
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function configureResetting(array $config, ContainerBuilder $container): void
+    {
+        $container->getDefinition('marlinc.user.action.request')
+            ->replaceArgument(9, $config['retry_ttl']);
+
+        $container->getDefinition('marlinc.user.action.check_email')
+            ->replaceArgument(4, $config['token_ttl']);
+
+        $container->getDefinition('marlinc.user.action.reset')
+            ->replaceArgument(8, $config['token_ttl']);
+
+        $container->getDefinition('marlinc.user.mailer.default')
+            ->replaceArgument(3, [$config['email']['address'] => $config['email']['sender_name']])
+            ->replaceArgument(4, $config['email']['template']);
+    }
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function checkManagerTypeToModelTypesMapping(array $config): void
+    {
+        $managerType = $config['manager_type'];
+
+        if (!\in_array($managerType, ['orm', 'mongodb'], true)) {
+            throw new \InvalidArgumentException(sprintf('Invalid manager type "%s".', $managerType));
         }
+
+    }
+    
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function configureMailer(array $config, ContainerBuilder $container): void
+    {
+        $container->setAlias('marlinc.user.mailer', $config['mailer']);
+    }
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function configureDefaultAvatar(array $config, ContainerBuilder $container): void
+    {
+        $container->getDefinition('marlinc.user.twig.global')
+            ->replaceArgument(1, $config['default_avatar']);
+    }
+
+    /**
+     * @param array<string, mixed> $config
+     */
+    private function configureImpersonation(array $config, ContainerBuilder $container): void
+    {
+        $container->getDefinition('marlinc.user.twig.global')
+            ->replaceArgument(2, $config['enabled'])
+            ->replaceArgument(3, $config['route'])
+            ->replaceArgument(4, $config['parameters']);
     }
 }

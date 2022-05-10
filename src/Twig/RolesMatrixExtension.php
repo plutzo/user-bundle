@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Marlinc\UserBundle\Twig;
 
 use Marlinc\UserBundle\Security\RolesBuilder\MatrixRolesBuilderInterface;
@@ -17,10 +26,7 @@ use Twig\TwigFunction;
  */
 final class RolesMatrixExtension extends AbstractExtension
 {
-    /**
-     * @var MatrixRolesBuilderInterface
-     */
-    private $rolesBuilder;
+    private MatrixRolesBuilderInterface $rolesBuilder;
 
     public function __construct(MatrixRolesBuilderInterface $rolesBuilder)
     {
@@ -39,11 +45,6 @@ final class RolesMatrixExtension extends AbstractExtension
         ];
     }
 
-    public function getName(): string
-    {
-        return self::class;
-    }
-
     public function renderRolesList(Environment $environment, FormView $form): string
     {
         $roles = $this->rolesBuilder->getRoles();
@@ -55,7 +56,7 @@ final class RolesMatrixExtension extends AbstractExtension
 
             $roles[$role] = $attributes;
             foreach ($form->getIterator() as $child) {
-                if ($child->vars['value'] == $role) {
+                if ($child->vars['value'] === $role) {
                     $roles[$role]['form'] = $child;
                 }
             }
@@ -76,7 +77,7 @@ final class RolesMatrixExtension extends AbstractExtension
 
             $groupedRoles[$attributes['admin_label']][$role] = $attributes;
             foreach ($form->getIterator() as $child) {
-                if ($child->vars['value'] == $role) {
+                if ($child->vars['value'] === $role) {
                     $groupedRoles[$attributes['admin_label']][$role]['form'] = $child;
                 }
             }

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * This file is part of the FOSUserBundle package.
+ * This file is part of the Sonata Project package.
  *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,24 +13,11 @@
 
 namespace Marlinc\UserBundle\Mailer;
 
-use Marlinc\UserBundle\Model\UserInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 
-/**
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- */
 interface MailerInterface
 {
-    /**
-     * Send an email to a user to confirm the account creation.
-     *
-     * @param UserInterface $user
-     */
-    public function sendConfirmationEmailMessage(UserInterface $user);
+    public function sendConfirmationEmailMessage(UserInterface $user): void;
 
-    /**
-     * Send an email to a user to confirm the password reset.
-     *
-     * @param UserInterface $user
-     */
-    public function sendResettingEmailMessage(UserInterface $user);
+    public function sendResettingEmailMessage(UserInterface $user): void;
 }

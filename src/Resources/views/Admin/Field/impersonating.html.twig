@@ -12,9 +12,10 @@ file that was distributed with this source code.
 {% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
 
 {% block field %}
-    {% if app.user and object.username != app.user.username and marlinc_user.impersonating %}
-        <a href="{{ url(marlinc_user.impersonating.route, marlinc_user.impersonating.parameters | merge({'_switch_user': object.username})) }}" title="{{ 'switch_user'|trans({}, 'MarlincUserBundle')}}">
-            <i class="glyphicon glyphicon-user"></i><i class="glyphicon glyphicon-log-in"></i>
+    {% if app.user and object.username != app.user.username and marlinc_user.isImpersonatingEnabled %}
+        <a href="{{ url(marlinc_user.impersonatingRoute, marlinc_user.impersonatingRouteParameters|merge({'_switch_user': object.username})) }}" title="{{ 'switch_user'|trans({}, 'MarlincUserBundle')}}">
+            <i class="fas fa-user"></i>
+            <i class="fas fa-sign-in-alt"></i>
         </a>
     {% else %}
         -

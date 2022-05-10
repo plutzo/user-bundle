@@ -1,0 +1,11 @@
+framework:
+    session:
+        storage_id: session.storage.mock_file
+
+security:
+    encoders:
+        Marlinc\UserBundle\Entity\UserInterface: plaintext
+
+    firewalls:
+        main:
+            anonymous: true

@@ -1,41 +1,48 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
 {% block user_block %}
     {% if app.user %}
-        {% set _bg_class          = "bg-light-blue" %}
-        {% set _logout_uri        = url('marlinc_user_security_logout') %}
-        {% set _logout_text       = 'user_block_logout'|trans({}, 'MarlincUserBundle') %}
-        {% set _profile_uri       = marlinc_user.userAdmin.isGranted('EDIT', app.user) ? marlinc_user.userAdmin.generateUrl('edit', {id: app.user.id}) : marlinc_user.userAdmin.generateUrl('show', {id: app.user.id}) %}
-        {% set _profile_text      = 'user_block_profile'|trans({}, 'MarlincUserBundle') %}
-        {% set _user_image        = marlinc_user.defaultAvatar ? asset(marlinc_user.defaultAvatar) : null %}
-        {# Customize this with your profile picture implementation, see below for example #}
-        {#{% set _user_image  = app.user.profilePicture|default(asset(sonata_user.defaultAvatar)) %}#}
+        {% set _bg_class = 'bg-light-blue' %}
+        {% set _logout_uri = url('marlinc_user_admin_security_logout') %}
+        {% set _logout_text = 'user_block_logout'|trans({}, 'MarlincUserBundle') %}
 
-        {% if is_granted('ROLE_PREVIOUS_ADMIN') and marlinc_user.impersonating %}
-            {% set _bg_class    = "bg-light-green" %}
-            {% set _logout_uri  = url(marlinc_user.impersonating.route, marlinc_user.impersonating.parameters| merge({'_switch_user': '_exit'})) %}
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') and marlinc_user.isImpersonatingEnabled %}
+            {% set _bg_class = 'bg-light-green' %}
+            {% set _logout_uri = url(marlinc_user.impersonatingRoute, marlinc_user.impersonatingRouteParameters|merge({'_switch_user': '_exit'})) %}
             {% set _logout_text = 'switch_user_exit'|trans({}, 'MarlincUserBundle') %}
         {% endif %}
 
         <li class="user-header {{ _bg_class }}">
-            {% if _user_image %}
-                <img src="{{ _user_image }}" class="img-circle" alt="Avatar" />
-            {% endif %}
+            <img src="{{ asset(marlinc_user.defaultAvatar) }}" class="img-circle" alt="Avatar"/>
             <p>{{ app.user }}</p>
         </li>
 
-{#
-    Uncomment to add some information
-        <li class="user-body">
-
-        </li>
-#}
-
         <li class="user-footer">
             <div class="pull-left">
-                <a href="{{ _profile_uri }}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> {{ _profile_text }}</a>
+                <a href="{{
+                    marlinc_user.userAdmin.isGranted('EDIT', app.user) ?
+                        marlinc_user.userAdmin.generateUrl('edit', {id: app.user.id}) :
+                        marlinc_user.userAdmin.generateUrl('show', {id: app.user.id})
+                }}" class="btn btn-default btn-flat">
+                    <i class="fas fa-user"></i>
+                    {{ 'user_block_profile'|trans({}, 'MarlincUserBundle') }}
+                </a>
             </div>
 
             <div class="pull-right">
-                <a href="{{ _logout_uri }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out fa-fw"></i> {{ _logout_text }}</a>
+                <a href="{{ _logout_uri }}" class="btn btn-default btn-flat">
+                    <i class="fas fa-sign-out-alt fa-fw"></i>
+                    {{ _logout_text }}
+                </a>
             </div>
         </li>
     {% endif %}

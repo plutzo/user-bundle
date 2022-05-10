@@ -2,8 +2,20 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Marlinc\UserBundle\DependencyInjection;
 
+use Marlinc\UserBundle\Admin\UserAdmin;
+use Marlinc\UserBundle\Entity\User;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -12,93 +24,101 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
-class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritdoc}
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('marlinc_user');
+        $treeBuilder = new TreeBuilder('marlinc_user');
+        $rootNode = $treeBuilder->getRootNode();
+
+        $supportedManagerTypes = ['orm'];
 
         $rootNode
             ->children()
-                ->scalarNode('impersonating_route')->end()
+                ->booleanNode('security_acl')->defaultFalse()->end()
                 ->arrayNode('impersonating')
+                    ->canBeEnabled()
                     ->children()
-                        ->scalarNode('route')->defaultFalse()->end()
+                        ->scalarNode('route')->isRequired()->cannotBeEmpty()->end()
                         ->arrayNode('parameters')
+                            ->defaultValue([])
                             ->useAttributeAsKey('id')
                             ->prototype('scalar')->end()
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('google_authenticator')
+                ->scalarNode('manager_type')
+                    ->cannotBeEmpty()
+                    ->defaultValue('orm')
+                    ->validate()
+                        ->ifNotInArray($supportedManagerTypes)
+                        ->thenInvalid('The manager type %s is not supported. Please choose one of '.json_encode($supportedManagerTypes))
+                    ->end()
+                ->end()
+                ->arrayNode('class')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('server')->cannotBeEmpty()->end()
-                        ->scalarNode('enabled')->defaultFalse()->end()
-                        ->arrayNode('ip_white_list')
-                            ->prototype('scalar')->end()
-                            ->defaultValue(['127.0.0.1'])
-                            ->info('IPs for which 2FA will be skipped.')
-                        ->end()
-                        ->arrayNode('forced_for_role')
-                            ->prototype('scalar')->end()
-                            ->defaultValue(['ROLE_ADMIN'])
-                            ->info('User roles for which 2FA is necessary.')
+                        ->scalarNode('user')->cannotBeEmpty()->defaultValue(User::class)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('admin')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('user')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('class')->cannotBeEmpty()->defaultValue(UserAdmin::class)->end()
+                                ->scalarNode('controller')->cannotBeEmpty()->defaultValue('%sonata.admin.configuration.default_controller%')->end()
+                                ->scalarNode('translation')->cannotBeEmpty()->defaultValue('MarlincUserBundle')->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
                 ->arrayNode('profile')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('default_avatar')
-                            ->defaultValue('bundles/marlincuser/default_avatar.png')
-                        ->end()
+                        ->scalarNode('default_avatar')->cannotBeEmpty()->defaultValue('bundles/MarlincUser/default_avatar.png')->end()
                     ->end()
                 ->end()
-                ->arrayNode('resetting')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('retry_ttl')
-                            ->defaultValue(7200)
-                        ->end()
-                        ->scalarNode('token_ttl')
-                            ->defaultValue(86400)
-                        ->end()
-                    ->end()
-                ->end()
-                ->arrayNode('cas')
-                    ->addDefaultsIfNotSet()
-                    ->canBeUnset()
-                    ->children()
-                        ->scalarNode('server_url')
-                            ->isRequired()
-                            ->cannotBeEmpty()
-                        ->end()
-                        ->scalarNode('xml_namespace')
-                            ->defaultValue('cas')
-                        ->end()
-                        ->arrayNode('options')
-                            ->prototype('scalar')->end()
-                            ->defaultValue([])
-                        ->end()
-                        ->scalarNode('user_attribute_name')
-                            ->defaultValue('user')
-                        ->end()
-                        ->scalarNode('ticket_parameter_name')
-                            ->defaultValue('ticket')
-                        ->end()
-                        ->scalarNode('service_parameter_name')
-                            ->defaultValue('service')
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
+                ->scalarNode('mailer')->cannotBeEmpty()->defaultValue('marlinc.user.mailer.default')->info('Custom mailer used to send reset password emails')->end()
+            ->end();
+
+        $this->addResettingSection($rootNode);
 
         return $treeBuilder;
+    }
+
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
+    private function addResettingSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('resetting')
+                    ->isRequired()
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->integerNode('retry_ttl')->defaultValue(7200)->end()
+                        ->integerNode('token_ttl')->defaultValue(86400)->end()
+                        ->arrayNode('email')
+                            ->isRequired()
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('template')->cannotBeEmpty()->defaultValue('@MarlincUser/Admin/Security/Resetting/email.html.twig')->end()
+                                ->scalarNode('address')->isRequired()->cannotBeEmpty()->end()
+                                ->scalarNode('sender_name')->isRequired()->cannotBeEmpty()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 }

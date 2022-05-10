@@ -1,5 +1,16 @@
-{% block marlinc_security_roles_widget %}
-{% spaceless %}
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% block sonata_security_roles_widget %}
+{% apply spaceless %}
     <div class="editable">
         <h4>{{ 'field.label_roles_editable'|trans({}, "MarlincUserBundle") }}</h4>
         {{ block('choice_widget') }}
@@ -14,14 +25,14 @@
         </ul>
     </div>
     {% endif %}
-{% endspaceless %}
-{% endblock marlinc_security_roles_widget %}
+{% endapply %}
+{% endblock sonata_security_roles_widget %}
 
-{% block marlinc_roles_matrix_widget %}
-{% spaceless %}
+{% block sonata_roles_matrix_widget %}
+{% apply spaceless %}
     {{ renderMatrix(form)|raw }}
     <ul class="list-unstyled">
         {{ renderRolesList(form)|raw }}
     </ul>
-{% endspaceless %}
-{% endblock marlinc_roles_matrix_widget %}
+{% endapply %}
+{% endblock sonata_roles_matrix_widget %}

@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the Sonata Project package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+use Marlinc\UserBundle\Form\Type\ResetPasswordRequestFormType;
+use Marlinc\UserBundle\Form\Type\ResettingFormType;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $containerConfigurator): void {
+    // Use "service" function for creating references to services when dropping support for Symfony 4.4
+    // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
+    $containerConfigurator->services()
+
+        ->set('marlinc.user.form.type.resetting', ResettingFormType::class)
+            ->tag('form.type', ['alias' => 'marlinc_user_resetting'])
+            ->args([
+                '%marlinc.user.user.class%',
+            ])
+
+        ->set('marlinc.user.form.type.reset_password_request', ResetPasswordRequestFormType::class)
+            ->tag('form.type', ['alias' => 'marlinc_user_reset_password_request']);
+};
