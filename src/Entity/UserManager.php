@@ -30,31 +30,19 @@ final class UserManager extends BaseEntityManager implements UserManagerInterfac
 {
     private CanonicalFieldsUpdaterInterface $canonicalFieldsUpdater;
 
-    /**
-     * TODO: Simplify this once support for Symfony 4.4 is dropped.
-     *
-     * @psalm-suppress UndefinedDocblockClass
-     * @phpstan-ignore-next-line
-     *
-     * @var UserPasswordEncoderInterface|UserPasswordHasherInterface
-     */
     private object $userPasswordHasher;
 
     /**
-     * TODO: Simplify this once support for Symfony 4.4 is dropped.
-     *
-     * @psalm-suppress UndefinedDocblockClass
      *
      * @phpstan-param class-string<UserInterface> $class
      *
-     * @param UserPasswordEncoderInterface|UserPasswordHasherInterface $userPasswordHasher
+     * @param UserPasswordHasherInterface $userPasswordHasher
      */
     public function __construct(
         string $class,
         ManagerRegistry $registry,
         CanonicalFieldsUpdaterInterface $canonicalFieldsUpdater,
-        // @phpstan-ignore-next-line
-        object $userPasswordHasher
+        UserPasswordHasherInterface $userPasswordHasher
     ) {
         parent::__construct($class, $registry);
 
@@ -72,13 +60,8 @@ final class UserManager extends BaseEntityManager implements UserManagerInterfac
         if (null === $plainPassword) {
             return;
         }
-
-        if ($this->userPasswordHasher instanceof UserPasswordHasherInterface) {
-            $password = $this->userPasswordHasher->hashPassword($user, $plainPassword);
-        } else {
-            // @phpstan-ignore-next-line
-            $password = $this->userPasswordHasher->encodePassword($user, $plainPassword);
-        }
+        
+        $password = $this->userPasswordHasher->hashPassword($user, $plainPassword);
 
         $user->setPassword($password);
         $user->eraseCredentials();
