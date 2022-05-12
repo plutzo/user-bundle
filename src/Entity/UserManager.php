@@ -29,7 +29,10 @@ final class UserManager extends BaseEntityManager implements UserManagerInterfac
 {
     private CanonicalFieldsUpdaterInterface $canonicalFieldsUpdater;
 
-    private object $userPasswordHasher;
+    /**
+     * @var UserPasswordHasherInterface
+     */
+    private UserPasswordHasherInterface $userPasswordHasher;
 
     /**
      *
