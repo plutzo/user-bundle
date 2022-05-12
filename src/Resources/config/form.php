@@ -15,15 +15,16 @@ use Marlinc\UserBundle\Form\Type\ResetPasswordRequestFormType;
 use Marlinc\UserBundle\Form\Type\ResettingFormType;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
+
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
+
     $containerConfigurator->services()
 
         ->set('marlinc.user.form.type.resetting', ResettingFormType::class)
             ->tag('form.type', ['alias' => 'marlinc_user_resetting'])
             ->args([
-                '%marlinc.user.user.class%',
+                param('marlinc.user.user.class'),
             ])
 
         ->set('marlinc.user.form.type.reset_password_request', ResetPasswordRequestFormType::class)

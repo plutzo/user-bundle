@@ -19,7 +19,6 @@ use Marlinc\UserBundle\Entity\UserInterface;
 use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Marlinc\UserBundle\Util\CanonicalFieldsUpdaterInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @author Hugo Briand <briand@ekino.com>
