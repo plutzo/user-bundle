@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use Marlinc\UserBundle\Validator\UserInitializer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4
@@ -22,6 +22,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('marlinc.user.validator.user_initializer', UserInitializer::class)
             ->tag('validator.initializer')
             ->args([
-                new ReferenceConfigurator('marlinc.user.util.canonical_fields_updater'),
+                service('marlinc.user.util.canonical_fields_updater'),
             ]);
 };

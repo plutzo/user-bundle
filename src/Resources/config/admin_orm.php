@@ -12,10 +12,10 @@ declare(strict_types=1);
  */
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
+
     $containerConfigurator->services()
 
         ->set('marlinc.user.admin.user')
@@ -30,6 +30,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'icon' => '<i class=\'fa fa-users\'></i>',
             ])
             ->args([
-                new ReferenceConfigurator('marlinc.user.manager.user'),
+                service('marlinc.user.manager.user'),
             ]);
 };

@@ -19,62 +19,62 @@ use Marlinc\UserBundle\Action\RequestAction;
 use Marlinc\UserBundle\Action\ResetAction;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4.4
-    // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
+
     $containerConfigurator->services()
 
         ->set('marlinc.user.action.request', RequestAction::class)
             ->public()
             ->args([
-                new ReferenceConfigurator('twig'),
-                new ReferenceConfigurator('router'),
-                new ReferenceConfigurator('security.authorization_checker'),
-                new ReferenceConfigurator('sonata.admin.pool'),
-                new ReferenceConfigurator('sonata.admin.global_template_registry'),
-                new ReferenceConfigurator('form.factory'),
-                new ReferenceConfigurator('marlinc.user.manager.user'),
-                new ReferenceConfigurator('marlinc.user.mailer'),
-                new ReferenceConfigurator('marlinc.user.util.token_generator'),
+                service('twig'),
+                service('router'),
+                service('security.authorization_checker'),
+                service('sonata.admin.pool'),
+                service('sonata.admin.global_template_registry'),
+                service('form.factory'),
+                service('marlinc.user.manager.user'),
+                service('marlinc.user.mailer'),
+                service('marlinc.user.util.token_generator'),
                 0,
             ])
 
         ->set('marlinc.user.action.check_email', CheckEmailAction::class)
             ->public()
             ->args([
-                new ReferenceConfigurator('twig'),
-                new ReferenceConfigurator('router'),
-                new ReferenceConfigurator('sonata.admin.pool'),
-                new ReferenceConfigurator('sonata.admin.global_template_registry'),
+                service('twig'),
+                service('router'),
+                service('sonata.admin.pool'),
+                service('sonata.admin.global_template_registry'),
                 0,
             ])
 
         ->set('marlinc.user.action.reset', ResetAction::class)
             ->public()
             ->args([
-                new ReferenceConfigurator('twig'),
-                new ReferenceConfigurator('router'),
-                new ReferenceConfigurator('security.authorization_checker'),
-                new ReferenceConfigurator('sonata.admin.pool'),
-                new ReferenceConfigurator('sonata.admin.global_template_registry'),
-                new ReferenceConfigurator('form.factory'),
-                new ReferenceConfigurator('marlinc.user.manager.user'),
-                new ReferenceConfigurator('translator'),
+                service('twig'),
+                service('router'),
+                service('security.authorization_checker'),
+                service('sonata.admin.pool'),
+                service('sonata.admin.global_template_registry'),
+                service('form.factory'),
+                service('marlinc.user.manager.user'),
+                service('translator'),
                 0,
             ])
 
         ->set('marlinc.user.action.login', LoginAction::class)
             ->public()
             ->args([
-                new ReferenceConfigurator('twig'),
-                new ReferenceConfigurator('router'),
-                new ReferenceConfigurator('security.authentication_utils'),
-                new ReferenceConfigurator('sonata.admin.pool'),
-                new ReferenceConfigurator('sonata.admin.global_template_registry'),
-                new ReferenceConfigurator('security.token_storage'),
-                new ReferenceConfigurator('translator'),
-                (new ReferenceConfigurator('security.csrf.token_manager'))->nullOnInvalid(),
+                service('twig'),
+                service('router'),
+                service('security.authentication_utils'),
+                service('sonata.admin.pool'),
+                service('sonata.admin.global_template_registry'),
+                service('security.token_storage'),
+                service('translator'),
+                (service('security.csrf.token_manager'))->nullOnInvalid(),
             ])
 
         ->set('marlinc.user.action.check_login', CheckLoginAction::class)

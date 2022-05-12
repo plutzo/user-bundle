@@ -17,7 +17,6 @@ use Marlinc\UserBundle\Security\RolesBuilder\MatrixRolesBuilder;
 use Marlinc\UserBundle\Security\RolesBuilder\SecurityRolesBuilder;
 use Marlinc\UserBundle\Twig\RolesMatrixExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 

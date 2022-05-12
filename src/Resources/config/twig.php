@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 use Marlinc\UserBundle\Twig\GlobalVariables;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4
+
     $containerConfigurator->services()
 
         ->set('marlinc.user.twig.global', GlobalVariables::class)
             ->args([
-                (new ReferenceConfigurator('sonata.admin.pool'))->nullOnInvalid(),
+                (service('sonata.admin.pool'))->nullOnInvalid(),
                 '',
                 false,
                 '',

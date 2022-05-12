@@ -13,18 +13,17 @@ declare(strict_types=1);
 
 use Marlinc\UserBundle\Mailer\Mailer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4
-    // Use "param" function for creating references to parameters when dropping support for Symfony 5.1
+
     $containerConfigurator->services()
 
         ->set('marlinc.user.mailer.default', Mailer::class)
             ->args([
-                new ReferenceConfigurator('router'),
-                new ReferenceConfigurator('twig'),
-                new ReferenceConfigurator('mailer'),
+                service('router'),
+                service('twig'),
+                service('mailer'),
                 [],
                 '',
             ]);

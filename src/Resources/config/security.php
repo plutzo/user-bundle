@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 use Marlinc\UserBundle\Security\UserProvider;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4
+
     $containerConfigurator->services()
 
         ->set('marlinc.user.security.user_provider', UserProvider::class)
             ->args([
-                new ReferenceConfigurator('marlinc.user.manager.user'),
+                service('marlinc.user.manager.user'),
             ]);
 };

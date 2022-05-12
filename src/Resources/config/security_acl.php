@@ -13,20 +13,20 @@ declare(strict_types=1);
 
 use Marlinc\UserBundle\Security\Authorization\Voter\UserAclVoter;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4
+
     $containerConfigurator->services()
 
         ->set('security.acl.voter.user_permissions', UserAclVoter::class)
             ->tag('monolog.logger', ['channel' => 'security'])
             ->tag('security.voter', ['priority' => 255])
             ->args([
-                new ReferenceConfigurator('security.acl.provider'),
-                new ReferenceConfigurator('security.acl.object_identity_retrieval_strategy'),
-                new ReferenceConfigurator('security.acl.security_identity_retrieval_strategy'),
-                new ReferenceConfigurator('security.acl.permission.map'),
-                (new ReferenceConfigurator('logger'))->nullOnInvalid(),
+                service('security.acl.provider'),
+                service('security.acl.object_identity_retrieval_strategy'),
+                service('security.acl.security_identity_retrieval_strategy'),
+                service('security.acl.permission.map'),
+                (service('logger'))->nullOnInvalid(),
             ]);
 };
