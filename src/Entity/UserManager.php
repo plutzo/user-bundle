@@ -15,8 +15,6 @@ namespace Marlinc\UserBundle\Entity;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Sonata\Doctrine\Entity\BaseEntityManager;
-use Marlinc\UserBundle\Entity\UserInterface;
-use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Marlinc\UserBundle\Util\CanonicalFieldsUpdaterInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
