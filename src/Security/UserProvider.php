@@ -17,7 +17,6 @@ use Marlinc\UserBundle\Entity\UserInterface;
 use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -82,16 +81,8 @@ final class UserProvider implements UserProviderInterface
         return $this->userManager->findUserByUsernameOrEmail($username);
     }
 
-    /**
-     * TODO: Simplify when dropping support for Symfony 4.
-     */
     private function buildUserNotFoundException(string $message): AuthenticationException
     {
-        if (!class_exists(UserNotFoundException::class)) {
-            // @phpstan-ignore-next-line
-            return new UsernameNotFoundException($message);
-        }
-
         return new UserNotFoundException($message);
     }
 }
