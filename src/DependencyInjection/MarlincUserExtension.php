@@ -27,20 +27,18 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
 {
     public function prepend(ContainerBuilder $container): void
     {
-        if ($container->hasExtension('twig')) {
-            // get all bundles
-            $bundles = $container->getParameter('kernel.bundles');
+        // get all bundles
+        $bundles = $container->getParameter('kernel.bundles');
 
-            if (isset($bundles['SonataAdminBundle'])) {
-                $container->prependExtensionConfig('sonata_admin', [
-                    'templates' => ['user_block' => '@MarlincUser/Admin/Core/user_block.html.twig']
-                ]);
-            }
-
-            $container->prependExtensionConfig('twig', [
-                'form_themes' => ['@MarlincUser/Admin/Core/user_block.html.twig']
+        if (isset($bundles['SonataAdminBundle'])) {
+            $container->prependExtensionConfig('sonata_admin', [
+                'templates' => ['user_block' => '@MarlincUser/Admin/Core/user_block.html.twig']
             ]);
+        }
 
+        if ($container->hasExtension('twig')) {
+            // add custom form widgets
+            $container->prependExtensionConfig('twig', ['form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']]);
         }
     }
 
@@ -141,7 +139,7 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         }
 
     }
-    
+
     /**
      * @param array<string, mixed> $config
      */
