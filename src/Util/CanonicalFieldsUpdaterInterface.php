@@ -20,6 +20,4 @@ interface CanonicalFieldsUpdaterInterface
     public function updateCanonicalFields(UserInterface $user): void;
 
     public function canonicalizeEmail(?string $email): ?string;
-
-    public function canonicalizeUsername(?string $username): ?string;
 }

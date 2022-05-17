@@ -22,13 +22,7 @@ class BaseUser implements UserInterface
      */
     protected $id;
 
-    protected ?string $username = null;
-
-    protected ?string $usernameCanonical = null;
-
     protected ?string $email = null;
-
-    protected ?string $emailCanonical = null;
 
     protected bool $enabled = false;
 
@@ -55,7 +49,7 @@ class BaseUser implements UserInterface
 
     public function __toString(): string
     {
-        return $this->getUsername();
+        return $this->getEmail();
     }
 
     /**
@@ -66,12 +60,9 @@ class BaseUser implements UserInterface
         return [
             $this->password,
             $this->salt,
-            $this->usernameCanonical,
-            $this->username,
             $this->enabled,
             $this->id,
             $this->email,
-            $this->emailCanonical,
         ];
     }
 
@@ -83,12 +74,9 @@ class BaseUser implements UserInterface
         [
             $this->password,
             $this->salt,
-            $this->usernameCanonical,
-            $this->username,
             $this->enabled,
             $this->id,
             $this->email,
-            $this->emailCanonical
         ] = $data;
     }
 
@@ -122,12 +110,7 @@ class BaseUser implements UserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->username ?? '-';
-    }
-
-    public function getUsernameCanonical(): ?string
-    {
-        return $this->usernameCanonical;
+        return $this->email ?? '-';
     }
 
     public function getSalt(): ?string
@@ -138,11 +121,6 @@ class BaseUser implements UserInterface
     public function getEmail(): ?string
     {
         return $this->email;
-    }
-
-    public function getEmailCanonical(): ?string
-    {
-        return $this->emailCanonical;
     }
 
     public function getPassword(): ?string
@@ -180,21 +158,6 @@ class BaseUser implements UserInterface
         return \in_array(strtoupper($role), $this->getRoles(), true);
     }
 
-    public function isAccountNonExpired(): bool
-    {
-        return true;
-    }
-
-    public function isAccountNonLocked(): bool
-    {
-        return true;
-    }
-
-    public function isCredentialsNonExpired(): bool
-    {
-        return true;
-    }
-
     public function isEnabled(): bool
     {
         return $this->enabled;
@@ -213,29 +176,9 @@ class BaseUser implements UserInterface
         }
     }
 
-    public function setUsername(?string $username): void
-    {
-        $this->username = $username;
-    }
-
-    public function setUsernameCanonical(?string $usernameCanonical): void
-    {
-        $this->usernameCanonical = $usernameCanonical;
-    }
-
-    public function setSalt(?string $salt): void
-    {
-        $this->salt = $salt;
-    }
-
     public function setEmail(?string $email): void
     {
         $this->email = $email;
-    }
-
-    public function setEmailCanonical(?string $emailCanonical): void
-    {
-        $this->emailCanonical = $emailCanonical;
     }
 
     public function setEnabled(bool $enabled): void
@@ -312,10 +255,6 @@ class BaseUser implements UserInterface
             return false;
         }
 
-        if ($this->username !== $user->getUsername()) {
-            return false;
-        }
-
         return true;
     }
 
@@ -339,16 +278,6 @@ class BaseUser implements UserInterface
         return $this->updatedAt;
     }
 
-    public function getRealRoles(): array
-    {
-        return $this->roles;
-    }
-
-    public function setRealRoles(array $roles): void
-    {
-        $this->setRoles($roles);
-    }
-    
     public function prePersist(): void
     {
         $this->createdAt = new \DateTime();

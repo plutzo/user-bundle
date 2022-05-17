@@ -27,18 +27,20 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
 {
     public function prepend(ContainerBuilder $container): void
     {
-        // get all bundles
-        $bundles = $container->getParameter('kernel.bundles');
-
-        if (isset($bundles['SonataAdminBundle'])) {
-            $container->prependExtensionConfig('sonata_admin', [
-                'templates' => ['user_block' => '@MarlincUser/Admin/Core/user_block.html.twig']
-            ]);
-        }
-
         if ($container->hasExtension('twig')) {
-            // add custom form widgets
-            $container->prependExtensionConfig('twig', ['form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']]);
+            // get all bundles
+            $bundles = $container->getParameter('kernel.bundles');
+
+            if (isset($bundles['SonataAdminBundle'])) {
+                $container->prependExtensionConfig('sonata_admin', [
+                    'templates' => ['user_block' => '@MarlincUser/Admin/Core/user_block.html.twig']
+                ]);
+            }
+
+            $container->prependExtensionConfig('twig', [
+                'form_themes' => ['@MarlincUser/Admin/Core/user_block.html.twig']
+            ]);
+
         }
     }
 
@@ -68,7 +70,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $loader->load('form.php');
         $loader->load('security.php');
         $loader->load('util.php');
-        $loader->load('validator.php');
 
         if (true === $config['security_acl']) {
             $loader->load('security_acl.php');

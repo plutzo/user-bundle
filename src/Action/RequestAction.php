@@ -83,8 +83,8 @@ final class RequestAction
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $username = $form->get('username')->getData();
-            $user = $this->userManager->findUserByUsernameOrEmail($username);
+            $email = $form->get('email')->getData();
+            $user = $this->userManager->findUserByEmail($email);
 
             if (null !== $user && $user->isEnabled() && !$user->isPasswordRequestNonExpired($this->retryTtl) && $user->isAccountNonLocked()) {
                 if (null === $user->getConfirmationToken()) {

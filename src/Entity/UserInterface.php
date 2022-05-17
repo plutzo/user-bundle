@@ -27,21 +27,9 @@ interface UserInterface extends SymfonyUserInterface, EquatableInterface,Passwor
      */
     public function getId();
 
-    public function setUsername(string $username): void;
-
-    public function getUsernameCanonical(): ?string;
-
-    public function setUsernameCanonical(?string $usernameCanonical): void;
-
-    public function setSalt(?string $salt): void;
-
     public function getEmail(): ?string;
 
     public function setEmail(?string $email): void;
-
-    public function getEmailCanonical(): ?string;
-
-    public function setEmailCanonical(?string $emailCanonical): void;
 
     public function getPlainPassword(): ?string;
 
@@ -78,12 +66,6 @@ interface UserInterface extends SymfonyUserInterface, EquatableInterface,Passwor
 
     public function removeRole(string $role): void;
 
-    public function isAccountNonExpired(): bool;
-
-    public function isAccountNonLocked(): bool;
-
-    public function isCredentialsNonExpired(): bool;
-
     public function isEnabled(): bool;
 
     public function setCreatedAt(?\DateTimeInterface $createdAt = null): void;
@@ -94,13 +76,4 @@ interface UserInterface extends SymfonyUserInterface, EquatableInterface,Passwor
 
     public function getUpdatedAt(): ?\DateTimeInterface;
 
-    /**
-     * @return string[]
-     */
-    public function getRealRoles(): array;
-
-    /**
-     * @param string[] $roles
-     */
-    public function setRealRoles(array $roles): void;
 }
