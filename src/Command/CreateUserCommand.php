@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class CreateUserCommand extends Command
 {
-    protected static $defaultName = 'sonata:user:create';
+    protected static $defaultName = 'marinc:user:create';
     protected static $defaultDescription = 'Create a user';
 
     private UserManagerInterface $userManager;
@@ -44,7 +44,6 @@ final class CreateUserCommand extends Command
         $this
             ->setDescription(static::$defaultDescription)
             ->setDefinition([
-                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
@@ -70,14 +69,12 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
         $inactive = $input->getOption('inactive');
         $superAdmin = $input->getOption('super-admin');
 
         $user = $this->userManager->create();
-        $user->setUsername($username);
         $user->setEmail($email);
         $user->setPlainPassword($password);
         $user->setEnabled(!$inactive);
@@ -85,7 +82,7 @@ EOT
 
         $this->userManager->save($user);
 
-        $output->writeln(sprintf('Created user "%s".', $username));
+        $output->writeln(sprintf('Created user "%s".', $email));
 
         return 0;
     }

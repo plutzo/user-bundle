@@ -23,7 +23,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set('marlinc.user.listener.user', UserListener::class)
             ->tag('doctrine.event_subscriber')
             ->args([
-                service('marlinc.user.util.canonical_fields_updater'),
                 service('marlinc.user.manager.user'),
             ])
 

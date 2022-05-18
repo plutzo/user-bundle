@@ -5,19 +5,9 @@ namespace Marlinc\UserBundle\Util;
 
 use Marlinc\UserBundle\Entity\UserInterface;
 
-class EmailCanonicalizer implements CanonicalFieldsUpdaterInterface
+class EmailCanonicalizer
 {
-    public function updateCanonicalFields(UserInterface $user): void
-    {
-        $user->setEmail($this->canonicalizeEmail($user->getEmail()));
-    }
-
-    public function canonicalizeEmail(?string $email): ?string
-    {
-        return $this->canonicalize($email);
-    }
-    
-    public function canonicalize(?string $string): ?string
+    static function canonicalize(?string $string): ?string
     {
         if (null === $string) {
             return null;

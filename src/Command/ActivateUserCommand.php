@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class ActivateUserCommand extends Command
 {
-    protected static $defaultName = 'sonata:user:activate';
+    protected static $defaultName = 'marinc:user:activate';
     protected static $defaultDescription = 'Activate a user';
 
     private UserManagerInterface $userManager;
@@ -43,7 +43,7 @@ final class ActivateUserCommand extends Command
         $this
             ->setDescription(static::$defaultDescription)
             ->setDefinition([
-                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
+                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
             ])
             ->setHelp(
                 <<<'EOT'
@@ -56,19 +56,19 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $username = $input->getArgument('username');
+        $email = $input->getArgument('email');
 
-        $user = $this->userManager->findUserByUsername($username);
+        $user = $this->userManager->findUserByEmail($email);
 
         if (null === $user) {
-            throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
+            throw new \InvalidArgumentException(sprintf('User identified by "%s" email does not exist.', $email));
         }
 
         $user->setEnabled(true);
 
         $this->userManager->save($user);
 
-        $output->writeln(sprintf('User "%s" has been activated.', $username));
+        $output->writeln(sprintf('User "%s" has been activated.', $email));
 
         return 0;
     }

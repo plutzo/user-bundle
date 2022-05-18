@@ -11,14 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Marlinc\UserBundle\Util\EmailCanonicalizer; // change 
 use Marlinc\UserBundle\Util\TokenGenerator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
-
-        ->set('marlinc.user.util.canonical_fields_updater', EmailCanonicalizer::class)
-
         ->set('marlinc.user.util.token_generator', TokenGenerator::class);
 };
