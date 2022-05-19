@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class DeactivateUserCommand extends Command
 {
-    protected static $defaultName = 'marinc:user:deactivate';
+    protected static $defaultName = 'marlinc:user:deactivate';
     protected static $defaultDescription = 'Deactivate a user';
 
     private UserManagerInterface $userManager;

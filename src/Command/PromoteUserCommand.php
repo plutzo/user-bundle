@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class PromoteUserCommand extends Command
 {
-    protected static $defaultName = 'marinc:user:promote';
+    protected static $defaultName = 'marlinc:user:promote';
     protected static $defaultDescription = 'Promotes a user by adding a role';
 
     private UserManagerInterface $userManager;

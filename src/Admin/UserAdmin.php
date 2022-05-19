@@ -55,7 +55,7 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->add('email')
+            ->addIdentifier('email')
             ->add('enabled', null, ['editable' => true])
             ->add('createdAt');
 

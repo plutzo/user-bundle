@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class ActivateUserCommand extends Command
 {
-    protected static $defaultName = 'marinc:user:activate';
+    protected static $defaultName = 'marlinc:user:activate';
     protected static $defaultDescription = 'Activate a user';
 
     private UserManagerInterface $userManager;

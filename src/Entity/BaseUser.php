@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Entity;
 
+use Marlinc\UserBundle\Util\EmailCanonicalizer;
 use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
 
 class BaseUser implements UserInterface
@@ -282,10 +283,12 @@ class BaseUser implements UserInterface
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->email = EmailCanonicalizer::canonicalize($this->email);
     }
 
     public function preUpdate(): void
     {
         $this->updatedAt = new \DateTime();
+        $this->email = EmailCanonicalizer::canonicalize($this->email);
     }
 }

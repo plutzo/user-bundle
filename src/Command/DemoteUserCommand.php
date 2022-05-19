@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class DemoteUserCommand extends Command
 {
-    protected static $defaultName = 'marinc:user:demote';
+    protected static $defaultName = 'marlinc:user:demote';
     protected static $defaultDescription = 'Demotes a user by removing a role';
 
     private UserManagerInterface $userManager;

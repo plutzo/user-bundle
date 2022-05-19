@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class ChangePasswordCommand extends Command
 {
-    protected static $defaultName = 'marinc:user:change-password';
+    protected static $defaultName = 'marlinc:user:change-password';
     protected static $defaultDescription = 'Change the password of a user';
 
     private UserManagerInterface $userManager;

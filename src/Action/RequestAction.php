@@ -86,7 +86,7 @@ final class RequestAction
             $email = $form->get('email')->getData();
             $user = $this->userManager->findUserByEmail($email);
 
-            if (null !== $user && $user->isEnabled() && !$user->isPasswordRequestNonExpired($this->retryTtl) && $user->isAccountNonLocked()) {
+            if (null !== $user && $user->isEnabled() && !$user->isPasswordRequestNonExpired($this->retryTtl) ) {
                 if (null === $user->getConfirmationToken()) {
                     $user->setConfirmationToken($this->tokenGenerator->generateToken());
                 }
@@ -97,7 +97,7 @@ final class RequestAction
             }
 
             return new RedirectResponse($this->urlGenerator->generate('marlinc_user_admin_resetting_check_email', [
-                'username' => $username,
+                'email' => $email,
             ]));
         }
 

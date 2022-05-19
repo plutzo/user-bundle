@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class CreateUserCommand extends Command
 {
-    protected static $defaultName = 'marinc:user:create';
+    protected static $defaultName = 'marlinc:user:create';
     protected static $defaultDescription = 'Create a user';
 
     private UserManagerInterface $userManager;
