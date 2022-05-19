@@ -55,8 +55,7 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->addIdentifier('username')
-            ->add('email')
+            ->addIdentifier('email')
             ->add('enabled', null, ['editable' => true])
             ->add('createdAt');
 
@@ -73,14 +72,12 @@ class UserAdmin extends AbstractAdmin
     {
         $filter
             ->add('id')
-            ->add('username')
             ->add('email');
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->add('username')
             ->add('email');
     }
 
@@ -88,7 +85,6 @@ class UserAdmin extends AbstractAdmin
     {
         $form
             ->with('general', ['class' => 'col-md-4'])
-                ->add('username')
                 ->add('email')
                 ->add('plainPassword', TextType::class, [
                     'required' => (!$this->hasSubject() || null === $this->getSubject()->getId()),
@@ -96,7 +92,7 @@ class UserAdmin extends AbstractAdmin
                 ->add('enabled', null)
             ->end()
             ->with('roles', ['class' => 'col-md-8'])
-                ->add('realRoles', RolesMatrixType::class, [
+                ->add('roles', RolesMatrixType::class, [
                     'label' => false,
                     'multiple' => true,
                     'required' => false,

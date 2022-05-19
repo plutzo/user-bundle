@@ -68,7 +68,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $loader->load('form.php');
         $loader->load('security.php');
         $loader->load('util.php');
-        $loader->load('validator.php');
 
         if (true === $config['security_acl']) {
             $loader->load('security_acl.php');
@@ -140,7 +139,7 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         }
 
     }
-    
+
     /**
      * @param array<string, mixed> $config
      */

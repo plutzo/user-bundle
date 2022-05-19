@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class ChangePasswordCommand extends Command
 {
-    protected static $defaultName = 'sonata:user:change-password';
+    protected static $defaultName = 'marlinc:user:change-password';
     protected static $defaultDescription = 'Change the password of a user';
 
     private UserManagerInterface $userManager;
@@ -43,7 +43,7 @@ final class ChangePasswordCommand extends Command
         $this
             ->setDescription(static::$defaultDescription)
             ->setDefinition([
-                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
+                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
             ])
             ->setHelp(
@@ -58,13 +58,13 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $username = $input->getArgument('username');
+        $email = $input->getArgument('email');
         $password = $input->getArgument('password');
 
-        $user = $this->userManager->findUserByUsername($username);
+        $user = $this->userManager->findUserByEmail($email);
 
         if (null === $user) {
-            throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
+            throw new \InvalidArgumentException(sprintf('User identified by "%s" email does not exist.',$email));
         }
 
         $user->setPlainPassword($password);
@@ -72,7 +72,7 @@ EOT
         $this->userManager->updatePassword($user);
         $this->userManager->save($user);
 
-        $output->writeln(sprintf('Changed password for user "%s".', $username));
+        $output->writeln(sprintf('Changed password for user "%s".', $email));
 
         return 0;
     }

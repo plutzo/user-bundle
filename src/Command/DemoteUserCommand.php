@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class DemoteUserCommand extends Command
 {
-    protected static $defaultName = 'sonata:user:demote';
+    protected static $defaultName = 'marlinc:user:demote';
     protected static $defaultDescription = 'Demotes a user by removing a role';
 
     private UserManagerInterface $userManager;
@@ -44,7 +44,7 @@ final class DemoteUserCommand extends Command
         $this
             ->setDescription(static::$defaultDescription)
             ->setDefinition([
-                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
+                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('role', InputArgument::OPTIONAL, 'The role'),
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Instead specifying role, use this to quickly add the super administrator role'),
             ])
@@ -60,7 +60,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $username = $input->getArgument('username');
+        $email = $input->getArgument('email');
         $role = $input->getArgument('role');
         $superAdmin = (true === $input->getOption('super-admin'));
 
@@ -72,22 +72,22 @@ EOT
             throw new \InvalidArgumentException('Not enough arguments.');
         }
 
-        $user = $this->userManager->findUserByUsername($username);
+        $user = $this->userManager->findUserByEmail($email);
 
         if (null === $user) {
-            throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
+            throw new \InvalidArgumentException(sprintf('User identified by "%s" email does not exist.', $email));
         }
 
         if ($superAdmin) {
             $user->setSuperAdmin(false);
 
-            $output->writeln(sprintf('User "%s" has been demoted as a simple user. This change will not apply until the user logs out and back in again.', $username));
+            $output->writeln(sprintf('User "%s" has been demoted as a simple user. This change will not apply until the user logs out and back in again.', $email));
         } elseif ($user->hasRole($role)) {
             $user->removeRole($role);
 
-            $output->writeln(sprintf('Role "%s" has been removed from user "%s". This change will not apply until the user logs out and back in again.', $role, $username));
+            $output->writeln(sprintf('Role "%s" has been removed from user "%s". This change will not apply until the user logs out and back in again.', $role, $email));
         } else {
-            $output->writeln(sprintf('User "%s" didn\'t have "%s" role.', $username, $role));
+            $output->writeln(sprintf('User "%s" didn\'t have "%s" role.', $email, $role));
         }
 
         $this->userManager->save($user);

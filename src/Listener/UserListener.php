@@ -20,22 +20,18 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Persistence\ObjectManager;
 use Marlinc\UserBundle\Entity\UserInterface;
 use Marlinc\UserBundle\Entity\UserManagerInterface;
-use Marlinc\UserBundle\Util\CanonicalFieldsUpdaterInterface;
 
 /**
  * @internal
  */
 final class UserListener implements EventSubscriber
 {
-    private CanonicalFieldsUpdaterInterface $canonicalFieldsUpdater;
 
     private UserManagerInterface $userManager;
 
     public function __construct(
-        CanonicalFieldsUpdaterInterface $canonicalFieldsUpdater,
         UserManagerInterface $userManager
     ) {
-        $this->canonicalFieldsUpdater = $canonicalFieldsUpdater;
         $this->userManager = $userManager;
     }
 
@@ -72,7 +68,6 @@ final class UserListener implements EventSubscriber
 
     private function updateUser(UserInterface $user): void
     {
-        $this->canonicalFieldsUpdater->updateCanonicalFields($user);
         $this->userManager->updatePassword($user);
     }
 

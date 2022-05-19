@@ -49,9 +49,9 @@ final class CheckEmailAction
 
     public function __invoke(Request $request): Response
     {
-        $username = $request->query->get('username');
+        $email = $request->query->get('email');
 
-        if (null === $username) {
+        if (null === $email) {
             // the user does not come from the sendEmail action
             return new RedirectResponse($this->urlGenerator->generate('marlinc_user_admin_resetting_request'));
         }

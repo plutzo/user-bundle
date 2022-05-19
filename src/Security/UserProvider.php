@@ -76,9 +76,9 @@ final class UserProvider implements UserProviderInterface
         return $userClass === $class || is_subclass_of($class, $userClass);
     }
 
-    private function findUser(string $username): ?UserInterface
+    private function findUser(string $email): ?UserInterface
     {
-        return $this->userManager->findUserByUsernameOrEmail($username);
+        return $this->userManager->findUserByEmail($email);
     }
 
     private function buildUserNotFoundException(string $message): AuthenticationException

@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class PromoteUserCommand extends Command
 {
-    protected static $defaultName = 'sonata:user:promote';
+    protected static $defaultName = 'marlinc:user:promote';
     protected static $defaultDescription = 'Promotes a user by adding a role';
 
     private UserManagerInterface $userManager;
@@ -44,7 +44,7 @@ final class PromoteUserCommand extends Command
         $this
             ->setDescription(static::$defaultDescription)
             ->setDefinition([
-                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
+                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('role', InputArgument::OPTIONAL, 'The role'),
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Instead specifying role, use this to quickly add the super administrator role'),
             ])
@@ -60,7 +60,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $username = $input->getArgument('username');
+        $email = $input->getArgument('email');
         $role = $input->getArgument('role');
         $superAdmin = (true === $input->getOption('super-admin'));
 
@@ -72,22 +72,22 @@ EOT
             throw new \InvalidArgumentException('Not enough arguments.');
         }
 
-        $user = $this->userManager->findUserByUsername($username);
+        $user = $this->userManager->findUserByEmail($email);
 
         if (null === $user) {
-            throw new \InvalidArgumentException(sprintf('User identified by "%s" username does not exist.', $username));
+            throw new \InvalidArgumentException(sprintf('User identified by "%s" email does not exist.', $email));
         }
 
         if ($superAdmin) {
             $user->setSuperAdmin(true);
 
-            $output->writeln(sprintf('User "%s" has been promoted as a super administrator. This change will not apply until the user logs out and back in again.', $username));
+            $output->writeln(sprintf('User "%s" has been promoted as a super administrator. This change will not apply until the user logs out and back in again.', $email));
         } elseif (!$user->hasRole($role)) {
             $user->addRole($role);
 
-            $output->writeln(sprintf('Role "%s" has been added to user "%s". This change will not apply until the user logs out and back in again.', $role, $username));
+            $output->writeln(sprintf('Role "%s" has been added to user "%s". This change will not apply until the user logs out and back in again.', $role, $email));
         } else {
-            $output->writeln(sprintf('User "%s" did already have "%s" role.', $username, $role));
+            $output->writeln(sprintf('User "%s" did already have "%s" role.', $email, $role));
         }
 
         $this->userManager->save($user);
