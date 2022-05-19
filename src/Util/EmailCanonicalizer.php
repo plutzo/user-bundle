@@ -7,7 +7,7 @@ namespace Marlinc\UserBundle\Util;
 
 class EmailCanonicalizer
 {
-    static function canonicalize(?string $string): ?string
+    public static function canonicalize(?string $string): ?string
     {
         if (null === $string) {
             return null;
