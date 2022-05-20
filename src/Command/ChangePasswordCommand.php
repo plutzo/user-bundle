@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Marlinc\UserBundle\Command;
 
 use Marlinc\UserBundle\Entity\UserManagerInterface;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,19 +21,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @internal
  */
-final class ChangePasswordCommand extends Command
+final class ChangePasswordCommand extends abstractUserCommand
 {
     protected static $defaultName = 'marlinc:user:change-password';
     protected static $defaultDescription = 'Change the password of a user';
-
-    private UserManagerInterface $userManager;
-
-    public function __construct(UserManagerInterface $userManager)
-    {
-        parent::__construct();
-
-        $this->userManager = $userManager;
-    }
 
     protected function configure(): void
     {
@@ -56,24 +46,21 @@ EOT
             );
     }
 
+    protected function doExecute($user, $input, $output): string
+    {
+        $password = $input->getArgument('password');
+        $this->user->setPlainPassword($password);
+        $this->userManager->updatePassword($user);
+        $this->userManager->save($this->user);
+
+        return sprintf('Changed password for user "%s".', $user->getEmail());
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $email = $input->getArgument('email');
-        $password = $input->getArgument('password');
-
-        $user = $this->userManager->findUserByEmail($email);
-
-        if (null === $user) {
-            throw new \InvalidArgumentException(sprintf('User identified by "%s" email does not exist.',$email));
-        }
-
-        $user->setPlainPassword($password);
-
-        $this->userManager->updatePassword($user);
-        $this->userManager->save($user);
-
-        $output->writeln(sprintf('Changed password for user "%s".', $email));
-
+        parent::execute($input , $output);
+        $output->writeln($this->doExecute( $this->user ,$input , $output ));
         return 0;
     }
+
 }
