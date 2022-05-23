@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Command;
 
-use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @internal
  */
-final class ChangePasswordCommand extends abstractUserCommand
+final class ChangePasswordCommand extends AbstractUserCommand
 {
     protected static $defaultName = 'marlinc:user:change-password';
     protected static $defaultDescription = 'Change the password of a user';
@@ -46,12 +45,12 @@ EOT
             );
     }
 
-    protected function doExecute($user, $input, $output): string
+    protected function doExecute(object $user,InputInterface $input, OutputInterface $output): string
     {
         $password = $input->getArgument('password');
-        $this->user->setPlainPassword($password);
+        $user->setPlainPassword($password);
         $this->userManager->updatePassword($user);
-        $this->userManager->save($this->user);
+        $this->userManager->save($user);
 
         return sprintf('Changed password for user "%s".', $user->getEmail());
     }
@@ -59,7 +58,6 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input , $output);
-        $output->writeln($this->doExecute( $this->user ,$input , $output ));
         return 0;
     }
 

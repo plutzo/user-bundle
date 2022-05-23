@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Command;
 
-use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -22,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @internal
  */
-final class PromoteUserCommand extends abstractUserCommand
+final class PromoteUserCommand extends AbstractUserCommand
 {
     protected static $defaultName = 'marlinc:user:promote';
     protected static $defaultDescription = 'Promotes a user by adding a role';
@@ -48,7 +47,7 @@ EOT
             );
     }
 
-    protected function doExecute($user, $input, $output): string
+    protected function doExecute(object $user,InputInterface $input, OutputInterface $output): string
     {
         $role = $input->getArgument('role');
         $superAdmin = (true === $input->getOption('super-admin'));
@@ -75,14 +74,13 @@ EOT
         }
 
         $this->userManager->save($user);
-        
+
         return $message;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input , $output);
-        $output->writeln($this->doExecute( $this->user ,$input , $output ));
         return 0;
     }
 }

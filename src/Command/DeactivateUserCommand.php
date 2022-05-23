@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\Command;
 
-use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @internal
  */
-final class DeactivateUserCommand extends abstractUserCommand
+final class DeactivateUserCommand extends AbstractUserCommand
 {
     protected static $defaultName = 'marlinc:user:deactivate';
     protected static $defaultDescription = 'Deactivate a user';
@@ -44,9 +43,9 @@ EOT
             );
     }
 
-    protected function doExecute($user, $input, $output): string
+    protected function doExecute(object $user,InputInterface $input, OutputInterface $output): string
     {
-        $this->user->setEnabled(false);
+        $user->setEnabled(false);
         $this->userManager->save($user);
 
         return sprintf('User "%s" has been activated.', $user->getEmail());
@@ -55,7 +54,6 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input , $output);
-        $output->writeln($this->doExecute( $this->user ,$input , $output ));
         return 0;
     }
 
