@@ -8,6 +8,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class AbstractUserCommand extends Command
 {
@@ -20,13 +21,19 @@ abstract class AbstractUserCommand extends Command
         $this->userManager = $userManager;
     }
 
+    protected function configure(): void
+    {
+        $this
+            ->setDefinition([
+                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
+            ]);
+    }
+
     /**
-     * @param object $user
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return string
+     * Implement this method to run the code for the command.
+     * The return value will be displayed in the command line.
      */
-    abstract protected function doExecute(object $user,InputInterface $input,OutputInterface $output): string;
+    abstract protected function doExecute(UserInterface $user, InputInterface $input, OutputInterface $output): string;
 
     protected function Execute(InputInterface $input, OutputInterface $output): int
     {
