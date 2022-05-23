@@ -45,7 +45,8 @@ abstract class AbstractUserCommand extends Command
             throw new \InvalidArgumentException(sprintf('User identified by "%s" email does not exist.', $email));
         }
 
-        $output->writeln($this->doExecute($user, $input,$output));
+        $output->writeln($this->doExecute($user, $input, $output));
+
         return Command::SUCCESS;
     }
 
