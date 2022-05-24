@@ -55,12 +55,11 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
 
         if (isset($bundles['SonataAdminBundle'])) {
             $loader->load('admin.php');
-            $loader->load(sprintf('admin_%s.php', $config['manager_type']));
+            $loader->load('admin_orm.php');
             $loader->load('actions.php');
         }
 
-        $loader->load(sprintf('%s.php', $config['manager_type']));
-
+        $loader->load('orm.php');
         $loader->load('twig.php');
         $loader->load('commands.php');
         $loader->load('listener.php');
@@ -68,12 +67,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $loader->load('form.php');
         $loader->load('security.php');
         $loader->load('util.php');
-
-        if (true === $config['security_acl']) {
-            $loader->load('security_acl.php');
-        }
-
-        $this->checkManagerTypeToModelTypesMapping($config);
 
         $this->configureClass($config, $container);
         $this->configureMailer($config, $container);
@@ -125,19 +118,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $container->getDefinition('marlinc.user.mailer.default')
             ->replaceArgument(3, [$config['email']['address'] => $config['email']['sender_name']])
             ->replaceArgument(4, $config['email']['template']);
-    }
-
-    /**
-     * @param array<string, mixed> $config
-     */
-    private function checkManagerTypeToModelTypesMapping(array $config): void
-    {
-        $managerType = $config['manager_type'];
-
-        if (!\in_array($managerType, ['orm', 'mongodb'], true)) {
-            throw new \InvalidArgumentException(sprintf('Invalid manager type "%s".', $managerType));
-        }
-
     }
 
     /**
