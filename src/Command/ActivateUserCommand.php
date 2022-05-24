@@ -14,37 +14,23 @@ declare(strict_types=1);
 namespace Marlinc\UserBundle\Command;
 
 use Marlinc\UserBundle\Entity\UserManagerInterface;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @internal
  */
-final class ActivateUserCommand extends Command
+final class ActivateUserCommand extends AbstractUserCommand
 {
     protected static $defaultName = 'marlinc:user:activate';
     protected static $defaultDescription = 'Activate a user';
 
-    private UserManagerInterface $userManager;
-
-    public function __construct(UserManagerInterface $userManager)
-    {
-        parent::__construct();
-
-        $this->userManager = $userManager;
-    }
-
     protected function configure(): void
     {
-        \assert(null !== static::$defaultDescription);
-
+        parent::configure();
         $this
-            ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
-            ])
             ->setHelp(
                 <<<'EOT'
 The <info>%command.full_name%</info> command activates a user (so they will be able to log in):
@@ -54,22 +40,13 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function doExecute(UserInterface $user,InputInterface $input, OutputInterface $output): string
     {
-        $email = $input->getArgument('email');
-
-        $user = $this->userManager->findUserByEmail($email);
-
-        if (null === $user) {
-            throw new \InvalidArgumentException(sprintf('User identified by "%s" email does not exist.', $email));
-        }
-
         $user->setEnabled(true);
 
         $this->userManager->save($user);
 
-        $output->writeln(sprintf('User "%s" has been activated.', $email));
-
-        return 0;
+        return sprintf('User "%s" has been activated.', $user->getEmail());
     }
+
 }

@@ -14,66 +14,43 @@ declare(strict_types=1);
 namespace Marlinc\UserBundle\Command;
 
 use Marlinc\UserBundle\Entity\UserManagerInterface;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @internal
  */
-final class ChangePasswordCommand extends Command
+final class ChangePasswordCommand extends AbstractUserCommand
 {
     protected static $defaultName = 'marlinc:user:change-password';
     protected static $defaultDescription = 'Change the password of a user';
 
-    private UserManagerInterface $userManager;
-
-    public function __construct(UserManagerInterface $userManager)
-    {
-        parent::__construct();
-
-        $this->userManager = $userManager;
-    }
-
     protected function configure(): void
     {
-        \assert(null !== static::$defaultDescription);
+        parent::configure();
+        $definition = $this->getDefinition();
+        $definition->addArgument(new InputArgument('password', InputArgument::REQUIRED, 'The password'));
 
-        $this
-            ->setDescription(static::$defaultDescription)
-            ->setDefinition([
-                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
-                new InputArgument('password', InputArgument::REQUIRED, 'The password'),
-            ])
-            ->setHelp(
-                <<<'EOT'
+        $this->setHelp(
+            <<<'EOT'
 The <info>%command.full_name%</info> command changes the password of a user:
 
   <info>php %command.full_name% matthieu mypassword</info>
 
 EOT
-            );
+        );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function doExecute(UserInterface $user,InputInterface $input, OutputInterface $output): string
     {
-        $email = $input->getArgument('email');
         $password = $input->getArgument('password');
-
-        $user = $this->userManager->findUserByEmail($email);
-
-        if (null === $user) {
-            throw new \InvalidArgumentException(sprintf('User identified by "%s" email does not exist.',$email));
-        }
-
         $user->setPlainPassword($password);
-
         $this->userManager->updatePassword($user);
         $this->userManager->save($user);
 
-        $output->writeln(sprintf('Changed password for user "%s".', $email));
-
-        return 0;
+        return sprintf('Changed password for user "%s".', $user->getEmail());
     }
+    
 }
