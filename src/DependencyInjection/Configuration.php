@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Marlinc\UserBundle\DependencyInjection;
 
 use Marlinc\UserBundle\Admin\UserAdmin;
-use Marlinc\UserBundle\Entity\User;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -40,7 +39,6 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->booleanNode('security_acl')->defaultFalse()->end()
                 ->arrayNode('impersonating')
                     ->canBeEnabled()
                     ->children()
@@ -52,18 +50,10 @@ final class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->scalarNode('manager_type')
-                    ->cannotBeEmpty()
-                    ->defaultValue('orm')
-                    ->validate()
-                        ->ifNotInArray($supportedManagerTypes)
-                        ->thenInvalid('The manager type %s is not supported. Please choose one of '.json_encode($supportedManagerTypes))
-                    ->end()
-                ->end()
                 ->arrayNode('class')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('user')->cannotBeEmpty()->defaultValue(User::class)->end()
+                        ->scalarNode('user')->cannotBeEmpty()->end()
                     ->end()
                 ->end()
                 ->arrayNode('admin')
