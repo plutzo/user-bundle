@@ -22,6 +22,20 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
+        ->set('marlinc.user.admin.user')
+            ->tag('sonata.admin', [
+                'model_class' => param('marlinc.user.user.class'),
+                'controller' => param('marlinc.user.admin.user.controller'),
+                'manager_type' => 'orm',
+                'group' => 'marlinc_user',
+                'label' => 'users',
+                'translation_domain' => 'MarlincUserBundle',
+                'label_translator_strategy' => 'sonata.admin.label.strategy.underscore',
+                'icon' => '<i class=\'fa fa-users\'></i>',
+            ])
+            ->args([
+                service('marlinc.user.manager.user'),
+            ])
 
         ->set('marlinc.user.matrix_roles_builder', MatrixRolesBuilder::class)
             ->args([

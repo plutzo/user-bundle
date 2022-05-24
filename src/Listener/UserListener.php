@@ -2,19 +2,10 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Sonata Project package.
- *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Marlinc\UserBundle\Listener;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata as ORMClassMetadata;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Persistence\ObjectManager;
@@ -26,12 +17,9 @@ use Marlinc\UserBundle\Entity\UserManagerInterface;
  */
 final class UserListener implements EventSubscriber
 {
-
     private UserManagerInterface $userManager;
 
-    public function __construct(
-        UserManagerInterface $userManager
-    ) {
+    public function __construct(UserManagerInterface $userManager) {
         $this->userManager = $userManager;
     }
 
@@ -75,10 +63,10 @@ final class UserListener implements EventSubscriber
     {
         $meta = $om->getClassMetadata(\get_class($user));
 
-        if ($om instanceof EntityManager) {
+        if ($om instanceof EntityManagerInterface) {
             \assert($meta instanceof ORMClassMetadata);
 
             $om->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $user);
-        } 
+        }
     }
 }

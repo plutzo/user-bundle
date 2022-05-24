@@ -55,7 +55,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
 
         if (isset($bundles['SonataAdminBundle'])) {
             $loader->load('admin.php');
-            $loader->load('admin_orm.php');
             $loader->load('actions.php');
         }
 
