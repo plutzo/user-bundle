@@ -30,20 +30,20 @@ final class PromoteUserCommand extends AbstractUserCommand
 
     protected function configure(): void
     {
-        $this
-            ->setDefinition([
-                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
-                new InputArgument('role', InputArgument::OPTIONAL, 'The role'),
-                new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Instead specifying role, use this to quickly add the super administrator role'),
-            ])
-            ->setHelp(
-                <<<'EOT'
+        parent::configure();
+        $definition = $this->getDefinition();
+        $definition->addArgument(new InputArgument('role', InputArgument::OPTIONAL, 'The role'));
+        $definition->addOption(new InputOption('super-admin', null, InputOption::VALUE_NONE,
+            'Instead specifying role, use this to quickly add the super administrator role'));
+
+        $this->setHelp(
+            <<<'EOT'
 The <info>%command.full_name%</info> command promotes a user by adding a role
 
   <info>php %command.full_name% matthieu ROLE_CUSTOM</info>
   <info>php %command.full_name% --super-admin matthieu</info>
 EOT
-            );
+        );
     }
 
     protected function doExecute(UserInterface $user,InputInterface $input, OutputInterface $output): string

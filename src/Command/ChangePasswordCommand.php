@@ -29,19 +29,18 @@ final class ChangePasswordCommand extends AbstractUserCommand
 
     protected function configure(): void
     {
-        $this
-            ->setDefinition([
-                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
-                new InputArgument('password', InputArgument::REQUIRED, 'The password'),
-            ])
-            ->setHelp(
-                <<<'EOT'
+        parent::configure();
+        $definition = $this->getDefinition();
+        $definition->addArgument(new InputArgument('password', InputArgument::REQUIRED, 'The password'));
+
+        $this->setHelp(
+            <<<'EOT'
 The <info>%command.full_name%</info> command changes the password of a user:
 
   <info>php %command.full_name% matthieu mypassword</info>
 
 EOT
-            );
+        );
     }
 
     protected function doExecute(UserInterface $user,InputInterface $input, OutputInterface $output): string
