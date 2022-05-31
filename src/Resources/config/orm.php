@@ -13,7 +13,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 param('marlinc.user.user.class'),
                 service('doctrine'),
-                service('marlinc.user.util.canonical_fields_updater'),
                 service('security.password_hasher'),
             ]);
 };
