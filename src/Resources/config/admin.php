@@ -24,8 +24,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
         ->set('marlinc.user.admin.user')
             ->tag('sonata.admin', [
-                'model_class' => (string)param('marlinc.user.user.class'),
-                'controller' => (string)param('marlinc.user.admin.user.controller'),
+                'model_class' => (string) param('marlinc.user.user.class'),
+                'controller' => (string) param('marlinc.user.admin.user.controller'),
                 'manager_type' => 'orm',
                 'group' => 'marlinc_user',
                 'label' => 'users',

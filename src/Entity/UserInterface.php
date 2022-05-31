@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-interface UserInterface extends  EquatableInterface,PasswordAuthenticatedUserInterface ,SymfonyUserInterface
+interface UserInterface extends PasswordAuthenticatedUserInterface, SymfonyUserInterface, EquatableInterface
 {
     public const ROLE_DEFAULT = 'ROLE_USER';
     public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
