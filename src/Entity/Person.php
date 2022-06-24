@@ -209,6 +209,14 @@ class Person extends EntityReference
      * @var string|null
      *
      * @Groups({"person_read", "person_write"})
+     * @ORM\Column(name="birthPlace", type="string", length=190, nullable=true)
+     */
+    private $birthPlace;
+
+    /**
+     * @var string|null
+     *
+     * @Groups({"person_read", "person_write"})
      * @ORM\Column(name="driverLicenseNr", type="string", length=190, nullable=true)
      */
     private $driverLicenseNr;
@@ -669,10 +677,12 @@ class Person extends EntityReference
 
     /**
      * @param string|null $company
+     * @return Person
      */
-    public function setCompany(?string $company): void
+    public function setCompany(?string $company): self
     {
         $this->company = $company;
+        return $this;
     }
 
     /**
@@ -750,6 +760,24 @@ class Person extends EntityReference
     public function setVaccinationStatus(?string $vaccinationStatus): self
     {
         $this->vaccinationStatus = $vaccinationStatus;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBirthPlace(): ?string
+    {
+        return $this->birthPlace;
+    }
+
+    /**
+     * @param string|null $birthPlace
+     * @return Person
+     */
+    public function setBirthPlace(?string $birthPlace): self
+    {
+        $this->birthPlace = $birthPlace;
         return $this;
     }
 }
