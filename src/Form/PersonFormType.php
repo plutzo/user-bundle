@@ -178,6 +178,13 @@ class PersonFormType extends AbstractType
             );
         }
 
+        if (in_array('birthPlace', $options['enabled_fields'])) {
+            $builder->add('birthPlace', null, [
+                    'required' => in_array('birthPlace', $options['required_fields'])
+                ]
+            );
+        }
+
         if (in_array('customerId', $options['enabled_fields'])) {
             $builder->add('customerId', null, [
                     'required' => in_array('customerId', $options['required_fields'])
