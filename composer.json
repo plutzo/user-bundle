@@ -27,7 +27,7 @@
         "php": ">=7.4",
         "doctrine/collections": "^1.6",
         "doctrine/common": "^3.1",
-        "doctrine/persistence": "^2.1",
+        "doctrine/persistence": "^3.1.0",
         "sonata-project/doctrine-extensions": "^1.13",
         "sonata-project/form-extensions": "^1.4",
         "sonata-project/twig-extensions": "^1.3",
