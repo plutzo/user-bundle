@@ -35,10 +35,6 @@ class BaseUser implements UserInterface
 
     protected ?\DateTimeInterface $lastLogin = null;
 
-    protected ?string $confirmationToken = null;
-
-    protected ?\DateTimeInterface $passwordRequestedAt = null;
-
     /**
      * @var string[]
      */
@@ -139,11 +135,6 @@ class BaseUser implements UserInterface
         return $this->lastLogin;
     }
 
-    public function getConfirmationToken(): ?string
-    {
-        return $this->confirmationToken;
-    }
-
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -209,28 +200,6 @@ class BaseUser implements UserInterface
     public function setLastLogin(?\DateTimeInterface $time = null): void
     {
         $this->lastLogin = $time;
-    }
-
-    public function setConfirmationToken(?string $confirmationToken): void
-    {
-        $this->confirmationToken = $confirmationToken;
-    }
-
-    public function setPasswordRequestedAt(?\DateTimeInterface $date = null): void
-    {
-        $this->passwordRequestedAt = $date;
-    }
-
-    public function getPasswordRequestedAt(): ?\DateTimeInterface
-    {
-        return $this->passwordRequestedAt;
-    }
-
-    public function isPasswordRequestNonExpired(int $ttl): bool
-    {
-        $passwordRequestedAt = $this->getPasswordRequestedAt();
-
-        return null !== $passwordRequestedAt && $passwordRequestedAt->getTimestamp() + $ttl > time();
     }
 
     public function setRoles(array $roles): void

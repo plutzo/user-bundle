@@ -43,16 +43,6 @@ interface UserInterface extends PasswordAuthenticatedUserInterface, SymfonyUserI
 
     public function setSuperAdmin(bool $boolean): void;
 
-    public function getConfirmationToken(): ?string;
-
-    public function setConfirmationToken(?string $confirmationToken): void;
-
-    public function getPasswordRequestedAt(): ?\DateTimeInterface;
-
-    public function setPasswordRequestedAt(?\DateTimeInterface $date = null): void;
-
-    public function isPasswordRequestNonExpired(int $ttl): bool;
-
     public function setLastLogin(?\DateTimeInterface $time = null): void;
 
     public function hasRole(string $role): bool;

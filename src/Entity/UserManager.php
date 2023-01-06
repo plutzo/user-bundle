@@ -68,8 +68,4 @@ final class UserManager extends BaseEntityManager implements UserManagerInterfac
         ]);
     }
 
-    public function findUserByConfirmationToken(string $token): ?UserInterface
-    {
-        return $this->findOneBy(['confirmationToken' => $token]);
-    }
 }

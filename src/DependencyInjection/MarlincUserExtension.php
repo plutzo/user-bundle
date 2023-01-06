@@ -105,15 +105,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
      */
     private function configureResetting(array $config, ContainerBuilder $container): void
     {
-        $container->getDefinition('marlinc.user.action.request')
-            ->replaceArgument(9, $config['retry_ttl']);
-
-        $container->getDefinition('marlinc.user.action.check_email')
-            ->replaceArgument(4, $config['token_ttl']);
-
-        $container->getDefinition('marlinc.user.action.reset')
-            ->replaceArgument(8, $config['token_ttl']);
-
         $container->getDefinition('marlinc.user.mailer.default')
             ->replaceArgument(3, [$config['email']['address'] => $config['email']['sender_name']])
             ->replaceArgument(4, $config['email']['template']);

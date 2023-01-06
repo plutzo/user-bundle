@@ -23,6 +23,4 @@ interface UserManagerInterface extends ManagerInterface
     public function updatePassword(UserInterface $user): void;
 
     public function findUserByEmail(string $email): ?UserInterface;
-
-    public function findUserByConfirmationToken(string $token): ?UserInterface;
 }
