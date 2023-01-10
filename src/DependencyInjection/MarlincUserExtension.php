@@ -57,7 +57,7 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
             $loader->load('admin.php');
             $loader->load('actions.php');
         }
-
+        $loader->load('reset_password.php');
         $loader->load('orm.php');
         $loader->load('twig.php');
         $loader->load('commands.php');
