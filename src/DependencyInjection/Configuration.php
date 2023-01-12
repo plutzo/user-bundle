@@ -75,9 +75,59 @@ final class Configuration implements ConfigurationInterface
                         ->scalarNode('default_avatar')->cannotBeEmpty()->defaultValue('bundles/MarlincUser/default_avatar.png')->end()
                     ->end()
                 ->end()
+                ->arrayNode('reset_password')
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('email')->cannotBeEmpty()->end()
+                    ->end()
+                    ->children()
+                    ->arrayNode('templates')
+                    ->addDefaultsIfNotSet()
+                        ->children()
+                        ->scalarNode('check_email')->cannotBeEmpty()->defaultValue('@MarlincUser/reset_password/check_email.html.twig')->end()
+                        ->scalarNode('email')->cannotBeEmpty()->defaultValue('@MarlincUser/reset_password/email.html.twig')->end()
+                        ->scalarNode('request')->cannotBeEmpty()->defaultValue('@MarlincUser/reset_password/request.html.twig')->end()
+                        ->scalarNode('reset')->cannotBeEmpty()->defaultValue('@MarlincUser/reset_password/reset.html.twig')->end()
+                        ->scalarNode('mail_reset_password_html')->cannotBeEmpty()->defaultValue('@MarlincUser/reset_password/mails/mail_reset_password.html.twig')->end()
+                        ->scalarNode('mail_reset_password_text')->cannotBeEmpty()->defaultValue('@MarlincUser/reset_password/mails/mail_reset_password.text.twig')->end()
+                      ->end()
+                    ->end()
+                    ->end()
+                ->end()
                 ->scalarNode('mailer')->cannotBeEmpty()->defaultValue('marlinc.user.mailer.default')->info('Custom mailer used to send reset password emails')->end()
             ->end();
+
+        $this->addResettingSection($rootNode);
+
         return $treeBuilder;
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference, PossiblyUndefinedMethod
+     *
+     * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
+     */
+    private function addResettingSection(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('resetting')
+                    ->isRequired()
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->integerNode('retry_ttl')->defaultValue(7200)->end()
+                        ->integerNode('token_ttl')->defaultValue(86400)->end()
+                        ->arrayNode('email')
+                            ->isRequired()
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('template')->cannotBeEmpty()->defaultValue('@MarlincUser/Admin/Security/Resetting/email.html.twig')->end()
+                                ->scalarNode('address')->isRequired()->cannotBeEmpty()->end()
+                                ->scalarNode('sender_name')->isRequired()->cannotBeEmpty()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
 }

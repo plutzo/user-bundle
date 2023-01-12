@@ -44,7 +44,7 @@ class ResetPasswordController extends AbstractController
             );
         }
 
-        return $this->render('security/request.html.twig', [
+        return $this->render($this->container->getParameter('reset_password')['templates']['request'], [
             'requestForm' => $form->createView(),
         ]);
     }
@@ -57,7 +57,7 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
-        return $this->render('security/check_email.html.twig', [
+        return $this->render($this->container->getParameter('reset_password')['templates']['check_email'], [
             'resetToken' => $resetToken,
         ]);
     }
@@ -85,7 +85,7 @@ class ResetPasswordController extends AbstractController
                 $e->getReason()
             ));
 
-            return $this->redirectToRoute('app_forgot_password_request');
+            return $this->redirectToRoute('marlinc_user_forgot_password_request');
         }
 
         // The token is valid; allow the user to change their password.
@@ -111,7 +111,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('security/reset.html.twig', [
+        return $this->render($this->container->getParameter('reset_password')['templates']['reset'], [
             'resetForm' => $form->createView(),
         ]);
     }
@@ -143,10 +143,10 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('kontakt@abc-bayer.de', 'Bayer Apotheken Bonus Chance'))
+            ->from(new Address($this->container->getParameter('reset_password')['email'], 'Bayer Apotheken Bonus Chance'))
             ->to($user->getEmail())
             ->subject('Zurücksetzen Ihres Passworts')
-            ->htmlTemplate('mails/reset_password.html.twig')
+            ->htmlTemplate($this->container->getParameter('reset_password')['templates']['mail_reset_password_html'])
             ->context([
                 'resetToken' => $resetToken,
                 'user' => $user

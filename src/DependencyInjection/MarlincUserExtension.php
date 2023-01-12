@@ -36,6 +36,12 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
             ]);
         }
 
+        if (isset($bundles['SymfonyCastsResetPasswordBundle'])) {
+            $container->prependExtensionConfig('symfonycasts_reset_password', [
+                'request_password_repository' => 'marlinc.user.reset.password.request.repository'
+            ]);
+        }
+
         if ($container->hasExtension('twig')) {
             // add custom form widgets
             $container->prependExtensionConfig('twig', ['form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']]);
@@ -66,10 +72,15 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $loader->load('form.php');
         $loader->load('security.php');
         $loader->load('util.php');
+        $loader->load('service.php');
+
 
         $this->configureClass($config, $container);
         $this->configureMailer($config, $container);
         $this->configureDefaultAvatar($config['profile'], $container);
+        $container->setParameter('reset_password',$config['reset_password']);
+
+
         if (isset($bundles['SonataAdminBundle'])) {
             $this->configureAdmin($config['admin'], $container);
             $this->configureResetting($config['resetting'], $container);
