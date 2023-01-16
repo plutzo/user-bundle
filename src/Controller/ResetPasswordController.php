@@ -6,6 +6,7 @@ use App\Entity\User;
 use Marlinc\UserBundle\Form\Type\ChangePasswordFormType;
 use Marlinc\UserBundle\Form\Type\ResetPasswordRequestFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,11 +26,14 @@ class ResetPasswordController extends AbstractController
 
     private $resetPasswordHelper;
     private $entityManager;
+    private TemplateRegistryInterface $templateRegistry;
 
-    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, EntityManagerInterface $entityManager)
+    public function __construct( TemplateRegistryInterface $templateRegistry,
+         ResetPasswordHelperInterface $resetPasswordHelper, EntityManagerInterface $entityManager)
     {
         $this->resetPasswordHelper = $resetPasswordHelper;
         $this->entityManager = $entityManager;
+        $this->templateRegistry = $templateRegistry;
     }
     
     public function request(Request $request, MailerInterface $mailer): Response
@@ -44,8 +48,9 @@ class ResetPasswordController extends AbstractController
             );
         }
 
-        return $this->render($this->container->getParameter('reset_password')['templates']['request'], [
-            'requestForm' => $form->createView(),
+        return $this->render('@MarlincUser/Admin/Security/Resetting/request.html.twig', [
+            'form' => $form->createView(),
+            'base_template' => $this->templateRegistry->getTemplate('layout'),
         ]);
     }
 
@@ -57,12 +62,13 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
-        return $this->render($this->container->getParameter('reset_password')['templates']['check_email'], [
+        return $this->render('@MarlincUser/Admin/Security/Resetting/checkEmail.html.twig', [
             'resetToken' => $resetToken,
+            'base_template' => $this->templateRegistry->getTemplate('layout'),
         ]);
     }
 
-    public function reset(Request $request, UserPasswordHasherInterface $userPasswordHasher, string $token = null): Response
+    public function reset(Request $request, UserPasswordHasherInterface $userPasswordHasher,string $token = null ): Response
     {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
@@ -73,6 +79,7 @@ class ResetPasswordController extends AbstractController
         }
 
         $token = $this->getTokenFromSession();
+
         if (null === $token) {
             throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
         }
@@ -111,8 +118,9 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render($this->container->getParameter('reset_password')['templates']['reset'], [
-            'resetForm' => $form->createView(),
+        return $this->render('@MarlincUser/Admin/Security/Resetting/reset.html.twig', [
+            'form' => $form->createView(),
+            'base_template' => $this->templateRegistry->getTemplate('layout'),
         ]);
     }
 
@@ -143,10 +151,10 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address($this->container->getParameter('reset_password')['email'], 'Bayer Apotheken Bonus Chance'))
+            ->from(new Address('kontakt@abc-bayer.de', 'Bayer Apotheken Bonus Chance')) // fix the address
             ->to($user->getEmail())
             ->subject('Zurücksetzen Ihres Passworts')
-            ->htmlTemplate($this->container->getParameter('reset_password')['templates']['mail_reset_password_html'])
+            ->htmlTemplate('@MarlincUser/Admin/Security/Resetting/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
                 'user' => $user

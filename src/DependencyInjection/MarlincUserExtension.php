@@ -78,7 +78,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $this->configureClass($config, $container);
         $this->configureMailer($config, $container);
         $this->configureDefaultAvatar($config['profile'], $container);
-        $container->setParameter('reset_password',$config['reset_password']);
 
 
         if (isset($bundles['SonataAdminBundle'])) {
