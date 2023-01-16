@@ -27,12 +27,20 @@ class ResetPasswordController extends AbstractController
     private $resetPasswordHelper;
     private $entityManager;
     private TemplateRegistryInterface $templateRegistry;
+    private array $fromEmail;
+    private string $templateEmail;
 
-    public function __construct( TemplateRegistryInterface $templateRegistry,
-         ResetPasswordHelperInterface $resetPasswordHelper, EntityManagerInterface $entityManager)
+    public function __construct( 
+        TemplateRegistryInterface $templateRegistry,
+        ResetPasswordHelperInterface $resetPasswordHelper,
+        EntityManagerInterface $entityManager ,
+        array $fromEmail ,
+        string $templateEmail )
     {
         $this->resetPasswordHelper = $resetPasswordHelper;
         $this->entityManager = $entityManager;
+        $this->fromEmail = $fromEmail;
+        $this->templateEmail = $templateEmail;
         $this->templateRegistry = $templateRegistry;
     }
     
@@ -150,11 +158,14 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('marlinc_user_check_email');
         }
 
+        $fromName = current($this->fromEmail);
+        $fromAddress = current(array_keys($this->fromEmail));
+
         $email = (new TemplatedEmail())
-            ->from(new Address('kontakt@abc-bayer.de', 'Bayer Apotheken Bonus Chance')) // fix the address
+            ->from(new Address($fromAddress,$fromName))
             ->to($user->getEmail())
             ->subject('Zurücksetzen Ihres Passworts')
-            ->htmlTemplate('@MarlincUser/Admin/Security/Resetting/email.html.twig')
+            ->htmlTemplate($this->templateEmail)
             ->context([
                 'resetToken' => $resetToken,
                 'user' => $user

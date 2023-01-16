@@ -41,7 +41,7 @@ file that was distributed with this source code.
         <div class="login-box-body">
             {% block marlinc_user_reset_form %}
                 <p class="login-box-msg">{{ 'resetting.reset.submit'|trans({}, 'MarlincUserBundle') }}</p>
-                {{ form_start(form, { 'action': path('marlinc_user_admin_resetting_reset', {'token': token}) }) }}
+                {{ form_start(form, {'attr' : {'class' : 'form'}}) }}
                     <div class="form-group">
                         {{ form_widget(form.plainPassword.first, {'attr': {
                             'class': 'form-control',

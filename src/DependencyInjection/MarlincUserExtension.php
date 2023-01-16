@@ -118,6 +118,10 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $container->getDefinition('marlinc.user.mailer.default')
             ->replaceArgument(3, [$config['email']['address'] => $config['email']['sender_name']])
             ->replaceArgument(4, $config['email']['template']);
+
+        $container->getDefinition('marlinc.user.reset.password')
+            ->replaceArgument(3, [$config['email']['address'] => $config['email']['sender_name']])
+            ->replaceArgument(4, $config['email']['template']);
     }
 
     /**
