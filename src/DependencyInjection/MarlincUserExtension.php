@@ -36,12 +36,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
             ]);
         }
 
-        if (isset($bundles['SymfonyCastsResetPasswordBundle'])) {
-            $container->prependExtensionConfig('symfonycasts_reset_password', [
-                'request_password_repository' => 'marlinc.user.reset.password.request.repository'
-            ]);
-        }
-
         if ($container->hasExtension('twig')) {
             // add custom form widgets
             $container->prependExtensionConfig('twig', ['form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']]);
@@ -68,11 +62,9 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $loader->load('twig.php');
         $loader->load('commands.php');
         $loader->load('listener.php');
-        $loader->load('mailer.php');
         $loader->load('form.php');
         $loader->load('security.php');
         $loader->load('util.php');
-        $loader->load('service.php');
 
 
         $this->configureClass($config, $container);
@@ -115,10 +107,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
      */
     private function configureResetting(array $config, ContainerBuilder $container): void
     {
-        $container->getDefinition('marlinc.user.mailer.default')
-            ->replaceArgument(3, [$config['email']['address'] => $config['email']['sender_name']])
-            ->replaceArgument(4, $config['email']['template']);
-
         $container->getDefinition('marlinc.user.reset.password')
             ->replaceArgument(3, [$config['email']['address'] => $config['email']['sender_name']])
             ->replaceArgument(4, $config['email']['template']);

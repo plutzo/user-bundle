@@ -18,6 +18,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ])
         ->tag('controller.service_arguments')
         ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
-        ->public()
     ;
 };
