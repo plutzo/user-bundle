@@ -24,8 +24,8 @@ class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
 
-    private $resetPasswordHelper;
-    private $entityManager;
+    private TemplateRegistryInterface $resetPasswordHelper;
+    private EntityManagerInterface $entityManager;
     private TemplateRegistryInterface $templateRegistry;
     private array $fromEmail;
     private string $templateEmail;
