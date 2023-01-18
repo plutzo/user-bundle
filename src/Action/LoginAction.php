@@ -86,7 +86,7 @@ final class LoginAction
             'csrf_token' => $csrfToken,
             'error' => $this->authenticationUtils->getLastAuthenticationError(),
             'last_username' => $this->authenticationUtils->getLastUsername(),
-            'reset_route' => $this->urlGenerator->generate('marlinc_user_admin_resetting_request'),
+            'reset_route' => $this->urlGenerator->generate('marlinc_user_forgot_password_request'),
         ]));
     }
 

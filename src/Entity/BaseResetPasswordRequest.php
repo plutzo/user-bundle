@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;
 
-class BaseResetPasswordRequest implements ResetPasswordRequestInterface
+abstract class BaseResetPasswordRequest implements ResetPasswordRequestInterface
 {
     use ResetPasswordRequestTrait;
 
@@ -27,4 +27,6 @@ class BaseResetPasswordRequest implements ResetPasswordRequestInterface
     {
         return $this->id;
     }
+
+    abstract public function getUser(): object;
 }
