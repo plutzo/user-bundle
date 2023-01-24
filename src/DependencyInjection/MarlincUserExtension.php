@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace Marlinc\UserBundle\DependencyInjection;
 
+use Marlinc\UserBundle\Action\RequestPasswordResetAction;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -49,7 +50,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
             $loader->load('admin.php');
             $loader->load('actions.php');
         }
-        $loader->load('reset_password.php');
         $loader->load('orm.php');
         $loader->load('twig.php');
         $loader->load('commands.php');
@@ -99,9 +99,9 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
      */
     private function configureResetting(array $config, ContainerBuilder $container): void
     {
-        $container->getDefinition('marlinc.user.reset.password')
-            ->replaceArgument(3, [$config['email']['address'] => $config['email']['sender_name']])
-            ->replaceArgument(4, $config['email']['template']);
+        $container->getDefinition(RequestPasswordResetAction::class)
+            ->replaceArgument(9, [$config['email']['address'] => $config['email']['sender_name']])
+            ->replaceArgument(10, $config['email']['template']);
     }
 
     /**

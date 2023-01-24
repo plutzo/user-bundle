@@ -40,8 +40,8 @@
                 {% endblock %}
                 <p class="login-box-msg">{{ 'title_user_authentication'|trans({}, 'MarlincUserBundle') }}</p>
 
-                <form action="{{ path("marlinc_user_admin_security_check") }}" method="post" role="form">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                <form action="{{ path("marlinc_user.admin.login") }}" method="post" role="form">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
                     <div class="form-group has-feedback">
                         <input class="form-control"

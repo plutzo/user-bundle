@@ -3,7 +3,7 @@
 {% block user_block %}
     {% if app.user %}
         {% set _bg_class = 'bg-light-blue' %}
-        {% set _logout_uri = url('marlinc_user_admin_security_logout') %}
+        {% set _logout_uri = url('marlinc_user.admin.logout') %}
         {% set _logout_text = 'user_block_logout'|trans({}, 'MarlincUserBundle') %}
 
         {% if is_granted('ROLE_PREVIOUS_ADMIN') and marlinc_user.isImpersonatingEnabled %}

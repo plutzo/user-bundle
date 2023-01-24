@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <routes xmlns="http://symfony.com/schema/routing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-    <route id="marlinc_user_forgot_password_request" path="/" controller="marlinc.user.reset.password:request" />
-    <route id="marlinc_user_check_email" path="/check-email" controller="marlinc.user.reset.password:checkEmail" />
-    <route id="marlinc_user_reset_password" path="/reset/{token?}" controller="marlinc.user.reset.password:reset" />
+    <route id="marlinc_user.admin.forgot_password_request" path="/" controller="Marlinc\UserBundle\Action\RequestPasswordResetAction" />
+    <route id="marlinc_user.admin.check_email" path="/check-email" controller="Marlinc\UserBundle\Action\CheckEmailAction" />
+    <route id="marlinc_user.admin.reset_password" path="/reset/{token?}" controller="Marlinc\UserBundle\Action\ResetPasswordAction" />
 </routes>

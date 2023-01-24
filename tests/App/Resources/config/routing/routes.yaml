@@ -8,5 +8,5 @@ _sonata_admin:
     prefix: /admin
 
 admin_security:
-    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
+    resource: '@MarlincUserBundle/Resources/config/routing/admin_security.xml'
 

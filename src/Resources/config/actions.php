@@ -3,19 +3,15 @@
 declare(strict_types=1);
 
 use Marlinc\UserBundle\Action\CheckEmailAction;
-use Marlinc\UserBundle\Action\CheckLoginAction;
 use Marlinc\UserBundle\Action\LoginAction;
-use Marlinc\UserBundle\Action\LogoutAction;
-use Marlinc\UserBundle\Action\RequestAction;
-use Marlinc\UserBundle\Action\ResetAction;
+use Marlinc\UserBundle\Action\RequestPasswordResetAction;
+use Marlinc\UserBundle\Action\ResetPasswordAction;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
-        ->set('marlinc.user.action.login', LoginAction::class)
-            ->public()
+        ->set(LoginAction::class)
             ->args([
                 service('twig'),
                 service('router'),
@@ -23,13 +19,35 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 service('sonata.admin.pool'),
                 service('sonata.admin.global_template_registry'),
                 service('security.token_storage'),
-                service('translator'),
-                (service('security.csrf.token_manager'))->nullOnInvalid(),
+                service('translator')
             ])
-
-        ->set('marlinc.user.action.check_login', CheckLoginAction::class)
-            ->public()
-
-        ->set('marlinc.user.action.logout', LogoutAction::class)
-            ->public();
+        ->set(RequestPasswordResetAction::class)
+            ->args([
+                service('twig'),
+                service('mailer.mailer'),
+                service('security.http_utils'),
+                service('form.factory'),
+                service('sonata.admin.global_template_registry'),
+                service('symfonycasts.reset_password.helper'),
+                service('marlinc.user.manager.user'),
+                service('translator'),
+                [],
+                ''
+            ])
+        ->set(CheckEmailAction::class)
+            ->args([
+                service('twig'),
+                service('sonata.admin.global_template_registry'),
+                service('symfonycasts.reset_password.helper')
+            ])
+        ->set(ResetPasswordAction::class)
+            ->args([
+                service('twig'),
+                service('security.http_utils'),
+                service('form.factory'),
+                service('sonata.admin.global_template_registry'),
+                service('symfonycasts.reset_password.helper'),
+                service('marlinc.user.manager.user')
+            ])
+    ;
 };
