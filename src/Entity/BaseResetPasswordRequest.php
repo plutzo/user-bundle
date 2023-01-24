@@ -12,21 +12,14 @@ abstract class BaseResetPasswordRequest implements ResetPasswordRequestInterface
     use ResetPasswordRequestTrait;
 
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @var int|string|null
      */
-    private $id;
+    protected $id;
 
     public function __construct( \DateTimeInterface $expiresAt, string $selector, string $hashedToken)
     {
         $this->initialize($expiresAt, $selector, $hashedToken);
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    abstract public function getUser(): object;
+    abstract public function getUser(): UserInterface;
 }
