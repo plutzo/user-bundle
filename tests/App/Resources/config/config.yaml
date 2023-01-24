@@ -53,8 +53,8 @@ doctrine:
         entity_managers:
             default:
                 mappings:
-                    SonataUserBundle: null
-                    SonataUserTest:
+                    MarlincUserBundle: null
+                    MarlincUserTest:
                         type: annotation
                         dir: '%kernel.project_dir%/Entity'
                         is_bundle: false
@@ -66,4 +66,4 @@ sonata_user:
     resetting:
         email:
             address: 'sonatauser@example.com'
-            sender_name: 'SonataUserBundle'
+            sender_name: 'MarlincUserBundle'

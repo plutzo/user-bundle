@@ -1,6 +1,6 @@
 {
     "name": "marlinc/user-bundle",
-    "description": "Symfony SonataUserBundle",
+    "description": "Symfony MarlincUserBundle",
     "license": "MIT",
     "type": "symfony-bundle",
     "keywords": [
@@ -9,13 +9,12 @@
     ],
     "authors": [
         {
-            "name": "Thomas Rabaix",
-            "email": "thomas.rabaix@sonata-project.org",
-            "homepage": "http://sonata-project.org"
+            "name": "Elias",
+            "email": "elias@keen-on.de"
         },
         {
-            "name": "Sonata Community",
-            "homepage": "https://github.com/sonata-project/SonataUserBundle/contributors"
+            "name": "Majid",
+            "email": "majid@keen-on.de"
         }
     ],
     "homepage": "https://marlinc.com",

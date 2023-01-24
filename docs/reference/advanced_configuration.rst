@@ -26,7 +26,7 @@ Full configuration options:
             user:
                 class: Marlinc\UserBundle\Admin\Entity\UserAdmin
                 controller: '%sonata.admin.configuration.default_controller%'
-                translation: SonataUserBundle
+                translation: MarlincUserBundle
 
         profile:
             default_avatar: bundles/sonatauser/default_avatar.png # Default avatar displayed if the user doesn't have one
@@ -35,6 +35,6 @@ Full configuration options:
 
         resetting: # Reset password configuration (must be configured)
             email:
-                template: '@SonataUser/Admin/Security/Resetting/email.html.twig'
+                template: '@MarlincUser/Admin/Security/Resetting/email.html.twig'
                 address: ~
                 sender_name: ~

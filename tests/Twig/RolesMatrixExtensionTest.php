@@ -2,14 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Sonata Project package.
- *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Marlinc\UserBundle\Tests\Twig;
 
@@ -69,7 +61,7 @@ final class RolesMatrixExtensionTest extends TestCase
         $this->environment
             ->expects(static::once())
             ->method('render')
-            ->with('@SonataUser/Form/roles_matrix_list.html.twig', ['roles' => []])
+            ->with('@MarlincUser/Form/roles_matrix_list.html.twig', ['roles' => []])
             ->willReturn('');
 
         $rolesMatrixExtension = new RolesMatrixExtension($this->rolesBuilder);
@@ -100,7 +92,7 @@ final class RolesMatrixExtensionTest extends TestCase
         $this->environment
             ->expects(static::once())
             ->method('render')
-            ->with('@SonataUser/Form/roles_matrix_list.html.twig', [
+            ->with('@MarlincUser/Form/roles_matrix_list.html.twig', [
                 'roles' => [
                     'SUPER_TEST_ROLE' => [
                         'role' => 'SUPER_TEST_ROLE',
@@ -140,7 +132,7 @@ final class RolesMatrixExtensionTest extends TestCase
         $this->environment
             ->expects(static::once())
             ->method('render')
-            ->with('@SonataUser/Form/roles_matrix_list.html.twig', [
+            ->with('@MarlincUser/Form/roles_matrix_list.html.twig', [
                 'roles' => [
                     'SUPER_TEST_ROLE' => [
                         'role' => 'SUPER_TEST_ROLE',
@@ -182,7 +174,7 @@ final class RolesMatrixExtensionTest extends TestCase
         $this->environment
             ->expects(static::once())
             ->method('render')
-            ->with('@SonataUser/Form/roles_matrix.html.twig', [
+            ->with('@MarlincUser/Form/roles_matrix.html.twig', [
                 'grouped_roles' => [],
                 'permission_labels' => ['EDIT', 'CREATE'],
             ])
@@ -224,7 +216,7 @@ final class RolesMatrixExtensionTest extends TestCase
         $this->environment
             ->expects(static::once())
             ->method('render')
-            ->with('@SonataUser/Form/roles_matrix.html.twig', [
+            ->with('@MarlincUser/Form/roles_matrix.html.twig', [
                 'grouped_roles' => [
                     'fooadmin' => [
                         'BASE_ROLE_FOO_EDIT' => [
@@ -277,7 +269,7 @@ final class RolesMatrixExtensionTest extends TestCase
         $this->environment
             ->expects(static::once())
             ->method('render')
-            ->with('@SonataUser/Form/roles_matrix.html.twig', [
+            ->with('@MarlincUser/Form/roles_matrix.html.twig', [
                 'grouped_roles' => [
                     'fooadmin' => [
                         'BASE_ROLE_FOO_%s' => [

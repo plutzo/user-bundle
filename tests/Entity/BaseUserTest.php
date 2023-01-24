@@ -2,14 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Sonata Project package.
- *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Marlinc\UserBundle\Tests\Entity;
 
@@ -87,13 +79,13 @@ final class BaseUserTest extends TestCase
     {
         // Given
         $user = new BaseUser();
-        $user->setUsername('John');
+        $user->setEmail('john@example.com');
 
         // When
         $string = (string) $user;
 
         // Then
-        static::assertSame('John', $string, 'Should return the username as string representation');
+        static::assertSame('john@example.com', $string, 'Should return the username as string representation');
     }
 
     public function testToStringWithoutName(): void

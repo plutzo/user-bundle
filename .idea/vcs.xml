@@ -2,9 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/marlinc/admin-bundle" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/marlinc/entity-bundle" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/marlinc/postalcode-bundle" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/vendor/marlinc/select2entity-bundle" vcs="Git" />
   </component>
 </project>

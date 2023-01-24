@@ -2,23 +2,14 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Sonata Project package.
- *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Marlinc\UserBundle\Command;
 
-use Marlinc\UserBundle\Entity\UserManagerInterface;
+use Marlinc\UserBundle\Entity\UserInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @internal
@@ -31,12 +22,11 @@ final class DemoteUserCommand extends AbstractUserCommand
     protected function configure(): void
     {
         parent::configure();
-        $definition = $this->getDefinition();
-        $definition->addArgument(new InputArgument('role', InputArgument::OPTIONAL, 'The role'));
-        $definition->addOption(new InputOption('super-admin', null, InputOption::VALUE_NONE,
-            'Instead specifying role, use this to quickly add the super administrator role'));
-
-        $this->setHelp(
+        $this
+            ->addArgument('role', InputArgument::OPTIONAL, 'The role')
+            ->addOption('super-admin', null, InputOption::VALUE_NONE,
+            'Instead specifying role, use this to quickly add the super administrator role')
+            ->setHelp(
             <<<'EOT'
 The <info>%command.full_name%</info> command demotes a user by removing a role
 

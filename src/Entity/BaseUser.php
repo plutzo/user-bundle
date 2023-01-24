@@ -2,14 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Sonata Project package.
- *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Marlinc\UserBundle\Entity;
 
@@ -26,8 +18,6 @@ class BaseUser implements UserInterface
     protected ?string $email = null;
 
     protected bool $enabled = false;
-
-    protected ?string $salt = null;
 
     protected ?string $password = null;
 
@@ -46,7 +36,7 @@ class BaseUser implements UserInterface
 
     public function __toString(): string
     {
-        return $this->getEmail();
+        return $this->getEmail() ?? '-';
     }
 
     /**
@@ -56,7 +46,6 @@ class BaseUser implements UserInterface
     {
         return [
             $this->password,
-            $this->salt,
             $this->enabled,
             $this->id,
             $this->email,
@@ -70,7 +59,6 @@ class BaseUser implements UserInterface
     {
         [
             $this->password,
-            $this->salt,
             $this->enabled,
             $this->id,
             $this->email,
@@ -112,7 +100,7 @@ class BaseUser implements UserInterface
 
     public function getSalt(): ?string
     {
-        return $this->salt;
+        return null;
     }
 
     public function getEmail(): ?string
@@ -218,10 +206,6 @@ class BaseUser implements UserInterface
         }
 
         if ($this->password !== $user->getPassword()) {
-            return false;
-        }
-
-        if ($this->salt !== $user->getSalt()) {
             return false;
         }
 

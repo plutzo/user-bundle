@@ -27,7 +27,7 @@ the example above).  To enable this feature please refer to the
 
 
 Then is it simply a case of providing the route name to redirect to once the user has been impersonated
-in the ``SonataUserBundle`` configuration:
+in the ``MarlincUserBundle`` configuration:
 
 .. code-block:: yaml
 

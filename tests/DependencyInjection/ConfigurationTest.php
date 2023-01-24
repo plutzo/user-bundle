@@ -2,20 +2,12 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Sonata Project package.
- *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Marlinc\UserBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit\Framework\TestCase;
-use Marlinc\UserBundle\Admin\Entity\UserAdmin;
+use Marlinc\UserBundle\Admin\UserAdmin;
 use Marlinc\UserBundle\DependencyInjection\Configuration;
 use Marlinc\UserBundle\Entity\BaseUser;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -64,7 +56,7 @@ final class ConfigurationTest extends TestCase
                 'user' => [
                     'class' => UserAdmin::class,
                     'controller' => '%sonata.admin.configuration.default_controller%',
-                    'translation' => 'SonataUserBundle',
+                    'translation' => 'MarlincUserBundle',
                 ],
             ],
             'profile' => [
@@ -77,7 +69,7 @@ final class ConfigurationTest extends TestCase
                 'email' => [
                     'address' => 'sonata@localhost.com',
                     'sender_name' => 'Sonata Admin',
-                    'template' => '@SonataUser/Admin/Security/Resetting/email.html.twig',
+                    'template' => '@MarlincUser/Admin/Security/Resetting/email.html.twig',
                 ],
             ],
         ]);

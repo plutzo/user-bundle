@@ -3,12 +3,12 @@
 
 namespace Marlinc\UserBundle\Command;
 
+use Marlinc\UserBundle\Entity\UserInterface;
 use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class AbstractUserCommand extends Command
 {
@@ -24,9 +24,7 @@ abstract class AbstractUserCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDefinition([
-                new InputArgument('email', InputArgument::REQUIRED, 'The email'),
-            ]);
+            ->addArgument('email', InputArgument::REQUIRED, 'The email');
     }
 
     /**

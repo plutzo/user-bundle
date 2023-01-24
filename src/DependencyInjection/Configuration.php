@@ -2,14 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Sonata Project package.
- *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Marlinc\UserBundle\DependencyInjection;
 
@@ -75,7 +67,6 @@ final class Configuration implements ConfigurationInterface
                         ->scalarNode('default_avatar')->cannotBeEmpty()->defaultValue('bundles/MarlincUser/default_avatar.png')->end()
                     ->end()
                 ->end()
-                ->scalarNode('mailer')->cannotBeEmpty()->defaultValue('marlinc.user.mailer.default')->info('Custom mailer used to send reset password emails')->end()
             ->end();
 
         $this->addResettingSection($rootNode);

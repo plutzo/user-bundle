@@ -2,15 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Sonata Project package.
- *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Marlinc\UserBundle\Action;
 
 use Sonata\AdminBundle\Admin\Pool;
@@ -29,20 +20,12 @@ use Twig\Environment;
 final class LoginAction
 {
     private Environment $twig;
-
     private UrlGeneratorInterface $urlGenerator;
-
     private AuthenticationUtils $authenticationUtils;
-
     private Pool $adminPool;
-
     private TemplateRegistryInterface $templateRegistry;
-
     private TokenStorageInterface $tokenStorage;
-
     private TranslatorInterface $translator;
-
-    private ?CsrfTokenManagerInterface $csrfTokenManager;
 
     public function __construct(
         Environment $twig,
@@ -51,8 +34,7 @@ final class LoginAction
         Pool $adminPool,
         TemplateRegistryInterface $templateRegistry,
         TokenStorageInterface $tokenStorage,
-        TranslatorInterface $translator,
-        ?CsrfTokenManagerInterface $csrfTokenManager = null
+        TranslatorInterface $translator
     ) {
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;
@@ -61,7 +43,6 @@ final class LoginAction
         $this->templateRegistry = $templateRegistry;
         $this->tokenStorage = $tokenStorage;
         $this->translator = $translator;
-        $this->csrfTokenManager = $csrfTokenManager;
     }
 
     public function __invoke(Request $request): Response
@@ -75,18 +56,12 @@ final class LoginAction
             return new RedirectResponse($this->urlGenerator->generate('sonata_admin_dashboard'));
         }
 
-        $csrfToken = null;
-        if (null !== $this->csrfTokenManager) {
-            $csrfToken = $this->csrfTokenManager->getToken('authenticate')->getValue();
-        }
-
         return new Response($this->twig->render('@MarlincUser/Admin/Security/login.html.twig', [
             'admin_pool' => $this->adminPool,
             'base_template' => $this->templateRegistry->getTemplate('layout'),
-            'csrf_token' => $csrfToken,
             'error' => $this->authenticationUtils->getLastAuthenticationError(),
             'last_username' => $this->authenticationUtils->getLastUsername(),
-            'reset_route' => $this->urlGenerator->generate('marlinc_user_forgot_password_request'),
+            'reset_route' => $this->urlGenerator->generate('marlinc_user.admin.forgot_password_request'),
         ]));
     }
 
@@ -94,12 +69,6 @@ final class LoginAction
     {
         $token = $this->tokenStorage->getToken();
 
-        if (null === $token) {
-            return false;
-        }
-
-        $user = $token->getUser();
-
-        return $user instanceof UserInterface;
+        return $token !== null && $token->getUser() instanceof UserInterface;
     }
 }

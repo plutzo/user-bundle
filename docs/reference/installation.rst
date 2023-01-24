@@ -29,7 +29,7 @@ their own installation chapter.
 Enable the Bundle
 -----------------
 
-Add ``SonataUserBundle`` via composer::
+Add ``MarlincUserBundle`` via composer::
 
     composer require sonata-project/user-bundle
 
@@ -40,13 +40,13 @@ are not already enabled::
 
     return [
         // ...
-        Marlinc\UserBundle\SonataUserBundle::class => ['all' => true],
+        Marlinc\UserBundle\MarlincUserBundle::class => ['all' => true],
     ];
 
 Configuration
 =============
 
-SonataUserBundle Configuration
+MarlincUserBundle Configuration
 ------------------------------
 
 .. code-block:: yaml
@@ -55,7 +55,7 @@ SonataUserBundle Configuration
 
     sonata_user:
         class:
-            user: App\Entity\SonataUserUser
+            user: App\Entity\MarlincUserUser
         resetting:
             email:
                 address: sonata@localhost
@@ -73,11 +73,11 @@ And these in the config mapping definition (or enable `auto_mapping`_)::
             entity_managers:
                 default:
                     mappings:
-                        SonataUserBundle: ~
+                        MarlincUserBundle: ~
 
-And then create the corresponding entity, ``src/Entity/SonataUserUser``::
+And then create the corresponding entity, ``src/Entity/MarlincUserUser``::
 
-    // src/Entity/SonataUserUser.php
+    // src/Entity/MarlincUserUser.php
 
     use Doctrine\ORM\Mapping as ORM;
     use Marlinc\UserBundle\Entity\BaseUser;
@@ -86,7 +86,7 @@ And then create the corresponding entity, ``src/Entity/SonataUserUser``::
      * @ORM\Entity
      * @ORM\Table(name="sonata_user__user")
      */
-    class SonataUserUser extends BaseUser
+    class MarlincUserUser extends BaseUser
     {
         /**
          * @ORM\Id
@@ -103,9 +103,9 @@ The only thing left is to update your schema::
 Doctrine MongoDB Configuration
 ------------------------------
 
-You have to create the corresponding document, ``src/Document/SonataUserUser``::
+You have to create the corresponding document, ``src/Document/MarlincUserUser``::
 
-    // src/Document/SonataUserUser.php
+    // src/Document/MarlincUserUser.php
 
     use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
     use Marlinc\UserBundle\Document\BaseUser;
@@ -113,7 +113,7 @@ You have to create the corresponding document, ``src/Document/SonataUserUser``::
     /**
      * @MongoDB\Document
      */
-    class SonataUserUser extends BaseUser
+    class MarlincUserUser extends BaseUser
     {
         /**
          * @MongoDB\Id
@@ -121,14 +121,14 @@ You have to create the corresponding document, ``src/Document/SonataUserUser``::
         protected $id;
     }
 
-Then configure ``SonataUserBundle`` to use the newly generated classes::
+Then configure ``MarlincUserBundle`` to use the newly generated classes::
 
     # config/packages/sonata_user.yaml
 
     sonata_user:
         manager_type: mongodb
         class:
-            user: App\Document\SonataUserUser
+            user: App\Document\MarlincUserUser
 
 Integrating the bundle into the Sonata Admin Bundle
 ---------------------------------------------------
@@ -145,11 +145,11 @@ Add the related security routing information:
     # config/routes.yaml
 
     sonata_user_admin_security:
-        resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
+        resource: '@MarlincUserBundle/Resources/config/routing/admin_security.xml'
         prefix: /admin
 
     sonata_user_admin_resetting:
-        resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
+        resource: '@MarlincUserBundle/Resources/config/routing/admin_resetting.xml'
         prefix: /admin
 
 Then, add a new custom firewall handlers for the admin:
@@ -279,13 +279,13 @@ Next Steps
 ----------
 
 At this point, your Symfony installation should be fully functional, without errors
-showing up from SonataUserBundle. If, at this point or during the installation,
+showing up from MarlincUserBundle. If, at this point or during the installation,
 you come across any errors, don't panic:
 
     - Read the error message carefully. Try to find out exactly which bundle is causing the error.
-      Is it SonataUserBundle or one of the dependencies?
-    - Make sure you followed all the instructions correctly, for both SonataUserBundle and its dependencies.
+      Is it MarlincUserBundle or one of the dependencies?
+    - Make sure you followed all the instructions correctly, for both MarlincUserBundle and its dependencies.
     - Still no luck? Try checking the project's `open issues on GitHub`_.
 
-.. _`open issues on GitHub`: https://github.com/sonata-project/SonataUserBundle/issues
+.. _`open issues on GitHub`: https://github.com/sonata-project/MarlincUserBundle/issues
 .. _`auto_mapping`: http://symfony.com/doc/4.4/reference/configuration/doctrine.html#configuration-overviews

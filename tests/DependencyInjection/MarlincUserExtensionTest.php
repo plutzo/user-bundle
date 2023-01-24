@@ -2,24 +2,13 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Sonata Project package.
- *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Marlinc\UserBundle\Tests\DependencyInjection;
 
+use Marlinc\UserBundle\DependencyInjection\MarlincUserExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
-use Marlinc\UserBundle\Admin\Entity\UserAdmin as EntityUserAdmin;
-use Marlinc\UserBundle\DependencyInjection\SonataUserExtension;
-use Marlinc\UserBundle\Entity\BaseUser as EntityBaseUser;
+use Marlinc\UserBundle\Admin\UserAdmin as EntityUserAdmin;
 use Marlinc\UserBundle\Entity\UserInterface;
-use Marlinc\UserBundle\Tests\Admin\Document\UserAdmin as DocumentUserAdmin;
-use Marlinc\UserBundle\Tests\Document\User as DocumentUser;
 use Marlinc\UserBundle\Tests\Entity\User as EntityUser;
 use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,7 +17,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 /**
  * @author Anton Dyshkant <vyshkant@gmail.com>
  */
-final class SonataUserExtensionTest extends AbstractExtensionTestCase
+final class MarlincUserExtensionTest extends AbstractExtensionTestCase
 {
     protected function setUp(): void
     {
@@ -83,7 +72,7 @@ final class SonataUserExtensionTest extends AbstractExtensionTestCase
 
         $fakeContainer->expects(static::once())
             ->method('prependExtensionConfig')
-            ->with('twig', ['form_themes' => ['@SonataUser/Form/form_admin_fields.html.twig']]);
+            ->with('twig', ['form_themes' => ['@MarlincUser/Form/form_admin_fields.html.twig']]);
 
         foreach ($this->getContainerExtensions() as $extension) {
             if ($extension instanceof PrependExtensionInterface) {
@@ -109,7 +98,7 @@ final class SonataUserExtensionTest extends AbstractExtensionTestCase
         static::assertArrayHasKey(0, $twigConfigurations);
         static::assertArrayHasKey('form_themes', $twigConfigurations[0]);
         static::assertSame(
-            ['@SonataUser/Form/form_admin_fields.html.twig'],
+            ['@MarlincUser/Form/form_admin_fields.html.twig'],
             $twigConfigurations[0]['form_themes']
         );
     }
@@ -142,7 +131,7 @@ final class SonataUserExtensionTest extends AbstractExtensionTestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testSonataUserBundleModelClasses(): void
+    public function testMarlincUserBundleModelClasses(): void
     {
         $this->load(['manager_type' => 'orm', 'class' => [
             'user' => UserInterface::class,
@@ -181,7 +170,7 @@ final class SonataUserExtensionTest extends AbstractExtensionTestCase
     protected function getContainerExtensions(): array
     {
         return [
-            new SonataUserExtension(),
+            new MarlincUserExtension(),
         ];
     }
 }
