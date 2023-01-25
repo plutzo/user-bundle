@@ -58,11 +58,8 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $loader->load('security.php');
         $loader->load('util.php');
 
-
         $this->configureClass($config, $container);
-        $this->configureMailer($config, $container);
         $this->configureDefaultAvatar($config['profile'], $container);
-
 
         if (isset($bundles['SonataAdminBundle'])) {
             $this->configureAdmin($config['admin'], $container);
@@ -102,14 +99,6 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
         $container->getDefinition(RequestPasswordResetAction::class)
             ->replaceArgument(9, [$config['email']['address'] => $config['email']['sender_name']])
             ->replaceArgument(10, $config['email']['template']);
-    }
-
-    /**
-     * @param array<string, mixed> $config
-     */
-    private function configureMailer(array $config, ContainerBuilder $container): void
-    {
-        $container->setAlias('marlinc.user.mailer', $config['mailer']);
     }
 
     /**
