@@ -97,8 +97,8 @@ final class MarlincUserExtension extends Extension implements PrependExtensionIn
     private function configureResetting(array $config, ContainerBuilder $container): void
     {
         $container->getDefinition(RequestPasswordResetAction::class)
-            ->replaceArgument(9, [$config['email']['address'] => $config['email']['sender_name']])
-            ->replaceArgument(10, $config['email']['template']);
+            ->replaceArgument(8, [$config['email']['address'] => $config['email']['sender_name']])
+            ->replaceArgument(9, $config['email']['template']);
     }
 
     /**
