@@ -6,6 +6,11 @@
 
 {% block body_text %}
 {% autoescape false %}
-{{ 'resetting.email.message'|trans({'%username%': user.email, '%confirmationUrl%': confirmationUrl}, 'MarlincUserBundle') }}
+    <p>Um Ihr Passwort zurückzusetzen, klicken Sie bitte auf den folgenden Link:</p>
+    <br>
+    <a href="{{ url('marlinc_user_reset_password', {token: resetToken.token}) }}">{{ url('marlinc_user_reset_password', {token: resetToken.token}) }}</a>
+    <br>
+    <p>Dieser Link wird in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }} ablaufen.</p>
 {% endautoescape %}
 {% endblock %}
+
