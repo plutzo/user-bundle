@@ -49,7 +49,8 @@ class UserAdmin extends AbstractAdmin
         $list
             ->addIdentifier('email')
             ->add('enabled', null, ['editable' => true])
-            ->add('createdAt');
+            ->add('createdAt')
+            ->add('lastLogin');
 
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
             $list
@@ -58,6 +59,16 @@ class UserAdmin extends AbstractAdmin
                     'template' => '@MarlincUser/Admin/Field/impersonating.html.twig',
                 ]);
         }
+
+        $list
+            ->add(ListMapper::NAME_ACTIONS, null, [
+                ListMapper::TYPE_ACTIONS => [
+                    'show' => [],
+                    'edit' => [],
+                    'delete' => [],
+                ],
+            ])
+        ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
