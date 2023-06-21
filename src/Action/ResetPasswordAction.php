@@ -7,10 +7,12 @@ use Marlinc\UserBundle\Entity\UserManagerInterface;
 use Marlinc\UserBundle\Form\Type\ResettingFormType;
 use Sonata\AdminBundle\Templating\TemplateRegistryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\HttpUtils;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
@@ -19,18 +21,18 @@ use Twig\Environment;
 class ResetPasswordAction
 {
     private Environment $twig;
-    private HttpUtils $httpUtils;
+    private RouterInterface $router;
     private FormFactoryInterface $formFactory;
     private TemplateRegistryInterface $templateRegistry;
     private ResetPasswordHelperInterface $resetPasswordHelper;
     private UserManagerInterface $userManager;
 
-    public function __construct(Environment $twig, HttpUtils $httpUtils, FormFactoryInterface $formFactory,
+    public function __construct(Environment $twig, RouterInterface $router, FormFactoryInterface $formFactory,
                                 TemplateRegistryInterface $templateRegistry,
                                 ResetPasswordHelperInterface $resetPasswordHelper, UserManagerInterface $userManager)
     {
         $this->twig = $twig;
-        $this->httpUtils = $httpUtils;
+        $this->router = $router;
         $this->formFactory = $formFactory;
         $this->templateRegistry = $templateRegistry;
         $this->resetPasswordHelper = $resetPasswordHelper;
@@ -47,7 +49,7 @@ class ResetPasswordAction
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($session, $token);
 
-            return $this->httpUtils->createRedirectResponse($request, 'marlinc_user.admin.reset_password');
+            return new RedirectResponse($this->router->generate('marlinc_user.admin.reset_password'));
         }
 
         $token = $this->getTokenFromSession($session);
@@ -65,7 +67,7 @@ class ResetPasswordAction
                 $e->getReason()
             ));
 
-            return $this->httpUtils->createRedirectResponse($request, 'marlinc_user.admin.forgot_password_request');
+            return new RedirectResponse($this->router->generate( 'marlinc_user.admin.forgot_password_request'));
         }
 
         // The token is valid; allow the user to change their password.
@@ -84,7 +86,7 @@ class ResetPasswordAction
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset($session);
 
-            return $this->httpUtils->createRedirectResponse($request, 'marlinc_user.admin.login');
+            return new RedirectResponse($this->router->generate( 'marlinc_user.admin.login'));
         }
 
         return new Response($this->twig->render('@MarlincUser/Admin/Security/Resetting/reset.html.twig', [

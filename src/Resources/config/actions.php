@@ -27,7 +27,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->args([
                 service('twig'),
                 service('mailer.mailer'),
-                service('security.http_utils'),
+                service('router'),
                 service('form.factory'),
                 service('sonata.admin.global_template_registry'),
                 service('symfonycasts.reset_password.helper'),
@@ -47,7 +47,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ->public()
             ->args([
                 service('twig'),
-                service('security.http_utils'),
+                service('router'),
                 service('form.factory'),
                 service('sonata.admin.global_template_registry'),
                 service('symfonycasts.reset_password.helper'),
