@@ -47,7 +47,7 @@ class ResetPasswordAction
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($session, $token);
 
-            return $this->httpUtils->createRedirectResponse($request, 'marlinc_user_reset_password');
+            return $this->httpUtils->createRedirectResponse($request, 'marlinc_user.admin.reset_password');
         }
 
         $token = $this->getTokenFromSession($session);
@@ -65,7 +65,7 @@ class ResetPasswordAction
                 $e->getReason()
             ));
 
-            return $this->httpUtils->createRedirectResponse($request, 'marlinc_user_forgot_password_request');
+            return $this->httpUtils->createRedirectResponse($request, 'marlinc_user.admin.forgot_password_request');
         }
 
         // The token is valid; allow the user to change their password.
