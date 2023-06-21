@@ -626,9 +626,9 @@
         <source>security.login.submit</source>
         <target>Anmelden</target>
       </trans-unit>
-      <trans-unit id="resetting.request.username">
-        <source>resetting.request.username</source>
-        <target>Benutzername oder E-Mail-Adresse</target>
+      <trans-unit id="resetting.request.email">
+        <source>resetting.request.email</source>
+        <target>E-Mail-Adresse</target>
       </trans-unit>
       <trans-unit id="resetting.request.submit">
         <source>resetting.request.submit</source>

@@ -101,7 +101,7 @@ final class RequestPasswordResetAction
             ->subject($this->translator->trans('resetting.email.subject', [], 'MarlincUserBundle'))
             ->htmlTemplate($this->template)
             ->context([
-                'resetToken' => $resetToken,
+                'resetToken' => $resetToken->getToken(),
                 'user' => $user
             ])
         ;
