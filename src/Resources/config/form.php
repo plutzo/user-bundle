@@ -12,10 +12,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->services()
         ->set('marlinc.user.form.type.resetting', ResettingFormType::class)
             ->tag('form.type', ['alias' => 'marlinc_user_resetting'])
-            ->args([
-                param('marlinc.user.user.class'),
-            ])
-
         ->set('marlinc.user.form.type.reset_password_request', ResetPasswordRequestFormType::class)
             ->tag('form.type', ['alias' => 'marlinc_user_reset_password_request']);
 };
