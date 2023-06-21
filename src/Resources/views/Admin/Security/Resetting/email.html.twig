@@ -6,6 +6,6 @@
 
 {% block body_text %}
 {% autoescape false %}
-{{ 'resetting.email.message'|trans({'%username%': user.email, '%confirmationUrl%': confirmationUrl}, 'MarlincUserBundle') }}
+{{ 'resetting.email.message'|trans({'%username%': user.email, '%confirmationUrl%': url('marlinc_user.admin.reset_password', {'token': resetToken})}, 'MarlincUserBundle') }}
 {% endautoescape %}
 {% endblock %}

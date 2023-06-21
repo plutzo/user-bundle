@@ -68,9 +68,9 @@ final class RequestPasswordResetAction
         ]));
     }
 
-    private function processSendingPasswordResetEmail(Request $request, string $email): RedirectResponse
+    private function processSendingPasswordResetEmail(Request $request, string $recipient): RedirectResponse
     {
-        $user = $this->userManager->findUserByEmail(EmailCanonicalizer::canonicalize($email));
+        $user = $this->userManager->findUserByEmail(EmailCanonicalizer::canonicalize($recipient));
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
@@ -98,7 +98,7 @@ final class RequestPasswordResetAction
         $email = (new TemplatedEmail())
             ->from(new Address($fromAddress,$fromName))
             ->to($user->getEmail())
-            ->subject($this->translator->trans('marlinc_user_password_reset_subject', [], 'MarlincUserBundle'))
+            ->subject($this->translator->trans('resetting.email.subject', [], 'MarlincUserBundle'))
             ->htmlTemplate($this->template)
             ->context([
                 'resetToken' => $resetToken,

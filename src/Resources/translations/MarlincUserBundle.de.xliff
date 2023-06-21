@@ -649,13 +649,11 @@
       </trans-unit>
       <trans-unit id="resetting.email.message">
         <source>resetting.email.message</source>
-        <target>
-          Hallo %username%!
+        <target><![CDATA[
+          <p>Hallo %username%!</p>
 
-          Besuchen Sie bitte folgende Seite, um Ihr Passwort zurückzusetzen: %confirmationUrl%
-
-          Mit besten Grüßen,
-          das Team.
+          <p>Besuchen Sie bitte folgende Seite, um Ihr Passwort zurückzusetzen:<br><a href="%confirmationUrl%">%confirmationUrl%</a></p>
+        ]]>
         </target>
       </trans-unit>
       <trans-unit id="resetting.reset.submit">
@@ -673,6 +671,18 @@
       <trans-unit id="form.new_password_confirmation">
         <source>form.new_password_confirmation</source>
         <target>Neues Passwort bestätigen</target>
+      </trans-unit>
+      <trans-unit id="list.label_last_login">
+        <source>list.label_last_login</source>
+        <target>Letzter Login</target>
+      </trans-unit>
+      <trans-unit id="list.label__actions">
+        <source>list.label__actions</source>
+        <target>Aktionen</target>
+      </trans-unit>
+      <trans-unit id="form.group_general">
+        <source>form.group_general</source>
+        <target></target>
       </trans-unit>
     </body>
   </file>
