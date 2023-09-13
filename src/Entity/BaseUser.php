@@ -65,17 +65,19 @@ class BaseUser implements UserInterface
         ] = $data;
     }
 
-    public function addRole(string $role): void
+    public function addRole(string $role): self
     {
         $role = strtoupper($role);
 
         if ($role === static::ROLE_DEFAULT) {
-            return;
+            return $this;
         }
 
         if (!\in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
+
+        return $this;
     }
 
     public function eraseCredentials(): void
@@ -148,55 +150,71 @@ class BaseUser implements UserInterface
         return $this->hasRole(static::ROLE_SUPER_ADMIN);
     }
 
-    public function removeRole(string $role): void
+    public function removeRole(string $role): self
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
+
+        return $this;
     }
 
-    public function setEmail(?string $email): void
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
-    public function setEnabled(bool $enabled): void
+    public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
+
+        return $this;
     }
 
-    public function setPassword(?string $password): void
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
-    public function setSuperAdmin(bool $boolean): void
+    public function setSuperAdmin(bool $boolean): self
     {
         if (true === $boolean) {
             $this->addRole(static::ROLE_SUPER_ADMIN);
         } else {
             $this->removeRole(static::ROLE_SUPER_ADMIN);
         }
+
+        return $this;
     }
 
-    public function setPlainPassword(?string $password): void
+    public function setPlainPassword(?string $password): self
     {
         $this->plainPassword = $password;
+
+        return $this;
     }
 
-    public function setLastLogin(?\DateTimeInterface $time = null): void
+    public function setLastLogin(?\DateTimeInterface $time = null): self
     {
         $this->lastLogin = $time;
+
+        return $this;
     }
 
-    public function setRoles(array $roles): void
+    public function setRoles(array $roles): self
     {
         $this->roles = [];
 
         foreach ($roles as $role) {
             $this->addRole($role);
         }
+
+        return $this;
     }
 
     public function isEqualTo(SymfonyUserInterface $user): bool
@@ -212,9 +230,11 @@ class BaseUser implements UserInterface
         return true;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt = null): void
+    public function setCreatedAt(?\DateTimeInterface $createdAt = null): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
@@ -222,9 +242,11 @@ class BaseUser implements UserInterface
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null): void
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt = null): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
