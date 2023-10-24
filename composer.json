@@ -20,6 +20,10 @@
     ],
     "homepage": "https://marlinc.com",
     "repositories": [{
+        "name": "marlinc/admin-bundle",
+        "type": "vcs",
+        "url": "https://github.com/feuerwagen/marlinc-admin-bundle.git"
+    },{
         "type": "composer",
         "url": "https://packages.aha.biz"
     }],
